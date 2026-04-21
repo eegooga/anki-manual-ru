@@ -1,16 +1,16 @@
-# Windows installation issues
+# Проблемы установки в Windows
 
-Some error messages you may encounter when installing Anki:
+Некоторые сообщения об ошибках, с которыми вы можете столкнуться при установке Anki:
 
 <!-- toc -->
 
-Please also see [startup issues](./startup-issues.md).
+Также см. [проблемы запуска](./startup-issues.md).
 
-## "Error opening file for writing"
+## «Error opening file for writing»
 
-If closing Anki and your browser does not help, please try restarting your
-computer, then running the installer again.
+Если закрытие Anki и браузера не помогло, попробуйте перезагрузить
+компьютер, а затем снова запустить установщик.
 
-## Antivirus issues
+## Проблемы с антивирусом
 
-Antivirus programs may sometimes report a [false positive](https://faqs.ankiweb.net/my-antivirus-program-says-anki-is-infected.html).
+Антивирусные программы иногда сообщают о [ложном срабатывании](https://faqs.ankiweb.net/my-antivirus-program-says-anki-is-infected.html).

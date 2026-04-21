@@ -1,41 +1,43 @@
-# Installing & Upgrading Anki on macOS
+# Установка и обновление Anki на macOS
 
 <!-- toc -->
 
-## Requirements
+## Требования
 
-macOS version requirements are listed on the download page.
+Требования к версии macOS указаны на странице загрузки.
 
-If you're on an old machine, you can obtain the old version from the [releases page](https://github.com/ankitects/anki/releases). The Qt5 builds on 24.11 and earlier support macOS 10.14 and later. If your macOS
-is between 10.10 and 10.13, you'll need to use [Anki 2.1.35-alternate](https://github.com/ankitects/anki/releases/tag/2.1.35).
+Если у вас старый компьютер, старую версию можно скачать на [странице релизов](https://github.com/ankitects/anki/releases).
+Сборки Qt5 в версии 24.11 и более ранних поддерживают macOS 10.14 и новее.
+Если у вас macOS от 10.10 до 10.13, нужно использовать [Anki 2.1.35-alternate](https://github.com/ankitects/anki/releases/tag/2.1.35).
 
-## Installing
+## Установка
 
-1. Download Anki from <https://apps.ankiweb.net>.
-2. Save the file to your desktop or downloads folder.
-3. Open it, and drag Anki to your Applications folder or desktop.
-4. Double-click on Anki in the location you placed it.
+1. Скачайте Anki с <https://apps.ankiweb.net>.
+2. Сохраните файл на рабочий стол или в папку загрузок.
+3. Откройте его и перетащите Anki в папку Applications или на рабочий стол.
+4. Дважды щёлкните Anki в том месте, куда вы его поместили.
 
-## Upgrading
+## Обновление
 
-To upgrade, close Anki if it is open, and then follow the steps above. Drag
-the Anki icon into the same location you previously stored it, and when prompted,
-overwrite the old version. Your card data will be preserved.
+Чтобы обновиться, закройте Anki, если он открыт, и выполните шаги выше.
+Перетащите значок Anki в то же место, где он уже находится, и когда появится
+запрос, подтвердите замену старой версии. Данные карточек сохранятся.
 
 ## Homebrew
 
-[Homebrew](https://brew.sh/) users can install Anki using
-`brew install --cask anki` in their preferred Terminal application.
+Пользователи [Homebrew](https://brew.sh/) могут установить Anki командой
+`brew install --cask anki` в удобном терминальном приложении.
 
-Upgrading can be done using `brew upgrade`, and for uninstalling: `brew uninstall --cask anki`
+Обновление выполняется командой `brew upgrade`, удаление — `brew uninstall --cask anki`.
 
-## Add-on Compatibility
+## Совместимость дополнений
 
-Some add-ons may not always work with the latest Anki release. If you upgrade to
-the latest Anki version and find an add-on you cannot live without stops working,
-you can download older Anki versions from the [releases page](https://github.com/ankitects/anki/releases).
+Некоторые дополнения не всегда работают с последним релизом Anki. Если вы
+обновились до последней версии и обнаружили, что важное для вас дополнение
+перестало работать, можно скачать более старую версию Anki со
+[страницы релизов](https://github.com/ankitects/anki/releases).
 
-## Problems
+## Проблемы
 
-If you encounter any issues when installing or starting Anki, please see:
-- [Display Issues](display-issues.md)
+Если у вас возникают проблемы при установке или запуске Anki, см.:
+- [Проблемы отображения](display-issues.md)

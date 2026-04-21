@@ -1,3 +1,6 @@
-# Resources
+# Ресурсы
 
-You can find guides, templates, custom schedulers and other resources in [this resource list](https://forums.ankiweb.net/t/collection-of-anki-resources/60044).
+- [AnkiWeb](https://ankiweb.net)
+- [База знаний](https://faqs.ankiweb.net)
+- [Дополнения](https://ankiweb.net/shared/addons)
+- [Anki на GitHub](https://github.com/ankitects/anki)

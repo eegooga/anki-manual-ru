@@ -1,11 +1,12 @@
-# Card Templates
+# Шаблоны карточек
 
-Card templates tell Anki which fields should appear on the front and back of your card,
-and control which cards will be generated when certain fields have text in them.
-By adjusting your card templates, you can alter the design and styling of many of your
-cards at once.
+Шаблоны карточек указывают Anki, какие поля должны отображаться
+на лицевой и оборотной стороне карточки, и управляют тем,
+какие карточки будут создаваться, когда определённые поля содержат текст.
+Изменяя шаблоны карточек, вы можете сразу менять дизайн и стиль
+большого числа карточек.
 
-Card templates are covered in some of the intro videos:
+Шаблоны карточек рассматриваются в нескольких вводных видео:
 
 - [Switching Card Order](http://www.youtube.com/watch?v=DnbKwHEQ1mA&yt:cc=on)
 
@@ -13,42 +14,41 @@ Card templates are covered in some of the intro videos:
 
 - [Typing in the Answer](http://www.youtube.com/watch?v=5tYObQ3ocrw&yt:cc=on)
 
-## The Templates Screen
+## Экран шаблонов
 
-You can modify card templates by clicking the **Cards...** button inside the
-editing screen.
+Изменять шаблоны карточек можно, нажав кнопку **Карточки...**
+в окне редактирования.
 
+Вы можете переключаться между **Лицевой шаблон**, **Оборотный шаблон**
+и **Стили** с помощью <kbd>Ctrl</kbd>+<kbd>1</kbd>, <kbd>Ctrl</kbd>+<kbd>2</kbd>
+и <kbd>Ctrl</kbd>+<kbd>3</kbd>.
 
-You can switch between **Front template**, **Back template** and **Styling** with <kbd>Ctrl</kbd>+<kbd>1</kbd>, <kbd>Ctrl</kbd>+<kbd>2</kbd>, and <kbd>Ctrl</kbd>+<kbd>3</kbd>.
+В Anki шаблоны пишутся на HTML — языке, на котором пишутся веб-страницы.
+Раздел стилей использует CSS — язык для оформления веб-страниц.
 
-In Anki, templates are written in HTML, which is the language that web
-pages are written in. The styling section is CSS, which is the language
-used for styling web pages.
+Справа показан предварительный просмотр лицевой и оборотной стороны
+текущей выбранной карточки. Если вы открыли окно при добавлении заметок,
+предпросмотр будет основан на тексте, введённом в окне добавления.
+Если окно открыто при редактировании заметки, предпросмотр будет основан
+на содержимом этой заметки. Если окно открыто из «Инструменты → Управление
+типами заметок», Anki будет отображать имена полей в скобках
+вместо содержимого.
 
-On the right is a preview of the front and back of the currently
-selected card. If you opened the window while adding notes, the preview
-will be based on the text you had typed into the Add Notes window. If
-you opened the window while editing a note, the preview will be based on
-the content of that note. If you opened the window from Tools → Manage
-Note Types, Anki will display each field’s name in parentheses in place
-of content.
+В правом верхнем углу окна есть кнопка Options, которая позволяет
+переименовывать или менять порядок карточек, а также содержит
+следующие две опции:
 
-At the top right of the window is an Options button that gives you
-options to rename or reorder the cards, as well as the following two
-options:
+- Опция **Deck Override** позволяет изменить колоду, в которую будут
+  помещаться карточки, создаваемые из текущего типа карточки.
+  По умолчанию карточки попадают в колоду, указанную в окне добавления заметок.
+  Если задать колоду здесь, этот тип карточки будет помещаться
+  в указанную здесь колоду, а не в колоду из окна добавления.
+  Это полезно, если вы хотите разделить карточки по разным колодам
+  (например, при изучении языка: продуктивные карточки в одну колоду,
+  распознавание — в другую). Проверить, в какую колоду сейчас
+  отправляются карточки, можно, снова выбрав Deck Override.
 
-- The **Deck Override** option allows you to change the deck that cards
-  generated from the current card type will be placed into. By
-  default, cards are placed into the deck you provide in the Add Notes
-  window. If you set a deck here, that card type will be placed into
-  the deck you specified, instead of the deck listed in the Add Notes
-  window. This can be useful if you want to separate cards into
-  different decks (for instance, when studying a language, to put
-  production cards in one deck and recognition cards in another). You
-  can check which deck the cards are currently going to by choosing
-  Deck Override again.
-
-- The **Browser Appearance** option allows you to set different (perhaps
-  simplified) templates for display in the Question and Answer columns
-  of the browser; see [browser appearance](styling.md#browser-appearance) for more
-  information.
+- Опция **Browser Appearance** позволяет задать отдельные
+  (возможно, упрощённые) шаблоны для отображения в столбцах
+  Question и Answer в браузере; подробнее см.
+  [внешний вид браузера](styling.md#browser-appearance).

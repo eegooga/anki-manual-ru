@@ -1,239 +1,246 @@
-# Text Files
+# Текстовые файлы
 
 <!-- toc -->
 
-Any **plain text** file that contains fields separated by commas,
-semicolons or tabs can be imported into Anki, provided some conditions
-are met.
+Любой файл **обычного текста**, в котором поля разделены запятыми,
+точками с запятой или табуляцией, можно импортировать в Anki,
+если соблюдены некоторые условия.
 
-- The files must be plain text (myfile.txt). Other formats like
-  myfile.xls, myfile.rtf, myfile.doc must be saved as a plain text
-  file first.
+- Файлы должны быть обычным текстом (`myfile.txt`). Другие форматы,
+  такие как `myfile.xls`, `myfile.rtf`, `myfile.doc`, сначала нужно сохранить
+  как файл обычного текста.
 
-- The files must be in UTF-8 format (see below).
+- Файлы должны быть в формате UTF-8 (см. ниже).
 
-- Anki determines the number of fields in the file by looking at the first
-  (non-commented) line. If some of the later records in the file contain fewer
-  fields, Anki will treat the missing fields as if they were blank. If some of your
-  records contain extra fields, the extra content will not be imported.
+- Anki определяет количество полей в файле по первой
+  (не закомментированной) строке. Если некоторые последующие записи содержат меньше
+  полей, Anki считает отсутствующие поля пустыми. Если какие-то записи
+  содержат лишние поля, лишнее содержимое импортировано не будет.
 
-- Anki tries to guess which field separator (commas, tabs, etc.) your file uses. 
-  If it guesses wrongly, you can change it in the import options window and preview 
-  the results. Or you can add [file headers](#file-headers) to force a specific field separator.
+- Anki пытается угадать, какой разделитель полей используется в вашем файле
+  (запятые, табуляция и т. д.). Если угадано неверно, это можно изменить
+  в окне настроек импорта и посмотреть предварительный результат.
+  Либо можно добавить [заголовки файла](#заголовки-файла), чтобы принудительно
+  задать конкретный разделитель полей.
 
-Fields in your text file can be mapped to any field in your notes,
-including the tags field. You can choose which field in the text file
-corresponds to which field in the note when you import.
+Поля в текстовом файле можно сопоставить с любыми полями заметки,
+включая поле тегов. При импорте вы можете выбрать, какое поле из текста
+соответствует какому полю заметки.
 
-When you import a text file, you can choose what deck to put the cards
-in. Keep in mind that if you have the deck override option set for one
-or more of your templates, the cards will go to that deck rather than
-the one you’ve selected.
+При импорте текстового файла вы можете выбрать колоду, в которую попадут
+карточки. Учтите: если для одного или нескольких шаблонов у вас включено
+переопределение колоды, карточки попадут в указанную там колоду,
+а не в ту, которую вы выбрали при импорте.
 
-This is an example of a valid file with three fields:
+Вот пример корректного файла с тремя полями:
 
     apple;banana;grape
     first field;second field;third field
 
-There are two ways to include newlines or the field separator in fields.
+Есть два способа включить переносы строк или сам разделитель полей внутрь поля.
 
-**Escape the characters by placing the contents of the field in
-quotation marks**:
+**Экранировать символы, заключив содержимое поля
+в кавычки**:
 
     hello;"this is
     a two line answer"
     two;this is a one line field
     "this includes a ; (semicolon)";another field
 
-Because quotes are used to mark where a field begins and ends, if you
-wish to include them inside your field, you need to replace a single
-doublequote with two doublequotes to "escape" them from the regular
-handling, like so:
+Поскольку кавычки используются для обозначения начала и конца поля,
+если вы хотите вставить их внутрь поля, нужно заменить одну двойную
+кавычку на две двойные кавычки, чтобы «экранировать» её,
+например так:
 
     field one;"field two with ""escaped quotes"" inside it"
 
-When you use a spreadsheet program like Libreoffice to create the CSV
-file for you, it will automatically take care of escaping double quotes.
+Если вы используете табличный редактор вроде LibreOffice для создания CSV,
+он автоматически корректно экранирует двойные кавычки.
 
-**Use HTML new lines**:
+**Использовать HTML-переносы строк**:
 
     hello; this is<br>a two line answer
     two; this is a one line one
 
-You need to turn on the **Allow HTML in fields** in the import
-dialog for HTML newlines to work.
+Чтобы HTML-переносы работали, в диалоге импорта нужно включить
+**Разрешить HTML в полях**.
 
-Escaped multi-lines will not work correctly if you are using cloze
-deletions that span multiple lines. In this case, please use HTML
-newlines instead.
+Экранированные многострочные поля работают некорректно,
+если вы используете cloze-удаления, охватывающие несколько строк.
+В таком случае используйте HTML-переносы строк.
 
-You can also include tags in another field and select it as a tags field
-in the import dialog:
+Вы также можете включить теги в отдельное поле и выбрать его как поле тегов
+в диалоге импорта:
 
     first field;second field;tags
 
-This is an example of a valid file where the first line is ignored (\#):
+Пример корректного файла, где первая строка игнорируется (`#`):
 
     # this is a comment and is ignored
     foo bar;bar baz;baz quux
     field1;field2;field3
 
-## Spreadsheets and UTF-8
+## Таблицы и UTF-8
 
-If you have non-Latin characters in your file (such as accents, Japanese
-and so on), Anki expects files to be saved in a "UTF-8 encoding". The
-easiest way to do this is to use the free LibreOffice spreadsheet
-program instead of Excel to edit your file, as it supports UTF-8 easily,
-and also exports multi-line content properly, unlike Excel. If you wish
-to keep using Excel, please see [this doc](https://docs.google.com/document/d/12YE_FS6A9ANLTESJNtPP116ti4nNmCBghyoJBRtno_k/edit?usp=sharing)
-for more information.
+Если в вашем файле есть нелатинские символы (например, акценты,
+японский и т. д.), Anki ожидает, что файл сохранён в «кодировке UTF-8».
+Самый простой способ — использовать бесплатный табличный редактор
+LibreOffice вместо Excel: он легко работает с UTF-8,
+а также корректно экспортирует многострочное содержимое, в отличие от Excel.
+Если вы хотите продолжать использовать Excel, см. [этот документ](https://docs.google.com/document/d/12YE_FS6A9ANLTESJNtPP116ti4nNmCBghyoJBRtno_k/edit?usp=sharing)
+для подробностей.
 
-To save your spreadsheet to a file Anki can read with LibreOffice, go to
-**File &gt; Save As**, and then select CSV for the type of file. After
-accepting the default options, LibreOffice will save the file and you
-can then import the saved file into Anki.
+Чтобы сохранить таблицу из LibreOffice в файл, который умеет читать Anki,
+откройте **File &gt; Save As** и выберите CSV как тип файла.
+После подтверждения параметров по умолчанию LibreOffice сохранит файл,
+и затем его можно импортировать в Anki.
 
 ## HTML
 
-Anki can treat text imported from text files as HTML (the language used
-for web pages). This means that text with bold, italics and other
-formatting can be exported to a text file and imported again. If you
-want to include HTML formatting, you can check the "allow HTML in
-fields" checkbox when importing. You may wish to turn this off if you’re
-trying to import cards whose content contains angle brackets or other
-HTML syntax.
+Anki может воспринимать текст, импортируемый из текстовых файлов,
+как HTML (язык веб-страниц). Это значит, что текст с жирным,
+курсивом и другим форматированием можно экспортировать в текстовый файл
+и затем снова импортировать. Если хотите включить HTML-форматирование,
+при импорте отметьте флажок «allow HTML in fields».
+Вы можете отключить это, если импортируете карточки,
+в содержимом которых есть угловые скобки или другой HTML-синтаксис.
 
-If you wish to use HTML for formatting your file but also wish to
-include angle brackets or ampersands, you may use the following replacements:
+Если вы хотите использовать HTML для форматирования,
+но также хотите включать угловые скобки или амперсанд,
+используйте следующие замены:
 
-| Character | Replacement |
-| --------- | ----------- |
-| &lt;      | `&lt;`      |
-| &gt;      | `&gt;`      |
-| &amp;     | `&amp;`     |
+| Символ | Замена |
+| ------ | ------ |
+| &lt;    | `&lt;` |
+| &gt;    | `&gt;` |
+| &amp;   | `&amp;` |
 
-## Importing Media
+## Импорт медиа
 
-If you want to include audio and pictures from a text file import, copy
-the files into the [collection.media folder](../files.md). **Do not put
-subdirectories in the media folder, or some features will not work.**
+Если вы хотите включить аудио и изображения через импорт текстового файла,
+скопируйте файлы в [папку collection.media](../files.md). **Не создавайте
+подкаталоги в папке media, иначе некоторые функции не будут работать.**
 
-After you’ve copied the files, change one of the fields in your text
-file as follows.
+После копирования файлов измените одно из полей в вашем текстовом
+файле следующим образом.
 
     <img src="myimage.jpg">
 
-or
+или
 
     [sound:myaudio.mp3]
 
-Alternatively, you can use the [find and replace](../browsing.md) feature
-in the browse screen to update all the fields at once. If each field
-contains text like "myaudio", and you wish to make it play a sound,
-you’d search for (.\*) and replace it with "\[sound:\\1.mp3\]", with the
-**regular expressions** option enabled.
+Либо можно использовать функцию [найти и заменить](../browsing.md)
+в окне браузера, чтобы обновить все поля сразу. Если каждое поле
+содержит текст вроде `myaudio`, и вы хотите, чтобы это воспроизводилось как звук,
+можно искать `(.*)` и заменить на `\[sound:\1.mp3\]`, включив опцию
+**регулярных выражений**.
 
-When importing a text file with these references, you must make sure to
-enable the "Allow HTML" option.
+При импорте текстового файла с такими ссылками обязательно
+включите опцию «Allow HTML».
 
-You might be tempted to do this in a template, like:
+Может возникнуть соблазн сделать это в шаблоне, например так:
 
     <img src="{{field name}}">
 
-Anki doesn’t support this for two reasons: searching for used media is
-expensive, as each card has to be rendered, and such functionality isn’t
-obvious to shared deck users. Please use the find & replace technique
-instead.
+Anki не поддерживает это по двум причинам: поиск используемого медиа
+дорог по ресурсам, так как нужно рендерить каждую карточку,
+и такое поведение неочевидно для пользователей общих колод.
+Вместо этого используйте технику find & replace.
 
-## Bulk Media
+## Массовый импорт медиа
 
-Another option for importing large amounts of media at once is to use
-the [media import add-on](https://ankiweb.net/shared/info/129299120).
-This add-on will automatically create notes for all files in a folder
-you select, with the filenames on the front (minus the file extension,
-so if you have a file named apple.jpg, the front would say "apple") and
-the images or audio on the back. If you would like a different
-arrangement of media and filenames, you can [change the note type](../browsing.md) of the created cards afterwards.
+Ещё один вариант массового импорта большого количества медиа —
+использовать [дополнение для импорта медиа](https://ankiweb.net/shared/info/129299120).
+Это дополнение автоматически создаёт заметки для всех файлов в выбранной папке:
+на лицевой стороне будет имя файла (без расширения,
+то есть если файл называется `apple.jpg`, на лицевой стороне будет `apple`),
+а на обратной — изображение или аудио. Если вам нужен другой вариант
+сопоставления медиа и имён файлов, после этого можно [изменить тип заметки](../browsing.md)
+у созданных карточек.
 
-## Duplicates and Updating
+## Дубликаты и обновление
 
-When importing text files, Anki uses the first field to determine if a
-note is unique. By default, if the file you are importing has a first
-field that matches one of the existing notes in your collection and that
-existing note is the same type as the type you’re importing, the
-existing note’s other fields will be updated based on content of the
-imported file. A drop-down box in the import screen allows you to change
-this behaviour, to either ignore duplicates completely, or import them
-as new notes instead of updating existing ones.
+При импорте текстовых файлов Anki использует первое поле для определения,
+уникальна ли заметка. По умолчанию, если у импортируемого файла первое поле
+совпадает с одной из существующих заметок в коллекции, и эта существующая
+заметка того же типа, что и импортируемая, остальные поля существующей заметки
+будут обновлены содержимым импортируемого файла. В выпадающем списке
+экрана импорта можно изменить это поведение: полностью игнорировать дубликаты
+или импортировать их как новые заметки вместо обновления существующих.
 
-The **match scope** setting controls how duplicates are identified. When
-**note type** is selected, Anki will identify a duplicate if another note
-with the same note type has the same first field. When set to **note type and deck**,
-a duplicate will only be flagged if the existing note also happens to be
-in the deck you are importing into.
+Параметр **область сопоставления** определяет, как именно ищутся дубликаты.
+Если выбрано **тип заметки**, Anki считает запись дубликатом,
+если другая заметка того же типа имеет такое же первое поле.
+Если выбрано **тип заметки и колода**, дубликат будет отмечен,
+только если существующая заметка также находится в колоде,
+в которую вы импортируете.
 
-If you have updating turned on and older versions of the notes you’re
-importing are already in your collection, they will be updated in place
-(in their current decks) rather than being moved to the deck you have
-set in the import dialog. If notes are updated in place, the existing
-scheduling information on all their cards will be preserved.
+Если у вас включено обновление и более старые версии импортируемых заметок
+уже есть в коллекции, они будут обновлены на месте
+(в своих текущих колодах), а не перемещены в колоду,
+заданную в диалоге импорта. При обновлении на месте
+сохраняется существующее расписание всех карточек.
 
-For info on how duplicates are handled in .apkg files, please see the
-[Deck Packages](../exporting.md#packaged-decks) section.
+Информацию о том, как обрабатываются дубликаты в файлах `.apkg`, см. в разделе
+[Пакеты колод](../exporting.md#packaged-decks).
 
-## File Headers
+## Заголовки файла
 
-Anki 2.1.54+ supports certain headers that can be included in the text file to
-make importing more powerful or convenient. They consist of `#key:value` pairs
-and must be listed in separate lines at the top of the file.
+Anki 2.1.54+ поддерживает специальные заголовки, которые можно включить
+в текстовый файл, чтобы сделать импорт более мощным и удобным.
+Они имеют формат пар `#key:value` и должны быть записаны
+в отдельных строках в начале файла.
 
-| Key               | Allowed Values                                                                             | Behaviour                                                                                                       |
-| ----------------- | ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
-| `separator`       | `Comma`, `Semicolon`, `Tab`, `Space`, `Pipe`, `Colon`, or the corresponding literal characters | Determines the field separator.                                                                                 |
-| `html`            | `true`, `false`                                                                            | Determines whether the file is treated as HTML.                                                                 |
-| `tags`            | List of tags, separated by spaces                                                          | Adds the listed tags to every imported note.                                                                      |
-| `columns`         | List of names, separated by the previously set separator                                   | Determines the number of columns and shows their given names when importing.                                    |
-| `notetype`        | Note type name or id                                                                        | Presets the note type, if it exists.                                                                             |
-| `deck`            | Deck name or id                                                                            | Presets the deck, if it exists.                                                                                 |
-| `notetype column` | `1`, `2`, `3`, ...                                                                         | Determines which column contains the note type name or id of each note, see [Notetype Column](#notetype-column). |
-| `deck column`     | `1`, `2`, `3`, ...                                                                         | Determines which column contains the deck name or id of each note, see [Deck Column](#deck-column).             |
-| `tags column`     | `1`, `2`, `3`, ...                                                                         | Determines which column contains the tags of each note.                                                         |
-| `guid column`     | `1`, `2`, `3`, ...                                                                         | Determines which column contains the GUID of each note, see [GUID Column](#guid-column).                        |
+| Ключ              | Допустимые значения                                                                       | Поведение                                                                                                          |
+| ----------------- | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| `separator`       | `Comma`, `Semicolon`, `Tab`, `Space`, `Pipe`, `Colon` или соответствующие символы-разделители | Определяет разделитель полей.                                                                                      |
+| `html`            | `true`, `false`                                                                            | Определяет, обрабатывается ли файл как HTML.                                                                       |
+| `tags`            | Список тегов, разделённых пробелами                                                       | Добавляет перечисленные теги к каждой импортированной заметке.                                                     |
+| `columns`         | Список имён, разделённых ранее заданным разделителем                                      | Определяет число столбцов и показывает их имена при импорте.                                                       |
+| `notetype`        | Имя или id типа заметки                                                                    | Предустанавливает тип заметки, если он существует.                                                                 |
+| `deck`            | Имя или id колоды                                                                          | Предустанавливает колоду, если она существует.                                                                     |
+| `notetype column` | `1`, `2`, `3`, ...                                                                         | Определяет, какой столбец содержит имя или id типа заметки для каждой заметки, см. [Столбец типа заметки](#столбец-типа-заметки). |
+| `deck column`     | `1`, `2`, `3`, ...                                                                         | Определяет, какой столбец содержит имя или id колоды для каждой заметки, см. [Столбец колоды](#столбец-колоды). |
+| `tags column`     | `1`, `2`, `3`, ...                                                                         | Определяет, какой столбец содержит теги каждой заметки.                                                            |
+| `guid column`     | `1`, `2`, `3`, ...                                                                         | Определяет, какой столбец содержит GUID каждой заметки, см. [Столбец GUID](#столбец-guid).                       |
 
-Some headers have further implications.
+У некоторых заголовков есть дополнительные особенности.
 
-### Notetype Column
+### Столбец типа заметки
 
-Usually, all notes from a file will be mapped to a single note type. That changes, if there is a column with note type names or ids. 
+Обычно все заметки из файла сопоставляются с одним типом заметки.
+Это меняется, если есть столбец с именами или id типов заметок.
 
-This allows you to
-import notes with different note types, and their fields will be mapped implicitly:
-The first regular column is used for the first field of any note regardless of
-its note type, the second regular column for the second field, and so on.
-A _regular column_ here being a column that does not contain special information
-like decks, tags, note types or GUIDs.
+Это позволяет импортировать заметки разных типов,
+и их поля будут сопоставляться неявно:
+первый обычный столбец используется как первое поле любой заметки
+независимо от её типа, второй обычный столбец — как второе поле и т. д.
+_Обычный столбец_ здесь — это столбец, не содержащий специальную информацию,
+такую как колоды, теги, типы заметок или GUID.
 
-### Deck Column
+### Столбец колоды
 
-Usually, any new cards created as a result of importing a text file will be placed
-in a single deck of your choice. If the file contains a deck column, however, new
-cards of a note will be placed in its specified deck instead. If the deck does not
-exist, a deck with the given name will be created.
+Обычно все новые карточки, созданные при импорте текстового файла,
+попадают в одну выбранную вами колоду. Однако если в файле есть столбец колоды,
+новые карточки заметки будут помещены в указанную для неё колоду.
+Если колода не существует, будет создана новая с заданным именем.
 
-### GUID Column
+### Столбец GUID
 
-GUID stands for _Globally Unique Identifier_. When you create notes in Anki, Anki
-assigns each note a unique ID, which can be used for duplicate checking. If you
-export your notes with the GUID included, you can make changes to the notes, and
-as long as you do not modify the GUID field, you'll be able to import the notes back
-in to update the existing notes.
+GUID означает _Globally Unique Identifier_ (глобально уникальный идентификатор).
+Когда вы создаёте заметки в Anki, Anki назначает каждой заметке уникальный ID,
+который можно использовать для проверки дубликатов. Если вы экспортируете
+заметки вместе с GUID, вносите в них изменения и не изменяете поле GUID,
+вы сможете импортировать эти заметки обратно для обновления существующих.
 
-Please note that the GUID is intended to be created by Anki. If you are creating
-your own IDs, such as `MYNOTE0001`, then it's recommended that you place the IDs
-in the first field, instead of assigning them to Anki's internal GUID. When importing,
-Anki is able to use either the first field or the GUID for duplicate checking, so you do not
-need to make IDs a GUID in order to be able to update your notes.
+Обратите внимание: GUID предназначен для генерации самим Anki.
+Если вы создаёте свои идентификаторы, например `MYNOTE0001`, рекомендуется
+помещать их в первое поле, а не записывать во внутренний GUID Anki.
+При импорте Anki может использовать для проверки дубликатов
+либо первое поле, либо GUID, поэтому не нужно делать ID именно GUID,
+чтобы иметь возможность обновлять заметки.
 
-One other thing to note is that the duplicate option will not work for rows that have a
-non-empty GUID. If a GUID is provided, and already exists in the collection, a duplicate will
-not be created.
+Ещё один момент: опция дубликатов не работает для строк,
+у которых GUID не пустой. Если GUID указан и уже существует в коллекции,
+дубликат создан не будет.

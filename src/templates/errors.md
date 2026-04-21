@@ -1,53 +1,67 @@
-# Checks and Errors
+# Проверки и ошибки
 
 <!-- toc -->
 
-When you save changes to a note type or export a deck, Anki 2.1.45+ checks
-for some common errors. These errors will cause issues later on when anyone studies
-the affected cards, so Anki won't let you proceed before you have fixed them.
+Когда вы сохраняете изменения типа заметки или экспортируете колоду,
+Anki 2.1.45+ проверяет ряд распространённых ошибок.
+Эти ошибки позже вызывают проблемы при обучении по затронутым карточкам,
+поэтому Anki не позволит продолжить,
+пока вы их не исправите.
 
-## Basics
+## Базовые сведения
 
-Please see [Key Concepts](../getting-started.md#key-concepts) before reading further.
+Перед чтением этого раздела см. [ключевые концепции](../getting-started.md#key-concepts).
 
-Most of the errors below will require you to modify your note type/card template. To do so:
+Большинство ошибок ниже потребует изменить ваш тип заметки/шаблон карточки.
+Для этого:
 
-- Open the Browse screen, and look at the items on the left.
-- Locate the note type mentioned in error message. You can use the search bar at the top left
-  if necessary.
-- Click on the note type, to show its cards/notes on the right.
-- Click the Cards... button at the top of the editing area to open the [templates screen](./intro.md#the-templates-screen).
+- Откройте экран браузера и посмотрите элементы слева.
+- Найдите тип заметки, указанный в сообщении об ошибке.
+  При необходимости используйте строку поиска вверху слева.
+- Нажмите на тип заметки, чтобы справа показать его карточки/заметки.
+- Нажмите кнопку Cards... в верхней части области редактирования,
+  чтобы открыть [экран шаблонов](./intro.md#the-templates-screen).
 
-## Specific Issues
+## Конкретные проблемы
 
-### Template Syntax Error
+### Ошибка синтаксиса шаблона
 
-This kind of error indicates an incorrect usage of the [field replacement](./fields.md)
-syntax.
+Такой тип ошибки указывает на неправильное использование синтаксиса
+[подстановки полей](./fields.md).
 
-You can correct mistakes on the template by opening the card templates screen:
+Ошибки в шаблоне можно исправить,
+открыв экран шаблонов карточек:
 
-- On the computer version, edit a problem card, and then click on the Cards... button
-- On AnkiMobile, while viewing a problem card in the study screen, tap the cog/gear, then Card Template.
+- В компьютерной версии: откройте проблемную карточку для редактирования,
+  затем нажмите кнопку Cards...
+- В AnkiMobile: при просмотре проблемной карточки в режиме обучения
+  нажмите шестерёнку, затем Card Template.
 
-When you correct a mistake, it will update all cards of that type - you do not need to make the same change for every card that uses the template.
+Когда вы исправите ошибку,
+изменение применится ко всем карточкам этого типа —
+не нужно повторять одно и то же для каждой карточки,
+использующей шаблон.
 
-What needs changing will depend on the message you are getting.
+Что именно менять, зависит от сообщения,
+которое вы получаете.
 
 **Found '{{Field}}', but there is no field called 'Field'**
 
-This indicates your template includes the name of a field that doesn't exist. To fix the problem, locate the
-`{{Field}}` inside the card template, and remove it.
+Это означает, что в шаблоне указано имя поля,
+которого не существует.
+Чтобы исправить проблему, найдите `{{Field}}`
+в шаблоне карточки и удалите его.
 
 **Missing }} in {{Field**
 
-This message is shown when {{ is found in the template without a matching }}. For example, if you have
+Это сообщение появляется, когда в шаблоне найдено `{{`
+без соответствующего `}}`. Например, если у вас:
 
 ```
 {{Field
 ```
 
-then this needs to be changed to
+это нужно изменить на:
 
 ```
 {{Field}}
@@ -55,11 +69,15 @@ then this needs to be changed to
 
 **Missing {{/Field}}**
 
-This means Anki found `{{#Field}}` or `{{^Field}}` in your card template, without a matching `{{/Field}}`. Removing `{{#Field}}` or `{{^Field}}` from the template will fix the error.
+Это означает, что Anki нашёл `{{#Field}}` или `{{^Field}}`
+в шаблоне карточки, но не нашёл соответствующего `{{/Field}}`.
+Удаление `{{#Field}}` или `{{^Field}}` из шаблона исправит ошибку.
 
 **Found {{/One}}, but expected {{/Two}}**
 
-Conditional replacements need to be closed in the same order they are opened. For example, the following template is incorrect:
+Условные подстановки должны закрываться
+в том же порядке, в котором открывались.
+Например, следующий шаблон неверен:
 
 ```
 {{#One}}
@@ -69,7 +87,7 @@ Conditional replacements need to be closed in the same order they are opened. Fo
 {{/Two}}
 ```
 
-To fix the problem, the template should be changed like so:
+Чтобы исправить проблему, шаблон должен быть таким:
 
 ```
 {{#One}}
@@ -81,87 +99,122 @@ To fix the problem, the template should be changed like so:
 
 **Found {{/Field}}, but missing '{{#Field}}' or '{{^Field}}'**
 
-Closing tags must be matched by opening tags. For example, the following is invalid, because there is no `{{#Two}}` or `{{^Two}}` at the start:
+Закрывающие теги должны соответствовать открывающим.
+Например, следующий шаблон неверен,
+так как в начале нет `{{#Two}}` или `{{^Two}}`:
 
 ```
   {{Field}}
 {{/Two}}
 ```
 
-It can be fixed by removing the closing tag:
+Исправляется удалением закрывающего тега:
 
 ```
 {{Field}}
 ```
 
-### Identical Front Sides
+### Идентичные лицевые стороны
 
-You have Anki configured to create two identical questions for each input. This can
-happen if you add a new card type without making any adjustments to it. Identical
-cards double your workload, and make Anki's scheduling less effective.
+У вас настроено создание двух одинаковых вопросов
+для каждого ввода. Такое может случиться,
+если вы добавили новый тип карточки и не внесли в него изменения.
+Идентичные карточки удваивают нагрузку
+и снижают эффективность планирования в Anki.
 
-To fix this, open the [templates screen](./intro.md#the-templates-screen), and
-select one of the duplicates at the top. Then use the button on the top right to
-remove the selected card type. This will delete all the duplicate cards/notes that
-were using the card type as well.
+Чтобы исправить это, откройте [экран шаблонов](./intro.md#the-templates-screen)
+и выберите один из дубликатов вверху.
+Затем используйте кнопку в правом верхнем углу,
+чтобы удалить выбранный тип карточки.
+Это также удалит все дублирующиеся карточки/заметки,
+которые использовали этот тип карточки.
 
-### Front of Card is Blank
+### Лицевая сторона карточки пустая
 
 <div id="no-field-replacement-on-front-side" />
 
-Anki displays cards by combining the fields you've entered with a
-template that says which fields should appear on the front and back of your cards. If you receive a
-message that a card has a blank front, it means either none of the fields included on your front template have any text in them, or you have fields that have text,
-but none are included on the front template.
-You can fix this problem by editing the card on the computer version, clicking on **Cards...**,
-and checking to make sure at least one field with some text on it is included on the front template.
-You can add extra fields with the Add Field button.
+Anki отображает карточки, объединяя введённые вами поля
+с шаблоном, который определяет,
+какие поля должны появляться на лицевой и оборотной стороне.
+Если вы получаете сообщение о пустой лицевой стороне,
+это значит, что либо ни одно поле из лицевого шаблона
+не содержит текста,
+либо поля с текстом есть,
+но ни одно из них не включено в лицевой шаблон.
+Исправить это можно, отредактировав карточку в desktop-версии,
+нажав **Cards...**,
+и убедившись, что в лицевой шаблон включено
+хотя бы одно поле с текстом.
+Дополнительные поля можно добавить кнопкой Add Field.
 
-If you are using the Cloze note type,
-please make sure you've included one or more cloze deletions in the Text field, e.g. {{c1::some cloze-deleted text}}.
+Если вы используете тип заметки Cloze,
+убедитесь, что в поле Text есть одно или несколько cloze-удалений,
+например `{{c1::some cloze-deleted text}}`.
 
-If you're using the type-in-the-answer functionality, please make sure you've included another field on the front side as well. 
+Если вы используете функцию ввода ответа с клавиатуры,
+убедитесь, что на лицевой стороне также есть ещё одно поле.
 
-### No Cloze Filter on Cloze Note Type
+### Нет фильтра Cloze у типа заметки Cloze
 <div id="no-cloze-filter-on-cloze-notetype" />
 
-A Cloze note type's front and back templates should have a [cloze](../editing.md#cloze-deletion)
-filter. If one is missing, you will need to add it back so that Anki can create cloze cards
-correctly.
+Лицевой и оборотный шаблоны типа заметки Cloze
+должны содержать фильтр [cloze](../editing.md#cloze-deletion).
+Если его нет, нужно вернуть его,
+чтобы Anki мог корректно создавать cloze-карточки.
 
-#### Single empty cards
+#### Одиночные пустые карточки
 
-When making clozes, each cloze number is turned into a separate card. For example, the following will create three cards:
+При создании cloze каждое число cloze
+превращается в отдельную карточку.
+Например, следующее создаст три карточки:
 
 ```
 {{c1::This}} is a {{c2::sample}} {{c3::sentence}}.
 ```
 
-If you later edit the text, and either remove or change a cloze number, the previously created card may become blank. For example:
+Если позже отредактировать текст
+и удалить или изменить номер cloze,
+ранее созданная карточка может стать пустой.
+Например:
 
 ```
 {{c1::This}} is a {{c2::sample}}
 ```
 
-and
+и
 
 ```
 {{c1::This}} is a {{c2::sample}} {{c1::sentence}}.
 ```
 
-are both changes that would make card 3 blank. When you view card 3, you'll see a message indicating that the card is blank, and can be cleaned up with the Empty Cards function. You can access that function via the Tools menu of the computer version's main window, and use it to remove blank cards. Please check the reported empty cards first, and if in doubt, create a backup with the File>Export menu item before proceeding.
+оба изменения сделают карточку 3 пустой.
+При просмотре карточки 3 вы увидите сообщение,
+что карточка пустая,
+и её можно удалить функцией Empty Cards.
+Эта функция доступна через меню Инструменты
+в главном окне desktop-версии,
+и с её помощью можно удалить пустые карточки.
+Сначала проверьте найденные пустые карточки,
+и при сомнениях создайте резервную копию
+через Файл>Экспорт перед продолжением.
 
-#### All cloze cards empty
+#### Все cloze-карточки пустые
 
-If you accidentally modify your card template, it may prevent any cloze deletions from appearing. If that has happened, please edit one such problem card, and note down the name of the first field - it is usually called "Text". Then, please:
+Если вы случайно изменили шаблон карточки,
+это может привести к тому,
+что cloze-удаления вообще перестанут отображаться.
+Если это произошло, отредактируйте одну проблемную карточку
+и запишите имя первого поля — обычно это `Text`.
+Затем:
 
-- Click on the Cards... button
-- Replace the front text with
+- Нажмите кнопку Cards...
+- Замените текст лицевой стороны на
 
   ```
   {{cloze:Text}}
   ```
 
-- Replace the back text with the same.
+- Замените текст оборотной стороны на тот же.
 
-If your field was called something other than Text, replace Text with the name of the field.
+Если ваше поле называлось не Text,
+замените Text на имя вашего поля.
