@@ -267,175 +267,217 @@ _relearning steps_, прежде чем снова станет карточко
   order is fastest in large collections, and allows you to prioritize subdecks that
   are closer to the top.
 
-  Decks/subdecks are always ordered alphabetically, so you can give them a numeric prefix like
-  001 to control the order they appear in. You can also use `_` and `~` as a
-  prefix to place items at the top or bottom.
+  Колоды/подколоды всегда сортируются по алфавиту, поэтому можно добавить
+  числовой префикс, например `001`, чтобы управлять порядком.
+  Также можно использовать префиксы `_` и `~`, чтобы разместить элементы
+  вверху или внизу.
 
-  Although position order depends initially on the insertion order option, you can manually
-  [reposition](./browsing.md#cards) cards in different
-  ways.
+  Хотя порядок позиций изначально зависит от параметра insertion order,
+  вы можете вручную [reposition](./browsing.md#cards) карточки разными способами.
 
-- **Deck, then random notes**: Gathers cards from each subdeck in order, starting from the top.
-  Cards from each subdeck are gathered from randomly selected notes.
+- **Deck, then random notes**: собирает карточки из каждой подколоды по порядку,
+  начиная сверху. Карточки каждой подколоды берутся из случайно выбранных заметок.
 
-- **Ascending position**: Gathers cards by ascending position (due #), which is typically the oldest-added first.
+- **Ascending position**: собирает карточки по возрастанию позиции (due #),
+  обычно от самых старых добавленных к более новым.
 
-- **Descending position**: Gathers cards by descending position (due #), which is typically the latest-added first.
+- **Descending position**: собирает карточки по убыванию позиции (due #),
+  обычно от самых недавно добавленных.
 
-- **Random notes**: Gathers cards from randomly selected notes.
+- **Random notes**: собирает карточки из случайно выбранных заметок.
 
-- **Random cards**: Gathers cards in a random order.
+- **Random cards**: собирает карточки в случайном порядке.
 
 ### New Card Sort Order
 
-Controls how the new cards are sorted after they have been gathered. The options are:
+Управляет сортировкой новых карточек после их сбора. Варианты:
 
-- **Card type, then order gathered**: Shows cards in order of card type number. Cards of each card type number are shown in the order they were gathered. If you have sibling burying disabled, this ensures all front→back cards are seen before any back→front cards.
-  This order is useful if you don't want sibling cards to appear too close to each other.
+- **Card type, then order gathered**: показывает карточки в порядке номера типа карточки.
+  Карточки каждого типа показываются в порядке сбора. Если sibling burying выключен,
+  этот вариант гарантирует, что все карточки front→back будут показаны до back→front.
+  Такой порядок полезен, если вы не хотите видеть sibling-карточки слишком близко.
 
-- **Order gathered**: Shows cards exactly as they were gathered. If sibling burying is disabled, this typically results in all sibling cards appearing one after the other.
+- **Order gathered**: показывает карточки ровно в порядке их сбора.
+  Если sibling burying выключен, обычно sibling-карточки идут подряд.
 
-- **Card type, then random**: Shows cards in order of card type number, but shuffles the cards of each card type number.
-  This order is useful if you don't want sibling cards to appear too close to each other, but still want the cards to appear in a random order.
+- **Card type, then random**: показывает карточки по номеру типа, но перемешивает
+  карточки внутри каждого типа. Полезно, если вы хотите разнести sibling-карточки,
+  но при этом сохранить случайность.
 
-- **Random note, then card type**: Picks notes at random, then shows all of their siblings in order.
+- **Random note, then card type**: случайно выбирает заметки, затем показывает
+  всех их sibling-карточек по порядку.
 
-- **Random**: Fully shuffles the gathered cards.
+- **Random**: полностью перемешивает собранные карточки.
 
 ### New/Review Order
 
-Whether new cards should be mixed in with review cards, shown before them, or shown after them.
+Определяет, должны ли новые карточки смешиваться с повторениями, показываться
+до них или после них.
 
 ### Interday Learning/Review Order
 
-Whether (re)learning cards that cross a day boundary should be mixed in with review cards,
-shown before them, or shown after them. Because learning cards tend to be harder than
-review cards, some users prefer to see them at the end (getting the easy stuff done
-first), or at the start (allowing more time to review forgotten ones).
+Определяет, как показывать (пере)обучающие карточки, которые пересекли
+границу дня: смешивать с повторениями, показывать до них или после.
+Так как обучающие карточки часто сложнее карточек повторения, некоторым
+пользователям удобнее видеть их в конце (сначала «лёгкие» карточки),
+а другим — в начале (чтобы осталось больше времени на сложные).
 
 ### Review Sort Order
 
-Controls how the review cards are sorted. The options are:
+Управляет сортировкой карточек повторения. Варианты:
 
-- **Due date, then random**: The default order prioritizes cards that have been waiting
-  longer, and it's the recommended order when you are up to date, or when you only have a small
-  backlog. If you have taken an extended break or have fallen behind in your reviews,
-  you may want to consider changing the sort order temporarily.
-- **Due date, then deck**: This also prioritizes cards that have been waiting
-  longer, and then shows review cards for each subdeck in turn.
-- **Deck, then due date**: Shows review cards for each
-  subdeck in turn. This order is generally not recommended, as having material appear
-  consistently in the same order makes it easier to guess the answer based on context,
-  and leads to weaker memories.
-- **Ascending intervals**: Shows cards with shorter intervals first.
-- **Descending intervals**: Shows cards with longer intervals first.
-- **Ascending ease**: Shows more difficult cards first.
-- **Descending ease**: Shows less difficult cards first.
-- **Relative overdueness**: Shows cards that you're more likely to have forgotten first. This is generally recommended if
-  you have a large backlog that may take some time to get through, and you want to
-  reduce the chances of forgetting more cards.
+- **Due date, then random**: порядок по умолчанию, приоритезирует карточки,
+  которые ждут дольше. Рекомендуется, когда вы почти без долга или долг небольшой.
+  После длительного перерыва можно временно выбрать другой порядок.
+- **Due date, then deck**: также приоритезирует «долго ждущие» карточки,
+  затем показывает повторения по подколодам по очереди.
+- **Deck, then due date**: показывает повторения по подколодам по очереди.
+  Обычно не рекомендуется: при постоянном порядке проще угадывать ответы
+  по контексту, что ухудшает долговременную память.
+- **Ascending intervals**: сначала карточки с меньшими интервалами.
+- **Descending intervals**: сначала карточки с большими интервалами.
+- **Ascending ease**: сначала более трудные карточки.
+- **Descending ease**: сначала более лёгкие карточки.
+- **Relative overdueness**: сначала карточки, которые вы с большей вероятностью
+  забыли. Обычно рекомендуется при большом бэклоге, который требует времени,
+  чтобы снизить риск дальнейшего забывания.
 
-  When using the SM-2 algorithm, overdueness is determined by comparing how
-  overdue cards are, and how long their interval is. For example, a card with a
-  current interval of 5 days that is overdue by 2 days, will display before a card
-  with a current interval of 10 days that is overdue by 3 days.
+  В алгоритме SM-2 overdueness определяется сравнением просрочки карточки
+  и длины её интервала. Например, карточка с текущим интервалом 5 дней
+  и просрочкой 2 дня будет показана раньше карточки с интервалом 10 дней
+  и просрочкой 3 дня.
 
-  When FSRS is enabled, this sort order is removed; the FSRS equivalent is **Ascending retrievability**,
-  which is calculated based on each card's retrievability (probability of recall) and the desired retention in the preset.
+  Когда включён FSRS, этот вариант сортировки исчезает; эквивалент в FSRS —
+  **Ascending retrievability**, рассчитываемый по retrievability каждой карточки
+  (вероятности вспоминания) и desired retention в пресете.
 
 ## Burying
 
-When Anki gathers cards, it first gathers intraday learning cards, then interday learning cards, then review cards, and finally new cards. This affects how burying works:
+При сборе карточек Anki сначала берёт intraday learning cards, затем interday
+learning cards, потом review cards и в конце new cards. Это влияет на burying:
 
-- If you have all burying options enabled, the sibling that comes earliest in that list will be shown. For example, a review card will be shown in preference to a new card.
-- Siblings later in the list can not bury earlier card types. For example, if you disable burying of new cards, and study a new card, it will not bury any interday learning or review cards, and you may see both a review sibling and new sibling in the same session.
+- Если включены все варианты burying, показывается sibling-карточка, которая
+  раньше в этом списке. Например, review-карточка будет показана раньше новой.
+- Sibling-карточки, которые стоят позже в списке, не могут «закопать» более
+  ранние типы карточек. Например, если вы отключили burying новых карточек и
+  изучаете новую карточку, она не закопает interday learning/review карточки,
+  и в одной сессии вы можете увидеть и review-sibling, и new-sibling.
 
-The options are:
+Варианты:
 
-- **Bury new siblings**: Whether other new cards of the same note (e.g. reverse cards, adjacent cloze deletions) will be delayed until the next day.
-- **Bury review siblings**: Whether other review cards of the same note will be delayed until the next day.
-- **Bury interday learning siblings**: Whether other learning cards of the same note that crossed a day boundary will be delayed until the next day.
+- **Bury new siblings**: откладывать ли другие новые карточки той же заметки
+  (например, обратные карточки, соседние cloze) до следующего дня.
+- **Bury review siblings**: откладывать ли другие review-карточки той же заметки
+  до следующего дня.
+- **Bury interday learning siblings**: откладывать ли до следующего дня другие
+  обучающие карточки той же заметки, пересёкшие границу дня.
 
-For more info about burying cards, please see [this section](./studying.md#siblings-and-burying) of the manual.
+Подробнее о burying см. [этот раздел](./studying.md#siblings-and-burying).
 
-## Audio
+## Аудио
 
-- **Don't play audio automatically**: By default, Anki automatically plays any audio you have on
-  cards. If you turn on this option Anki will not play audio until you press the replay audio key, <kbd>R</kbd> or <kbd>F5</kbd>.
+- **Don't play audio automatically**: по умолчанию Anki автоматически
+  воспроизводит любое аудио на карточках. Если включить эту опцию, звук
+  не будет воспроизводиться, пока вы не нажмёте повтор аудио
+  (<kbd>R</kbd> или <kbd>F5</kbd>).
 
-- **Skip question when replaying answer**: Controls whether audio from
-  the question side is played when you use replay action on the answer side. Note that, Anki [does not automatically play](./templates/fields.md#special-fields) audio from the `{{FrontSide}}` field. This option does not influence the behaviour of automatic play.
+- **Skip question when replaying answer**: управляет, проигрывать ли звук
+  с вопроса при действии replay на стороне ответа. Обратите внимание: Anki
+  [не воспроизводит автоматически](./templates/fields.md#special-fields)
+  аудио из поля `{{FrontSide}}`. Эта опция не влияет на автоматическое
+  воспроизведение.
 
-## Timers
+## Таймеры
 
 <a id="timer"></a>
 
-Anki monitors how long it takes you to answer each card, so that it
-can show you how long was spent studying each day. The time taken does
-not influence scheduling.
+Anki отслеживает, сколько времени занимает ответ на каждую карточку, чтобы
+показывать общее время обучения за день. Это время не влияет на расписание.
 
-### Internal Timer
+### Внутренний таймер
 
-- Maximum answer seconds: The default limit is 60 seconds. If you take
-  longer than that, Anki assumes you have walked away from your computer
-  or have been distracted, and caps the recorded time at 60 seconds, so
-  that you don’t end up with inaccurate statistics.
-- This internal timer runs from when the question is shown until you press a button to grade your answer. If you consistently
-  spend longer than 60 seconds on a card,
-  you may want to consider either raising
-  this limit, or even better, making your cards simpler.
+- Maximum answer seconds: лимит по умолчанию — 60 секунд. Если вы тратите
+  больше, Anki предполагает, что вы отвлеклись или отошли от компьютера,
+  и ограничивает записанное время 60 секундами, чтобы статистика не искажалась.
+- Внутренний таймер идёт с момента показа вопроса до нажатия кнопки оценки.
+  Если вы стабильно тратите на карточку больше 60 секунд, стоит либо
+  увеличить лимит, либо (лучше) упростить карточки.
 
-### On-screen Timer
+### Таймер на экране
 
-- Show on-screen timer: On the Study screen, show a timer that counts the time
-  you're taking to study each card. (This timer will stop when it reaches the Maximum answer seconds set for the internal timer.)
-- Stop on-screen timer on answer: Whether the on-screen timer should continue running from when you show
-  the answer until you press a button to grade your answer. This option does not impact the time that is recorded for your statistics.
+- Show on-screen timer: показывать в окне Study таймер времени на карточку.
+  (Этот таймер остановится на значении Maximum answer seconds внутреннего таймера.)
+- Stop on-screen timer on answer: продолжать ли экранный таймер после показа
+  ответа до нажатия кнопки оценки. На записываемую статистику эта опция
+  не влияет.
 
 ## Auto Advance
 
-Requires Anki 23.12 or later. Auto Advance allows you to automatically take some actions after a certain amount of time has passed. To use it, you must first set a non-zero
-time in **Seconds to show question for** and/or **Seconds to show answer for**. Then, in the
-study screen, use the Auto Advance action from the **More** button to start advancing.
+Требуется Anki 23.12+. Auto Advance позволяет автоматически выполнять
+действия после заданного времени. Чтобы использовать функцию, сначала задайте
+ненулевое время в **Seconds to show question for** и/или
+**Seconds to show answer for**. Затем в окне Study запустите Auto Advance
+через кнопку **More**.
 
 ## Easy Days
 
-If you want to spend less time on Anki on some days of the week, such as Sundays, this feature can help you do that.
-After the interval is calculated, it will be adjusted by a small amount to change the due date.
-Note that setting all days to "Reduced" or "Minimum" will result in the same workload as setting all days to "Normal".
-This feature works with both FSRS and the legacy SM-2 algorithm.
-Changing your Easy Days configuration doesn't retroactively change existing intervals and will only affect future intervals. Simply put, you will not see immediate changes in the number of due cards.
+Если вы хотите тратить меньше времени на Anki в отдельные дни недели
+(например, по воскресеньям), эта функция может помочь.
+После расчёта интервал будет слегка скорректирован для сдвига due date.
+Если установить все дни в "Reduced" или "Minimum", нагрузка будет такой же,
+как при "Normal" для всех дней. Функция работает и с FSRS, и с SM-2.
+Изменение Easy Days не пересчитывает существующие интервалы задним числом —
+влияет только на будущие интервалы, поэтому мгновенных изменений числа
+просроченных карточек не будет.
 
 ## FSRS
 
-The [Free Spaced Repetition Scheduler (FSRS)](https://github.com/open-spaced-repetition/fsrs4anki/wiki/ABC-of-FSRS) is an alternative to Anki's legacy
-SuperMemo 2 (SM-2) algorithm. By more accurately determining how much information you are likely
-to forget, it can help you remember more material in the same amount of time.
+[Free Spaced Repetition Scheduler (FSRS)](https://github.com/open-spaced-repetition/fsrs4anki/wiki/ABC-of-FSRS)
+— это альтернатива устаревшему алгоритму Anki SuperMemo 2 (SM-2).
+Более точно оценивая, сколько информации вы, вероятно, забудете, FSRS помогает
+запоминать больше материала за то же время.
 
-When you turn on FSRS, some new options
-become available, and SM-2 specific options, such as **Graduating interval**,
-**Easy bonus**, etc. are hidden. This option is shared by all presets.
+При включении FSRS появляются новые параметры, а SM-2-специфичные опции
+(например, **Graduating interval**, **Easy bonus** и др.) скрываются.
+Этот переключатель общий для всех пресетов.
 
-**Before Enabling**
+**Перед включением**
 
-- Please ensure all of your Anki clients support FSRS. Anki 23.10, AnkiMobile 23.10,
-  and AnkiWeb all support it. AnkiDroid supports it in 2.17+. If
-  one of your clients doesn't support it, things will not work correctly.
-- If you previously used the "custom scheduling" version of FSRS, please make
-  sure you clear out the custom scheduling section before enabling FSRS.
+- Убедитесь, что все ваши клиенты Anki поддерживают FSRS.
+  Anki 23.10, AnkiMobile 23.10 и AnkiWeb поддерживают его, AnkiDroid — с 2.17+.
+  Если хотя бы один клиент не поддерживает FSRS, работа будет некорректной.
+- Если вы ранее использовали версию FSRS с "custom scheduling", перед
+  включением FSRS очистите раздел custom scheduling.
 
-### A Short Guide
+### Краткая инструкция
 
-- Enable FSRS under the "FSRS" section, at the bottom of the deck options page. FSRS can only be enabled globally; you cannot enable it for some presets and disable it for others.
-- Ensure that all your learning and re-learning steps are shorter than 1d and can be completed on the same day. 23h is not recommended even though it's less than one day because you won't be able to finish this step on the same day as your first review. Steps such as 10m or 30m are good.
-- Click the "Optimize" button under the "FSRS parameters" field. If you see a message that says "The FSRS parameters currently appear to be optimal", that's fine.
-- Choose a value of desired retention: the proportion of cards recalled successfully when they are due. **This is the most important setting in FSRS. Higher retention leads to shorter intervals and more reviews per day.** The default is 90%, which offers a good balance of retention and workload. Above 90% the workload increases very quickly, and above 97% the workload can be overwhelming. You can use ["Compute minimum recommended retention"](#compute-minimum-recommended-retention) to help you choose the value of desired retention.
+- Включите FSRS в разделе "FSRS" внизу страницы deck options.
+  FSRS включается только глобально: нельзя включить его для одних пресетов
+  и выключить для других.
+- Убедитесь, что все learning/re-learning steps короче 1 дня и могут быть
+  завершены в тот же день. `23h` не рекомендуется, хотя и меньше суток:
+  вы не закончите этот шаг в тот же день, что и первое повторение.
+  Хорошие примеры: `10m`, `30m`.
+- Нажмите "Optimize" под полем "FSRS parameters".
+  Сообщение "The FSRS parameters currently appear to be optimal" — это нормально.
+- Выберите desired retention — долю карточек, успешно вспоминаемых к сроку.
+  **Это самая важная настройка FSRS. Более высокий retention даёт более короткие
+  интервалы и больше повторений в день.** Значение по умолчанию — 90%,
+  обычно это хороший баланс. Выше 90% нагрузка растёт очень быстро,
+  а выше 97% может стать чрезмерной. Для выбора можно использовать
+  ["Compute minimum recommended retention"](#compute-minimum-recommended-retention).
 
-Parameters and desired retention are preset-specific, so you can create multiple presets with different settings.
+Параметры и desired retention задаются на уровне пресета, поэтому можно
+создать несколько пресетов с разными настройками.
 
-FSRS can adapt to almost any habit, except for one: pressing "Hard" instead of "Again" when you forget the information. When you press "Hard", FSRS assumes you have recalled the information correctly (though with hesitation and a lot of mental effort). If you press "Hard" when you have failed to recall the information, all intervals will be unreasonably high. So, if you have this habit, please change it and use "Again" when you forget the information.
+FSRS адаптируется почти к любым привычкам, кроме одной: нажимать "Hard"
+вместо "Again", когда вы не вспомнили материал. При "Hard" FSRS считает,
+что материал вспомнен корректно (хоть и с трудом). Если ставить "Hard"
+при забывании, интервалы станут неоправданно большими. Поэтому при забывании
+используйте "Again".
 
-Regarding add-on compatibility, as a general rule of thumb, if an add-on affects intervals and scheduling in some way, it shouldn't be used with FSRS.
+По совместимости дополнений общее правило такое: если дополнение влияет
+на интервалы или планирование, с FSRS его лучше не использовать.
 
 ### Desired Retention
 
