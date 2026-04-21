@@ -1,83 +1,92 @@
-# Backups
+# Резервные копии
 
 <!-- toc -->
 
-## Automatic backups
+## Автоматические резервные копии
 
-Anki will create automatic backups of your card data. These include the text
-on your cards and your scheduling information, but do not include sounds or
-image files.
+Anki создаёт автоматические резервные копии данных карточек.
+Они включают текст на карточках и информацию о расписании,
+но не включают звуковые файлы и изображения.
 
-Automatic backups can be useful to recover from mistakes, but you should not
-rely solely on them. Because they are stored on your local device, they will not
-protect you if your device breaks or is stolen. We recommend you combine them with
-[manual backups](#manual-colpkg-backups).
+Автоматические резервные копии полезны для восстановления после ошибок,
+но полагаться только на них не стоит. Поскольку они хранятся локально,
+они не защитят вас, если устройство сломается или будет украдено.
+Рекомендуется сочетать их с [ручными резервными копиями](#ручные-резервные-копии-colpkg).
 
-### Restoring
+### Восстановление
 
-To restore from an automatic backup:
+Чтобы восстановиться из автоматической резервной копии:
 
-- Open Anki, and choose Switch Profile from the File menu.
-- Click on the "Open Backup" button.
-- Select the backup you wish to restore from.
+- Откройте Anki и выберите «Сменить профиль» в меню «Файл».
+- Нажмите кнопку «Open Backup».
+- Выберите резервную копию, из которой хотите восстановиться.
 
 ```admonish warning
-When restoring from a backup, any changes made since the backup was created will be lost.
+При восстановлении из резервной копии любые изменения, сделанные после её создания, будут потеряны.
 ```
 
-Anki disables automatic syncing and backups when you restore from a backup. Once you're
-happy that you've restored the correct backup, close and re-open Anki to return to normal.
+После восстановления Anki отключает автоматическую синхронизацию
+и резервное копирование. Когда убедитесь, что восстановили нужную копию,
+закройте и снова откройте Anki, чтобы вернуться к обычному режиму.
 
-### Creating
+### Создание
 
-Backups are created periodically. You can configure the time between backups
-in the [preferences](preferences.md) screen. The default is 30 minutes.
+Резервные копии создаются периодически.
+Интервал между копиями можно настроить на экране
+[настроек](preferences.md). По умолчанию это 30 минут.
 
-Certain operations will trigger a backup, even if the configured time has not
-elapsed yet:
+Некоторые операции запускают создание резервной копии,
+даже если заданный интервал ещё не прошёл:
 
-- A one-way sync download
-- Importing a .colpkg file using File>Import
-- Tools>Check Database
+- Односторонняя загрузка при синхронизации
+- Импорт файла `.colpkg` через Файл>Импорт
+- Инструменты>Проверить базу данных
 
-After backups are two days old, Anki will start removing some of the older ones.
-You can control how many daily, weekly and monthly backups you'd like to keep.
+После двух дней Anki начинает удалять часть старых копий.
+Вы можете настроить, сколько ежедневных, еженедельных
+и ежемесячных копий хранить.
 
-Backups created with 2.1.50 will not be importable into older Anki versions.
+Резервные копии, созданные в 2.1.50,
+не импортируются в более старые версии Anki.
 
-## Manual colpkg backups
+## Ручные резервные копии colpkg
 
-### Restoring
+### Восстановление
 
-You can restore from a manual backup by using File>Import.
+Восстановиться из ручной резервной копии можно через Файл>Импорт.
 
-### Creating
+### Создание
 
-In Anki 2.1.50+, you can use File>Create Backup to trigger an immediate backup. This
-functions like regular automatic backups, and does not include media files.
+В Anki 2.1.50+ можно использовать Файл>Create Backup,
+чтобы сразу создать резервную копию.
+Это работает как обычные автоматические копии и не включает медиафайлы.
 
-To create a backup that includes your sounds and images:
+Чтобы создать резервную копию, включающую звуки и изображения:
 
-- Select Export from the File menu.
-- Ensure "Anki collection package (.colpkg)" is selected.
-- Enable the "include media" option.
+- Выберите Экспорт в меню «Файл».
+- Убедитесь, что выбран «Anki collection package (.colpkg)».
+- Включите опцию «include media».
 
-This will create a .colpkg file that contains all of your cards and any sounds/images they
-use. We recommend you store the file somewhere safe, like a different device, or a cloud-based
-file storage service like Dropbox or Google Drive.
+Это создаст файл `.colpkg`, содержащий все карточки
+и все используемые ими звуки/изображения.
+Рекомендуется хранить файл в безопасном месте,
+например на другом устройстве или в облачном хранилище
+вроде Dropbox или Google Drive.
 
 ## AnkiWeb
 
-[Synchronising](./syncing.md) your collection with AnkiWeb provides some level of protection
-against your device being lost or stolen. If you need to restore your collection from AnkiWeb,
-you can force a one-way sync in the preferences screen, or sync from a new device, and then choose
-"Download".
+[Синхронизация](./syncing.md) коллекции с AnkiWeb даёт некоторый уровень защиты
+от потери или кражи устройства. Если нужно восстановить коллекцию из AnkiWeb,
+можно принудительно выполнить одностороннюю синхронизацию в настройках,
+или синхронизироваться с нового устройства и затем выбрать
+«Download».
 
-## Deletion log
+## Журнал удалений
 
-Anki logs deleted notes to a text file called deleted.txt in your
-profile folder. These notes are in a text format that can be read by
-File&gt;Import, though please note the import feature only supports a
-single note type at one time, so if you have deleted notes from
-different note types, you'll need to split the file into separate files
-for each note type first.
+Anki записывает удалённые заметки в текстовый файл `deleted.txt`
+в папке профиля. Эти заметки имеют текстовый формат,
+который можно импортировать через Файл&gt;Импорт,
+но учтите: импорт поддерживает только один тип заметки за раз,
+поэтому если удалены заметки разных типов,
+сначала нужно разделить файл на отдельные файлы
+для каждого типа заметок.

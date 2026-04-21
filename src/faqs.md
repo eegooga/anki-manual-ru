@@ -1,3 +1,3 @@
-# Frequently Asked Questions
+# Часто задаваемые вопросы
 
-Please see <https://faqs.ankiweb.net>
+Список часто задаваемых вопросов доступен [здесь](https://faqs.ankiweb.net/).

@@ -1,57 +1,55 @@
-# Installing & Upgrading Anki on Windows
+# Установка и обновление Anki в Windows
 
 <!-- toc -->
 
-## Requirements
+## Требования
 
-Recent Anki releases require a computer running the 64 bit version of Windows
-10 or 11.
+Свежие версии Anki требуют компьютер с 64-битной версией Windows 10 или 11.
 
-- The last Anki release that supported Windows 7 and 8.1 was Anki 2.1.49.
-- The last Anki release that supported 32 bit Windows was [Anki 2.1.35-alternate](https://github.com/ankitects/anki/releases/tag/2.1.35).
+- Последний релиз Anki с поддержкой Windows 7 и 8.1 — Anki 2.1.49.
+- Последний релиз Anki с поддержкой 32-битной Windows — [Anki 2.1.35-alternate](https://github.com/ankitects/anki/releases/tag/2.1.35).
 
-If you're on an old machine, you can obtain old releases from the [releases page](https://github.com/ankitects/anki/releases).
+Если у вас старый компьютер, старые релизы можно скачать на [странице релизов](https://github.com/ankitects/anki/releases).
 
-## Installing
+## Установка
 
-To install Anki:
+Чтобы установить Anki:
 
-1. Download Anki from <https://apps.ankiweb.net>.
-2. Save the installer to your desktop or downloads folder.
-3. Double-click on the installer to run it. If you see an error
-   message, please see the [installation issues page](installation-issues.md).
-4. Once Anki is installed, double-click on the new star icon on your
-   desktop to start Anki.
+1. Скачайте Anki с <https://apps.ankiweb.net>.
+2. Сохраните установщик на рабочий стол или в папку загрузок.
+3. Дважды щёлкните по установщику, чтобы запустить его. Если увидите сообщение
+   об ошибке, см. [страницу проблем установки](installation-issues.md).
+4. После установки Anki дважды щёлкните по новому значку-звезде на рабочем
+   столе, чтобы запустить Anki.
 
-## Upgrading
+## Обновление
 
-If upgrading from Anki 2.1.6+, there is no need to uninstall the previous
-version first. All you need to do is close Anki if it is open, and then follow
-the installation steps above. Your cards will be preserved when you upgrade.
+Если вы обновляетесь с Anki 2.1.6+, удалять предыдущую
+версию не требуется. Достаточно закрыть Anki, если он открыт,
+и выполнить шаги установки выше. При обновлении ваши карточки сохранятся.
 
-If upgrading from an Anki version before 2.1.6, or switching from the standard
-to the alternate version or vice versa, we recommend uninstalling the old
-version first, which will remove Anki's program data, but not delete your card
-data.
+Если вы обновляетесь с версии Anki до 2.1.6 или переходите со стандартной
+версии на alternate (или наоборот), рекомендуется сначала удалить старую
+версию: это удалит программные файлы Anki, но не удалит данные карточек.
 
-If you wish to downgrade to a previous version, please make sure you
-[downgrade first](http://changes.ankiweb.net).
+Если вы хотите откатиться на предыдущую версию, убедитесь,
+что сначала выполнили [процедуру отката](http://changes.ankiweb.net).
 
-## Add-on Compatibility
+## Совместимость дополнений
 
-Some add-ons may not always work with the latest Anki release. If you upgrade to
-the latest Anki version and find an add-on you cannot live without stops working,
-you can download older Anki versions from the [releases page](https://github.com/ankitects/anki/releases).
+Некоторые дополнения не всегда работают с последним релизом Anki. Если вы
+обновились до последней версии и обнаружили, что важное для вас дополнение
+перестало работать, можно скачать более старую версию Anki со
+[страницы релизов](https://github.com/ankitects/anki/releases).
 
-## Problems
+## Проблемы
 
-If you encounter any issues when installing or starting Anki, please see the
-following pages:
-- [Installation Issues](installation-issues.md)
-- [Startup Issues](startup-issues.md)
-- [Display Issues](display-issues.md)
-- [Permission Problems](permission-problems.md)
+Если у вас возникают проблемы при установке или запуске Anki, см. следующие страницы:
+- [Проблемы установки](installation-issues.md)
+- [Проблемы запуска](startup-issues.md)
+- [Проблемы отображения](display-issues.md)
+- [Проблемы с правами доступа](permission-problems.md)
 
-If you encounter any interface issues when using Anki, please see the following pages:
-- [Copy and Paste Issues](copy-and-paste.md)
-- [Text Size Issues](text-size.md)
+Если у вас возникают проблемы с интерфейсом при использовании Anki, см. следующие страницы:
+- [Проблемы копирования и вставки](copy-and-paste.md)
+- [Проблемы размера текста](text-size.md)

@@ -1,22 +1,21 @@
-# Packages Distributed by Linux Distributions
+# Пакеты, распространяемые дистрибутивами Linux
 
-We have seen a lot of issues caused by the customized versions of Anki
-distributed by Linux distributions:
+Мы видели много проблем, вызванных модифицированными версиями Anki,
+которые распространяются дистрибутивами Linux:
 
-- Anki depends on third-party libraries like Qt, and Linux distributions often
-  substitute different versions of those libraries, without testing the impact
-  of those changes.
-- Sometimes the version of Anki they distribute is years old, or is an
-  alpha/beta version not intended for stable release. Distributions will often
-  disable the built-in update check as well, to prevent you from being notified
-  of newer versions.
+- Anki зависит от сторонних библиотек, таких как Qt, а дистрибутивы Linux часто
+  подставляют другие версии этих библиотек, не тестируя влияние таких изменений.
+- Иногда версия Anki, которую они распространяют, устарела на годы или является
+  alpha/beta-версией, не предназначенной для стабильного релиза. Дистрибутивы также
+  часто отключают встроенную проверку обновлений, чтобы вы не получали уведомления
+  о новых версиях.
 
-Compiled builds of Anki are available on <https://apps.ankiweb.net>. Most of the
-necessary libraries are included, and Anki has been tested to work with these
-library versions. If you're experiencing issues with your distro's version, the
-first thing you should try is switching to the latest packaged version we
-provide.
+Скомпилированные сборки Anki доступны на <https://apps.ankiweb.net>. Большинство
+необходимых библиотек уже включено, и Anki протестирован для работы с этими
+версиями библиотек. Если у вас возникают проблемы с версией из вашего дистрибутива,
+первое, что стоит попробовать, — перейти на последнюю пакетную версию,
+которую предоставляем мы.
 
-You are welcome to continue using your distro's version of Anki if you prefer,
-but if you run into any issues, you will need to report them to your
-distribution's package maintainers.
+Вы можете продолжать использовать версию Anki из вашего дистрибутива,
+если предпочитаете именно её, но если возникнут проблемы,
+вам нужно будет сообщать о них сопровождающим пакета вашего дистрибутива.
