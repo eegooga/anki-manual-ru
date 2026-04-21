@@ -2,7 +2,7 @@
 
 ## Официальная документация
 
-- [AnkiWeb Manual](https://docs.ankiweb.net/intro.html) (En)
+- [Руководство AnkiWeb](https://docs.ankiweb.net/intro.html) (En)
 
 ## Мобильные клиенты
 
