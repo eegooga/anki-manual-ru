@@ -1,240 +1,265 @@
-# Deck Options
+# Параметры колоды
 
 <!-- toc -->
 
-Deck options primarily control the way Anki schedules cards. It is recommended
-that you spend a few weeks with the defaults to get a feel for how Anki works
-before you start adjusting the options. Please make sure you understand the options
-before changing them, as mistakes can reduce Anki's effectiveness.
+Параметры колоды в основном управляют тем, как Anki планирует карточки.
+Перед изменением настроек рекомендуется несколько недель поработать со
+значениями по умолчанию, чтобы почувствовать логику работы Anki.
+Перед изменениями важно понимать, что делает каждый параметр, так как ошибки
+могут снизить эффективность обучения.
 
-On your computer, do any of the following to open deck options:
+Чтобы открыть параметры колоды на компьютере, используйте любой из способов:
 
-- Click the gear icon on the Decks screen.
-- Select a deck on the Decks screen, and then click **Options**
-  at the bottom of the screen.
-- Click **More > Options** while in review mode.
-- Press <kbd>O</kbd> while in review mode.
+- Нажмите на иконку шестерёнки на экране Decks.
+- Выберите колоду на экране Decks и нажмите **Options** внизу экрана.
+- В режиме повторения нажмите **More > Options**.
+- В режиме повторения нажмите <kbd>O</kbd>.
 
-Here are some community posts about deck options that have been contributed in the past:
+Полезные материалы сообщества о параметрах колоды:
 
 - [Deck Options Explained](https://forums.ankiweb.net/t/deck-options-explained/213)
 - [Deck Options in a Mental Map](https://forums.ankiweb.net/t/deck-options-in-a-mental-map/15757)
 
-## Presets
+## Пресеты
 
-Anki allows you to share options between different decks, to make
-it easier to update options in many decks at once. To do this, options are
-grouped into _presets_. If you change an option in a preset, the change is applied to all decks that use the same preset. All newly created decks use the "Default" preset.
+Anki позволяет использовать общие настройки для разных колод, чтобы проще
+массово обновлять параметры. Для этого параметры объединяются в _пресеты_.
+Если вы меняете параметр в пресете, изменение применяется ко всем колодам,
+которые используют этот пресет. Все новые колоды получают пресет "Default".
 
-To change the options in one deck but not other decks, click the
-arrow icon in the top right of the Deck Options window. You can do the following:
+Чтобы изменить настройки только для одной колоды, нажмите иконку стрелки
+в правом верхнем углу окна Deck Options. Доступны действия:
 
-- **Save**: Save all modifications you've made in deck options.
-- **Add Preset**: Add a new preset for this deck, with the default options.
-- **Clone**: Clone your current preset, which is useful if you
-  want to modify some of the options but keep the rest as they are.
-- **Rename**: Change the name of the current preset.
-- **Delete**: Delete the current preset. This will make your next sync
-  a [one-way sync](./syncing.md#conflicts).
-- **Save to All Subdecks**: Like **Save**, but also assigns the selected preset to all
-  subdecks of the currently selected deck.
+- **Save**: сохранить все изменения параметров колоды.
+- **Add Preset**: добавить новый пресет для этой колоды с настройками по умолчанию.
+- **Clone**: клонировать текущий пресет — полезно, если нужно изменить часть
+  параметров, оставив остальные без изменений.
+- **Rename**: переименовать текущий пресет.
+- **Delete**: удалить текущий пресет. После этого следующая синхронизация
+  будет [односторонней](./syncing.md#conflicts).
+- **Save to All Subdecks**: как **Save**, но дополнительно назначает выбранный
+  пресет всем подколодам текущей колоды.
 
-Deck options are not retroactive. For example, if you change an option that
-controls the delay after failing a card, cards that you failed before
-changing this option will still have the old delay, not the new one.
+Параметры колоды не имеют обратной силы. Например, если вы изменили задержку
+после ошибки, карточки, ошибочно отвеченные до изменения, сохранят старую
+задержку, а не новую.
 
-## Subdecks
+## Подколоды
 
-If your deck has subdecks, and you wish one or more of them to have different settings from the parent deck, you can assign those subdecks to separate presets.
-When Anki shows a card, it will check which subdeck the card is in, and use the options
-for that deck. There are two exceptions:
+Если у колоды есть подколоды и вы хотите, чтобы некоторые из них имели
+настройки, отличные от родительской колоды, назначьте им отдельные пресеты.
+Когда Anki показывает карточку, он проверяет, в какой подколоде она находится,
+и применяет параметры этой подколоды. Есть два исключения:
 
-- The **New cards/day** and **Maximum reviews/day** [limits](#daily-limits) of a subdeck affect the number of cards that can be gathered from that subdeck. But the total number of cards you see during your study session is controlled by the limits of the deck you select to study.
-- The [display order](#display-order) options are taken from the
-  deck you select to study, not the deck of the current card.
+- [Лимиты](#daily-limits) **New cards/day** и **Maximum reviews/day**
+  подколоды ограничивают число карточек, которое можно собрать из этой
+  подколоды. Но общее число карточек в сессии определяется лимитами колоды,
+  которую вы выбрали для обучения.
+- Параметры [display order](#display-order) берутся из колоды, выбранной
+  для обучения, а не из колоды текущей карточки.
 
-For example, let's say you have this collection:
+Например, у вас такая структура:
 
     - Deck A (Preset 1)
       - Deck A::Subdeck B (Preset 2)
 
-Preset 1 and Preset 2 are identical, with two exceptions:
+Пресет 1 и Пресет 2 одинаковы, кроме двух пунктов:
 
-- Preset 1:
+- Пресет 1:
   - **Learning steps**: `1m 10m`
   - **New/review order**: `Mix with reviews`
-- Preset 2:
+- Пресет 2:
   - **Learning steps**: `20m 2h`
   - **New/review order**: `Show after reviews`
 
-If you choose to study Subdeck B:
+Если вы учите Subdeck B:
 
-- Learning steps for all new cards will be `20m 2h` (Preset 2 applies).
-- All new cards will be shown after reviews (Preset 2 applies).
+- Learning steps для всех новых карточек будут `20m 2h` (действует Пресет 2).
+- Все новые карточки будут показываться после повторений (действует Пресет 2).
 
-If you choose to study Deck A:
+Если вы учите Deck A:
 
-- Learning steps for new cards in Deck A will be `1m 10m` (Preset 1 applies).
-- Learning steps for new cards in Subdeck B will be `20m 2h` (Preset 2 applies).
-- All new cards will be mixed with reviews (Preset 1 applies).
+- Learning steps для новых карточек в Deck A будут `1m 10m` (действует Пресет 1).
+- Learning steps для новых карточек в Subdeck B будут `20m 2h` (действует Пресет 2).
+- Все новые карточки будут смешаны с повторениями (действует Пресет 1).
 
-## Daily Limits
+## Дневные лимиты
 
 ### New Cards/Day
 
-This option controls how many new cards can be introduced each day you open the program. If you
-study fewer than the limit, or miss a day, the next day the counts will be back
-to their original setting: you won't be given more cards than your limit allows.
+Этот параметр задаёт, сколько новых карточек можно вводить в день.
+Если вы изучили меньше лимита или пропустили день, на следующий день лимит
+не «накопится»: карточек сверх установленного значения не будет.
 
-When studying a deck that has subdecks inside it, the limits set on each subdeck control the maximum number of cards drawn from that particular deck. The selected deck's limits control the total number of cards that will be shown.
+При обучении колоды с подколодами лимиты подколод ограничивают максимум
+карточек, которые можно взять из каждой конкретной подколоды. Лимиты выбранной
+колоды управляют общим количеством показанных карточек.
 
-For earlier versions, see [this FAQ page](https://faqs.ankiweb.net/the-anki-2.1-scheduler.html).
+Для старых версий см. [этот FAQ](https://faqs.ankiweb.net/the-anki-2.1-scheduler.html).
 
-Studying new cards will temporarily increase the number of reviews you need to
-do a day, as newly-learned material needs to be repeated a number of times
-before the delay between repetitions can increase appreciably. If you are
-consistently learning 20 new cards a day, you can expect your daily reviews to
-be roughly about 200 cards/day. You can decrease the reviews required by
-introducing fewer new cards each day until your review burden decreases. More than one Anki user has excitedly studied
-hundreds of new cards over their first few days of using the program, and then has
-become overwhelmed by the reviews required.
+Изучение новых карточек временно увеличивает объём повторений, так как новый
+материал нужно повторить несколько раз, прежде чем интервалы заметно вырастут.
+Если стабильно изучать 20 новых карточек в день, можно ожидать примерно
+200 повторений в день. Уменьшить нагрузку можно, снижая число новых карточек.
+Многие пользователи в первые дни учат сотни новых карточек, а затем
+оказываются перегружены объёмом повторений.
 
 ### Maximum Reviews/Day
 
-Allows you to set an upper limit on the number of review cards to show each day.
-When this limit is reached, Anki will not show any more review cards for the
-day, even if there are more waiting. If you study consistently, this setting can
-help to smooth out occasional peaks in due card counts, and can save you from a
-heart attack when returning to Anki after taking a week off. When reviews have been
-hidden due to this option, a message will appear in the congratulations screen,
-suggesting you consider increasing the limit if you have time.
+Позволяет установить верхнюю границу числа карточек повторения в день.
+Когда лимит достигнут, Anki больше не показывает карточки повторения в этот
+день, даже если они ещё есть. При регулярном обучении это помогает сгладить
+пики нагрузки и не «пугает» огромным долгом после перерыва.
+Если карточки были скрыты из-за лимита, на экране поздравления появится
+подсказка увеличить лимит, если у вас есть время.
 
-When studying a deck that has subdecks inside it, the review limit behaves similarly to the new card limit.
+При изучении колоды с подколодами лимит повторений работает аналогично
+лимиту новых карточек.
 
-Anki includes any learning cards that have [crossed the day boundary](./preferences.md#scheduler) (interday learning cards) in the review count,
-so those learning cards will be subject to the review limit.
+Anki включает в счёт повторений карточки обучения, которые
+[перешли границу дня](./preferences.md#scheduler) (interday learning cards),
+поэтому к ним тоже применяется лимит повторений.
 
-### Per-Deck Daily Limits
+### Дневные лимиты на уровне колоды
 
-It is possible to use the same preset for different decks, with customized limits for each of them. This eliminates the need to create cloned presets just for that purpose, and makes it easier to set custom limits on subdecks.
+Можно использовать один и тот же пресет для разных колод, но с индивидуальными
+лимитами для каждой. Это убирает необходимость создавать клоны пресетов
+только ради лимитов и упрощает настройку подколод.
 
-Anki provides three options for daily limits:
+В Anki есть три варианта дневных лимитов:
 
-- **Preset**: applies to all the decks using a preset.
-- **This deck**: specific to a particular deck.
-- **Today only**: specific to a particular deck, and temporary.
+- **Preset**: действует для всех колод, использующих пресет.
+- **This deck**: действует только для конкретной колоды.
+- **Today only**: действует только для конкретной колоды и только временно.
 
 ### New Cards Ignore Review Limit
 
-By default, the review limit also applies to new cards, and no new cards will be shown when the review limit has been reached. If this option is enabled, new cards will be shown regardless of the review limit.
+По умолчанию лимит повторений распространяется и на новые карточки:
+когда лимит достигнут, новые карточки не показываются. Если включить эту
+опцию, новые карточки будут показываться независимо от лимита повторений.
 
-If you have a backlog of overdue review cards, it is recommended that you stop introducing new cards until you
-catch up with that backlog. Continuing to introduce new cards when you're already behind can
-make the backlog worse.
+Если у вас накопился долг просроченных повторений, рекомендуется временно
+не вводить новые карточки, пока вы не сократите этот долг. Иначе отставание
+может только увеличиться.
 
 ### Limits Start From Top
 
-By default, the daily limits of a higher-level deck do not apply if you select one of its subdecks. A parent deck can have a new card limit of 10 cards/day and its subdecks can have a new card limit of 20 cards/day. The limits set on the parent deck do not affect the number of new cards you can study from its subdeck.
+По умолчанию дневные лимиты верхнеуровневой колоды не применяются, если вы
+выбрали её подколоду. Например, у родительской колоды лимит 10 новых карточек/день,
+а у подколод — 20/день. Лимиты родителя не влияют на число новых карточек
+при изучении подколоды.
 
-When this option is enabled, the limits set on higher-level decks also apply to their subdecks when a subdeck is selected. In the previous example, you will be able to study only 10 new cards from the subdecks instead of 20 new cards.
+Если включить эту опцию, лимиты верхних колод применяются и к подколодам,
+когда выбрана подколода. В примере выше вы сможете изучить только 10 новых
+карточек из подколоды вместо 20.
 
-This option can be useful if you wish to study individual subdecks, while enforcing a total limit on cards in all the subdecks.
+Эта опция полезна, если вы хотите учить отдельные подколоды, но при этом
+удерживать общий лимит карточек по всем подколодам.
 
-## New Cards
+## Новые карточки
 
-The options here only affect new cards and
-[learning cards](getting-started.md#card-states). Once a card
-has graduated (that is, gone through all the learning steps), the options in this section no longer apply to the card.
+Параметры этого раздела влияют только на новые карточки и
+[карточки обучения](getting-started.md#card-states). После того как карточка
+«выпустилась» (прошла все шаги обучения), эти параметры к ней больше не применяются.
 
 ### Learning Steps
 
-Controls the number of learning repetitions, and the delay
-between them. One or more delays, separated by spaces must be entered.
-Each time you click **Good** during review, the card moves to the next step. Each time you click **Again**, the card goes back to the first step.
+Управляет числом повторов на этапе обучения и задержками между ними.
+Введите одну или несколько задержек через пробел.
+Каждое нажатие **Good** переводит карточку на следующий шаг, каждое
+нажатие **Again** возвращает на первый шаг.
 
-For example, let's say that your learning steps are `1m 10m 1d`.
+Например, пусть ваши learning steps: `1m 10m 1d`.
 
-- When you click **Again**, the card goes through the first step, and is shown
-  again 1 minute later.
-- When you click **Good** on a new card or after the 1 minute step, it moves
-  to the next step, and is shown again in 10 minutes.
-- When you click **Good** on a card after the 10 minute step, it is delayed
-  until the next day.
-- When you click **Good** on the card the next day, it graduates and
-  becomes a review card. The card is shown again after the delay configured by the
-  _graduating interval_.
+- При нажатии **Again** карточка проходит первый шаг и показывается снова
+  через 1 минуту.
+- При нажатии **Good** на новой карточке или после шага 1 минута карточка
+  переходит на следующий шаг и показывается через 10 минут.
+- При нажатии **Good** после шага 10 минут карточка откладывается до следующего дня.
+- При нажатии **Good** на следующий день карточка выпускается и становится
+  карточкой повторения. Следующий показ будет через задержку, заданную
+  параметром _graduating interval_.
 
-The **Hard** button works differently depending on which step you're on.
+Кнопка **Hard** работает по-разному в зависимости от текущего шага.
 
-- When you're on the first step, the **Hard** button shows a delay of `6m`. The `6m` delay is the average of first two steps: `1m` and `10m`.
-  - Exception: When there's only one learning step, the **Hard** button shows a delay 1.5 times that step. This delay is at most 1 day longer than the learning step.
-- When you're on any other step, the **Hard** button repeats that step.
+- На первом шаге **Hard** показывает задержку `6m`. Это среднее первых двух
+  шагов: `1m` и `10m`.
+  - Исключение: если шаг обучения только один, **Hard** даёт задержку в 1.5
+    раза больше этого шага. Эта задержка не более чем на 1 день длиннее шага.
+- На всех остальных шагах **Hard** повторяет текущий шаг.
 
-If there’s nothing else to study, Anki will show learning cards up to 20 minutes
-early by default. To turn this off or change the amount of time to look ahead, see [Preferences](preferences.md).
+Если больше нечего учить, Anki по умолчанию может показывать карточки обучения
+до 20 минут раньше. Чтобы отключить это или изменить «забегание вперёд»,
+см. [Preferences](preferences.md).
 
-#### Day Boundaries
+#### Границы дня
 
-Anki treats small steps and steps that [cross a day boundary](./preferences.md#review) differently.
-With small steps, the cards are shown as soon as the delay has passed,
-in preference to review cards and new cards. This is done so that
-you can answer the card as closely to your requested delay as possible.
-In contrast, if the step crosses a day boundary, the delay is automatically converted to days. For example, if the next day starts after 5 hours and the delay is 6 hours, Anki converts the delay to 1 day.
+Anki по-разному обрабатывает короткие шаги и шаги, которые
+[пересекают границу дня](./preferences.md#review).
+При коротких шагах карточки показываются сразу после истечения задержки,
+в приоритете перед новыми и повторениями — чтобы вы отвечали как можно ближе
+к запрошенному интервалу. Если шаг пересекает границу дня, задержка
+автоматически переводится в дни. Например, если следующий день начнётся
+через 5 часов, а задержка 6 часов, Anki преобразует её в 1 день.
 
 ### Graduating Interval
 
-The number of days to wait before showing a card again, after the Good button is used on the final learning step. This means that it is the first interval
-after the learning card graduates. Please see the example
-from [earlier in this section](deck-options.md#learning-steps).
+Количество дней до следующего показа карточки после нажатия **Good** на
+финальном шаге обучения. Это первый интервал после «выпуска» карточки из
+обучения. См. пример [выше в этом разделе](deck-options.md#learning-steps).
 
 ### Easy Interval
 
-The number of days to wait before showing a card again, after the Easy button is used on it.
+Количество дней до следующего показа карточки после нажатия **Easy**.
 
-The **Easy** button turns learning cards into a review cards regardless of which step you're on,
-and assigns them the delay you have configured in this option. Easy interval should always be at least
-as long as the graduating interval, and typically a few days longer.
+Кнопка **Easy** переводит карточку обучения в карточку повторения независимо
+от текущего шага и назначает ей задержку из этого параметра.
+Easy interval всегда должен быть не меньше graduating interval, обычно на
+несколько дней больше.
 
 ### Insertion Order
 
-Controls whether Anki should add new cards into the deck randomly, or sequentially.
-When you change this option, Anki will re-sort the decks in the current preset.
+Определяет, добавлять ли новые карточки случайно или последовательно.
+При изменении этого параметра Anki пересортирует колоды в текущем пресете.
 
-On recent Anki versions, you should leave this option set to `Sequential`, and adjust the [display order](deck-options.md#display-order) instead.
+В современных версиях Anki рекомендуется оставить `Sequential`, а порядок
+показа регулировать через [display order](deck-options.md#display-order).
 
 ## Lapses
 
-When you click **Again** on a review card, it is called a _lapse_. The options listed here affect such lapsed cards.
+Когда вы нажимаете **Again** на карточке повторения, это называется _lapse_.
+Параметры этого раздела влияют на такие карточки.
 
 ### Relearning Steps
 
-The same as learning steps, but for lapsed cards. When you fail a review card
-(press **Again**), the card goes through _relearning steps_, before it becomes a review card again.
+То же, что learning steps, но для карточек после lapse.
+Когда вы ошибаетесь на карточке повторения (**Again**), она проходит
+_relearning steps_, прежде чем снова станет карточкой повторения.
 
-If you leave the steps blank, the card will skip relearning, and will be assigned
-a new interval of 1 day by default.
+Если оставить шаги пустыми, карточка пропустит переобучение и получит
+новый интервал 1 день по умолчанию.
 
 ### Minimum Interval
 
-Specifies a minimum number of days a card should wait after it finishes relearning.
-The default is one day, meaning once relearning is finished, it will be shown again
-the next day.
+Задаёт минимальное число дней ожидания после завершения переобучения.
+По умолчанию это 1 день — карточка снова покажется на следующий день.
 
 ### Leeches
 
-Control the way Anki handles leeches. For details, see the [leeches](leeches.md)
-section.
+Управляет тем, как Anki обрабатывает leeches. Подробнее см. раздел
+[leeches](leeches.md).
 
-## Display Order
+## Порядок показа
 
-The options in this section are taken from the deck you select to study, not
-the deck of the currently displayed card.
+Параметры этого раздела берутся из колоды, выбранной для обучения, а не
+из колоды текущей отображаемой карточки.
 
-Some further information about display order is available in the [studying section](studying.md#display-order).
+Дополнительная информация о порядке показа есть в разделе
+[studying](studying.md#display-order).
 
 ### New Card Gather Order
 
-Controls how Anki gathers new cards from a deck. The options are:
+Определяет, как Anki собирает новые карточки из колоды. Варианты:
 
 - **Deck**: Gathers cards from each subdeck in order, starting from the top. Cards from
   each subdeck are gathered in ascending position. If the daily limit of the selected
