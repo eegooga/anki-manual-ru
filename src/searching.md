@@ -1,226 +1,236 @@
-# Searching
+# Поиск
 
 <!-- toc -->
 
-Anki's Browse screen and the Filtered Deck feature use a common method
-of searching for specific cards/notes. This method can also be used to adjust the scope of FSRS optimization. 
+Окно обзора Anki и функция фильтрованных колод используют общий способ
+поиска конкретных карточек/заметок. Этот же способ можно использовать для
+настройки области оптимизации FSRS.
 
-## Simple searches
+## Простые запросы
 
-When you type some text into the search box, Anki finds matching notes
-and displays their cards. Anki searches in all fields of the notes, but
-does not search for tags (see [later in this section](#tags-decks-cards-and-notes) to search for tags). Some examples:
+Когда вы вводите текст в поле поиска, Anki находит подходящие заметки
+и показывает их карточки. Поиск выполняется по всем полям заметок, но
+не по тегам (поиск по тегам описан [ниже](#теги-колоды-карточки-и-заметки)).
+Примеры:
 
 `dog`\
-searches for "dog" - will match words like "doggy" and "underdog" too.
+ищет «dog» — также найдёт слова вроде «doggy» и «underdog».
 
 `dog cat`\
-finds notes that have both "dog" and "cat" on them, such as "raining
-cats and dogs".
+находит заметки, содержащие одновременно «dog» и «cat», например
+«raining cats and dogs».
 
 `dog or cat`\
-finds notes with either "dog" or "cat".
+находит заметки с «dog» или «cat».
 
 `dog (cat or mouse)`\
-finds notes with "dog" and "cat", or "dog" and "mouse".
+находит заметки с «dog» и «cat» или с «dog» и «mouse».
 
 `-cat`\
-finds notes without "cat".
+находит заметки без «cat».
 
 `-cat -mouse`\
-finds notes with neither "cat" nor "mouse".
+находит заметки без «cat» и без «mouse».
 
 `-(cat or mouse)`\
-same as the above.
+то же самое, что выше.
 
 `"a dog"`\
-finds notes with the exact sequence of characters "a dog" in them, such
-as "atta dog", but not "dog a" or "adog".
+находит заметки с точной последовательностью символов «a dog», например
+«atta dog», но не «dog a» и не «adog».
 
 `-"a dog"`\
-finds notes without the exact sequence of characters "a dog" in them.
+находит заметки, где нет точной последовательности «a dog».
 
 `d_g`\
-finds notes with d, &lt;one character&gt;, g, like dog, dig, dug, and so on.
+находит заметки с d, &lt;одним символом&gt;, g: dog, dig, dug и т. д.
 
 `d*g`\
-finds notes with d, &lt;zero or more characters&gt;, g, like dg, dog, dung,
-etc.
+находит заметки с d, &lt;нулём или более символами&gt;, g: dg, dog, dung
+и т. д.
 
 `w:dog`\
-searches for the word "dog" as opposed to a sequence of characters - will match "dog", but not "doggy"
-or "underdog". Requires Anki 2.1.24+, AnkiMobile 2.1.61+, or AnkiDroid 2.17+. Note that
-formatting changes may be interpreted as word boundaries, e.g. searching
-for `w:exam` will match **exam**ple, as the "exam" part of example is in bold format.
+ищет слово «dog», а не просто последовательность символов: найдёт «dog»,
+но не «doggy» и не «underdog». Требуется Anki 2.1.24+, AnkiMobile 2.1.61+
+или AnkiDroid 2.17+. Изменение форматирования может восприниматься как
+граница слова; например, `w:exam` найдёт **exam**ple, если часть «exam»
+выделена жирным.
 
 `w:dog*`\
-will match "dog" and "doggy", but not "underdog".
+найдёт «dog» и «doggy», но не «underdog».
 
 `w:*dog`\
-will match "dog" and "underdog", but not "doggy".
+найдёт «dog» и «underdog», но не «doggy».
 
-Things to note from the above:
+Что важно:
 
-- Search terms are separated by spaces.
+- Поисковые термины разделяются пробелами.
 
-- When multiple search terms are provided, Anki looks for notes that
-  match all of the terms - an implicit `and` is inserted between each
-  term. On Anki 2.1.24+, AnkiMobile 2.0.60+, and AnkiDroid 2.17+ you can be explicit
-  if you like (`dog and cat` is the same as `dog cat`), but older
-  Anki versions will treat `and` as just another word to search for.
+- Если указано несколько терминов, Anki ищет заметки, подходящие под все
+  условия — между терминами неявно вставляется `and`. В Anki 2.1.24+,
+  AnkiMobile 2.0.60+ и AnkiDroid 2.17+ можно писать явно
+  (`dog and cat` = `dog cat`), но в старых версиях Anki `and`
+  воспринимается как обычное слово.
 
-- You can use `or` if you only need one of the terms to match.
+- Используйте `or`, если достаточно совпадения по одному из терминов.
 
-- You can prepend a minus sign (`-`) to a term to find notes that don’t
-  match the term.
+- Можно добавить минус (`-`) перед термином, чтобы найти заметки, которые
+  этому термину не соответствуют.
 
-- You can group search terms by placing them in parentheses, as in the
-  `dog (cat or mouse)` example. This becomes important when
-  combining OR and AND searches — in the example, with the
-  parentheses, it matches either "dog cat" or "dog mouse", whereas
-  without them it would match either "dog and cat" or "mouse".
+- Можно группировать термины скобками, как в `dog (cat or mouse)`.
+  Это важно при сочетании OR и AND: со скобками пример найдёт
+  «dog cat» или «dog mouse», а без скобок — «dog and cat» или «mouse».
 
-- Anki is only able to search within formatting in the [sort field](editing.md#customizing-fields) you’ve configured. For example, if you add
-  "**exa**mple" to one of your fields, with the "exa" part in bold, this will not be matched when
-  searching for `example` unless that field is the sort field. If a
-  word is not formatted, or the formatting does not change in the
-  middle of the word, then Anki will be able to find it in any field.
+- Anki умеет искать внутри форматирования только в настроенном вами
+  [поле сортировки](editing.md#customizing-fields). Например, если в поле
+  записано «**exa**mple» (часть «exa» жирная), поиск `example` не найдёт это
+  совпадение, если это поле не выбрано как поле сортировки. Если слово не
+  форматировано или форматирование не меняется внутри слова, Anki найдёт его
+  в любом поле.
 
-- Standard searches are case insensitive for Latin characters - a-z will
-  match A-Z, and vice versa. Other characters such as Cyrillic are case sensitive
-  in a standard search, but can be made case insensitive by searching on a word
-  boundary or regular expression (`w:`, `re:`).
+- Обычный поиск не чувствителен к регистру для латиницы: a-z совпадает с A-Z
+  и наоборот. Для других символов (например, кириллицы) обычный поиск
+  чувствителен к регистру, но можно сделать его нечувствительным через
+  поиск по границе слова или регулярному выражению (`w:`, `re:`).
 
-## Limiting to a field
+## Ограничение конкретным полем
 
-You can also ask Anki to match only if a particular field contains some
-text. Unlike the previous search examples, searching in fields requires an exact
-match by default.
+Можно попросить Anki искать только там, где определённое поле содержит текст.
+В отличие от примеров выше, поиск по полю по умолчанию требует точного совпадения.
 
 `front:dog`\
-finds notes with a Front field of exactly "dog". A field that says "a
-dog" will not match.
+находит заметки, где поле Front равно ровно «dog». Поле со значением
+«a dog» не подойдёт.
 
 `"animal front:a dog"`\
-finds notes where the "Animal Front" field is exactly "a dog". The double quotes are
-mandatory: see [later in this section](#matching-special-characters).
+находит заметки, где поле «Animal Front» равно ровно «a dog». Двойные
+кавычки обязательны: см. [ниже](#matching-special-characters).
 
 `front:*dog*`\
-finds notes where the Front field contains dog somewhere.
+находит заметки, где поле Front содержит dog в любом месте.
 
 `front:`\
-finds notes that have an empty Front field.
+находит заметки с пустым полем Front.
 
 `front:_*`\
-finds notes that have a non-empty Front field.
+находит заметки с непустым полем Front.
 
 `front:*`\
-finds notes that have a Front field, empty or not.
+находит заметки, у которых есть поле Front — пустое или нет.
 
 `fr*:text`\
-finds notes in a field starting with "fr". Requires Anki 2.1.24+, AnkiMobile 2.1.60+, or AnkiDroid 2.17+.
+находит заметки в поле, имя которого начинается с «fr». Требуется
+Anki 2.1.24+, AnkiMobile 2.1.60+ или AnkiDroid 2.17+.
 
-## Tags, decks, cards and notes
+## Теги, колоды, карточки и заметки
 
 `tag:animal`\
-finds notes with the tag "animal", or subtags like "animal::mammal".
+находит заметки с тегом «animal» или подтегами вроде «animal::mammal».
 
 `tag:none`\
-finds notes with no tags.
+находит заметки без тегов.
 
 `tag:ani*`\
-finds notes with tags starting with "ani".
+находит заметки с тегами, начинающимися на «ani».
 
 `deck:french`\
-find cards in a top-level deck called "French", or its subdecks like "French::Words". It will not match subdecks with that name, such as "Languages::French".
+находит карточки в верхнеуровневой колоде «French» и её подколодах
+вроде «French::Words». Не найдёт подколоды с таким названием в других
+ветках, например «Languages::French».
 
 `deck:french::words`\
-find cards in the "French::Words" subdeck.
+находит карточки в подколоде «French::Words».
 
 `deck:french -deck:french::*`\
-finds cards in "French", but not its subdecks.
+находит карточки в «French», но не в её подколодах.
 
 `deck:"french words"`\
-searching when the deck name has a space.
+поиск, когда в названии колоды есть пробел.
 
 `"deck:french words"`\
-same as earlier.
+то же, что выше.
 
 `deck:filtered`\
-filtered decks only.
+только фильтрованные колоды.
 
 `-deck:filtered`\
-normal decks only.
+только обычные колоды.
 
 `preset:"Default"`\
-cards in all decks that use the "Default" deck options preset.
-Requires Anki 23.10+, AnkiMobile 23.10+ or AnkiDroid 2.17+.
+карточки во всех колодах, использующих набор настроек «Default».
+Требуется Anki 23.10+, AnkiMobile 23.10+ или AnkiDroid 2.17+.
 
 `card:forward`\
-finds cards created by a card type named "Forward".
+находит карточки, созданные типом карточки «Forward».
 
 `card:1`\
-searches for cards by card type number, e.g. to find the second cloze
-deletion for a note, you’d use `card:2`
+ищет карточки по номеру типа карточки. Например, чтобы найти второе cloze-удаление
+в заметке, используйте `card:2`.
 
 `note:basic`\
-searches for cards created with a note type named "Basic".
+ищет карточки, созданные типом заметки «Basic».
 
-## Ignoring accents/combining characters
+## Игнорирование диакритики/комбинируемых символов
 
-Requires Anki 2.1.24+, AnkiMobile 2.0.60+ or AnkiDroid 2.17+.
+Требуется Anki 2.1.24+, AnkiMobile 2.0.60+ или AnkiDroid 2.17+.
 
-You can use `nc:` (nc stands for "no combining") to make Anki ignore combining characters. For example:
+Можно использовать `nc:` (no combining), чтобы Anki игнорировал комбинируемые
+символы. Например:
 
 `nc:uber`\
-matches notes with "uber", "über", "Über" and so on.
+совпадёт с заметками «uber», «über», «Über» и т. д.
 
 `nc:は`\
-matches "は", "ば", and "ぱ".
+совпадёт с «は», «ば» и «ぱ».
 
-Searches that ignore combining characters are slower than regular searches.
+Поиск с игнорированием комбинируемых символов работает медленнее обычного.
 
-## Regular expressions
+## Регулярные выражения
 
-Anki 2.1.24+, AnkiMobile 2.0.60+ and AnkiDroid 2.17+ support searching in notes with "regular expressions",
-a standard and powerful way of searching in text.
+Anki 2.1.24+, AnkiMobile 2.0.60+ и AnkiDroid 2.17+ поддерживают поиск в заметках
+с помощью «регулярных выражений» — стандартного и мощного способа поиска по тексту.
 
-Start a search with `re:` to search using regular expressions. To make things easier, Anki will
-treat the following as [raw input](#raw-input), so bear in mind the rules listed there.
+Начните запрос с `re:`, чтобы использовать регулярные выражения. Для удобства Anki
+будет обрабатывать последующую часть как [raw input](#raw-input), поэтому учитывайте
+правила из этого раздела.
 
-Some examples:
+Примеры:
 
 `"re:(some|another).*thing"`\
-finds notes that have "some" or "another" on them, followed by 0 or more characters, and then "thing".
+находит заметки, где есть «some» или «another», за которыми идут 0 или более символов,
+а затем «thing».
 
 `re:\d{3}`\
-finds notes that have 3 digits in a row.
+находит заметки, где подряд идут 3 цифры.
 
-Regular expressions can also be limited to a specific field. Please note that unlike the normal searches
-in a specific field, regular expressions in fields don't require an exact match:
+Регулярные выражения можно ограничить конкретным полем. В отличие от обычного
+поиска по полю, здесь точное совпадение не требуется:
 
 `front:re:[a-c]1`\
-matches uppercase or lowercase a1, B1 or c1 that occurs anywhere in the "Front" field.
+найдёт a1/B1/c1 в любом регистре, если они встречаются где угодно в поле «Front».
 
 `front:re:^[a-c]1$`\
-same as the previous example, but will not match if any other text falls before or after a1/b1/c1.
+то же, что выше, но не найдёт, если до или после a1/b1/c1 есть другой текст.
 
-Anki 2.1.50+ supports regular expressions for tags:
+В Anki 2.1.50+ регулярные выражения поддерживаются и для тегов:
 
 `tag:re:^parent$`\
-finds notes with the exact tag "parent", disregarding any child tags like "parent::child".
+находит заметки с точным тегом «parent», игнорируя дочерние теги типа
+«parent::child».
 
 `"tag:re:lesson-(1[7-9]|2[0-5])"`\
-finds notes with tags "lesson-17" through "lesson-25".
+находит заметки с тегами от «lesson-17» до «lesson-25».
 
-For more information on regular expressions, see [this website](<https://regexone.com/lesson/introduction_abcs>).
+Подробнее о регулярных выражениях: [этот сайт](<https://regexone.com/lesson/introduction_abcs>).
 
-Some things to be aware of:
+Обратите внимание:
 
-- The search is case-insensitive by default; use `(?-i)` at the start to turn on case sensitivity.
-- Some text like spaces and newlines may be represented differently in HTML - you can
-  use the HTML editor in the editing screen to see the underlying HTML contents.
-- For the specifics of Anki's regex support, see the [regex crate documentation](<https://docs.rs/regex/1.3.9/regex/#syntax>).
+- По умолчанию поиск нечувствителен к регистру; добавьте `(?-i)` в начале,
+  чтобы включить чувствительность к регистру.
+- Некоторые элементы (пробелы, переносы строк) в HTML могут быть представлены
+  иначе — используйте HTML-редактор в окне редактирования, чтобы увидеть
+  исходный HTML.
+- Подробности реализации regex в Anki см. в [документации regex crate](<https://docs.rs/regex/1.3.9/regex/#syntax>).
 
 ## Card state
 
