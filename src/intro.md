@@ -27,7 +27,7 @@
 - [Italiano](https://web.archive.org/web/20160423223801/http://192.167.9.6/Anki_ITA/Manual_ITA.htm)
 - [Polski](https://platynowy.github.io/anki-manual/)
 - [Português Brasileiro](https://mizerablebr.github.io/anki-manual/)
-- [русский язык](https://alexeygorelov.github.io/anki-manual-ru/)
+- [русский язык](https://github.com/eegooga/anki-manual-ru)
 - [Українська](https://astropsy999.github.io/anki-manual/)
 - [العربية](https://abdnh.github.io/anki-manual/)
 - [فارسى](https://web.archive.org/web/20250328102629/http://ankidroid.ir/anki.pdf)
