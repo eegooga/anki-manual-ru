@@ -144,7 +144,7 @@ BasicTeX, установите dvipng отдельно следующей ком
 
 Например, если ввести на лицевой стороне карточки:
 
-    Does [latex]\begin{math}\sum_{k = 1}^{\infty}\frac{1}{k}\end{math}[/latex] converge?
+    Сходится ли [latex]\begin{math}\sum_{k = 1}^{\infty}\frac{1}{k}\end{math}[/latex]?
 
 при показе карточки получится:
 
@@ -153,7 +153,7 @@ BasicTeX, установите dvipng отдельно следующей ком
 Формула выше называется «текстовой формулой», потому что отображается прямо
 внутри обычного текста. В отличие от неё, ниже показана «выносная формула»:
 
-    Does the sum below converge?
+    Сходится ли сумма ниже?
 
     [latex]\begin{displaymath}\sum_{k = 1}^{\infty}\frac{1}{k}\end{displaymath}[/latex]
 
@@ -178,11 +178,11 @@ BasicTeX, установите dvipng отдельно следующей ком
 
 Например, два предыдущих фрагмента LaTeX эквивалентны:
 
-    Does [$]\sum_{k = 1}^{\infty}\frac{1}{k}[/$] converge?
+    Сходится ли [$]\sum_{k = 1}^{\infty}\frac{1}{k}[/$]?
 
 и
 
-    Does the sum below converge?
+    Сходится ли сумма ниже?
 
     [$$]\sum_{k = 1}^{\infty}\frac{1}{k}[/$$]
 
