@@ -1,0 +1,488 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Математика и символы - Anki Manual</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Anki&#x27;s user manual. Anki is a flashcard program that makes learning easier.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="css/misc.css">
+        <link rel="stylesheet" href="css/mdbook-admonish.css">
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Anki Manual</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/ankitects/anki-manual/" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="Математика-и-символы"><a class="header" href="#Математика-и-символы">Математика и символы</a></h1>
+<ul>
+<li><a href="#mathjax">MathJax</a>
+<ul>
+<li><a href="#%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0-mathjax">Настройка MathJax</a></li>
+</ul>
+</li>
+<li><a href="#latex">LaTeX</a>
+<ul>
+<li><a href="#%D0%9F%D1%80%D0%B5%D0%B4%D1%83%D0%BF%D1%80%D0%B5%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BE-%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D0%B8">Предупреждение о безопасности</a></li>
+<li><a href="#%D0%9D%D0%B5%D0%BE%D0%B1%D1%85%D0%BE%D0%B4%D0%B8%D0%BC%D1%8B%D0%B5-%D0%B7%D0%BD%D0%B0%D0%BD%D0%B8%D1%8F">Необходимые знания</a></li>
+<li><a href="#webmobile">Web/Mobile</a></li>
+<li><a href="#%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80">Пример</a></li>
+<li><a href="#%D0%9F%D0%B0%D0%BA%D0%B5%D1%82%D1%8B">Пакеты</a></li>
+<li><a href="#%D0%9A%D0%BE%D0%BD%D1%84%D0%BB%D0%B8%D0%BA%D1%82%D1%8B-%D1%81-%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%B0%D0%BC%D0%B8">Конфликты с шаблонами</a></li>
+<li><a href="#%D0%9A%D0%BE%D0%BD%D1%84%D0%BB%D0%B8%D0%BA%D1%82%D1%8B-cloze">Конфликты Cloze</a></li>
+<li><a href="#%D0%9D%D0%B5%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D1%8B%D0%B5-%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D1%8B">Небезопасные команды</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="mathjax"><a class="header" href="#mathjax">MathJax</a></h2>
+<p><a href="https://www.mathjax.org">MathJax</a> — это современная браузерная система
+набора формул, удобная для математических и химических выражений. Она
+не требует установки дополнительного ПО, поэтому проста в использовании
+и рекомендуется большинству пользователей.</p>
+<p>MathJax поддерживается «из коробки» в Anki 2.1+, AnkiMobile и
+AnkiDroid 2.9+.</p>
+<p>Чтобы попробовать:</p>
+<ol>
+<li>
+<p>Введите в поле:</p>
+<pre><code>\sqrt{x}
+</code></pre>
+</li>
+<li>
+<p>Выделите только что введённый текст.</p>
+</li>
+<li>
+<p>Нажмите крайнюю правую кнопку в редакторе и выберите в меню
+«MathJax inline». Anki изменит текст на:</p>
+<pre><code>\(\sqrt{x}\)
+</code></pre>
+</li>
+<li>
+<p>Нажмите кнопку <strong>Cards…</strong>. Вы увидите, как формула будет выглядеть
+при повторении карточки.</p>
+<p>$$
+\sqrt{x}
+$$
+Поддержка MathJax в Anki ожидает выражения в формате TeX. Если вы не
+знакомы с форматированием TeX, воспользуйтесь <a href="https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference">этой шпаргалкой</a>.
+Обратите внимание: пункт 1 из этой шпаргалки не относится к Anki —
+в Anki для встроенных формул используются <code>\(</code> и <code>\)</code>, а для выносных —
+<code>\[</code> и <code>\]</code>.</p>
+</li>
+</ol>
+<p>Если в выражении MathJax нужны переносы строк, используйте
+<kbd>Shift</kbd>+<kbd>Enter</kbd>, а не просто <kbd>Enter</kbd>, иначе
+MathJax может работать некорректно.</p>
+<p>Anki включает встроенную поддержку mhchem для отображения химических
+уравнений. Подробнее см. раздел «chemical equations» и последующие разделы:
+<a href="https://mhchem.github.io/MathJax-mhchem/">https://mhchem.github.io/MathJax-mhchem/</a></p>
+<h3 id="Настройка-mathjax"><a class="header" href="#Настройка-mathjax">Настройка MathJax</a></h3>
+<p>Встроенная поддержка MathJax в Anki загружается до содержимого карточки,
+поэтому для настройки нужен специальный способ. Пример:</p>
+<pre><code class="language-javascript">&lt;script&gt;
+MathJax.config.tex['macros'] = {
+    R: '{\\mathbb {R}}',
+};
+if (typeof is_already_run == 'undefined') {
+  is_already_run = true
+  MathJax.startup.getComponents();
+}
+&lt;/script&gt;
+</code></pre>
+<p>Учтите, что в Anki есть особая логика для cloze-пропусков, которая может
+перестать работать, если изменить стандартные разделители формул MathJax.</p>
+<h2 id="latex"><a class="header" href="#latex">LaTeX</a></h2>
+<p>LaTeX — мощная система вёрстки, полезная для ввода математических и
+химических формул, нотной записи и т. д. Anki частично поддерживает LaTeX:
+вы можете вставлять LaTeX-код в заметки. При повторении карточки Anki
+запустит LaTeX и покажет сгенерированное изображение.</p>
+<p>LaTeX сложнее в настройке, и изображения можно генерировать только в
+компьютерной версии Anki. После генерации они отображаются и в мобильных
+клиентах. Из-за дополнительной сложности LaTeX рекомендуется только тем,
+кому не хватает возможностей MathJax.</p>
+<h3 id="Предупреждение-о-безопасности"><a class="header" href="#Предупреждение-о-безопасности">Предупреждение о безопасности</a></h3>
+<p>Код LaTeX может содержать вредоносные команды, способные читать или изменять
+данные на вашем компьютере вне Anki. Поэтому в новых версиях Anki по умолчанию
+генерация LaTeX-изображений отключена.</p>
+<p>Если вы хотите использовать LaTeX в своих карточках, включите опцию
+<strong>Generate LaTeX images</strong> в настройках.</p>
+<p><strong>Мы настоятельно рекомендуем не включать эту опцию, если вы используете
+общие колоды или планируете импортировать их в будущем, так как это может
+дать автору общей колоды доступ к вашему компьютеру</strong>.</p>
+<p>Для общих колод включать эту опцию не нужно. Если автор общей колоды
+заранее корректно сгенерировал все изображения, они уже будут доступны.</p>
+<h3 id="Необходимые-знания"><a class="header" href="#Необходимые-знания">Необходимые знания</a></h3>
+<p>Поддержка LaTeX в Anki не является полностью автоматической: предполагается,
+что вы уже умеете пользоваться LaTeX и установили его. Если опыта нет,
+обратитесь к одному из многочисленных руководств в интернете. Если у вас
+проблемы с разметкой, задайте вопрос на форуме по LaTeX.</p>
+<p>Для установки LaTeX в Windows используйте MiKTeX, в macOS — MacTeX, а в Linux —
+менеджер пакетов вашего дистрибутива. Также должен быть установлен dvipng.</p>
+<p>В Windows откройте Settings в окне обслуживания MiKTeX и убедитесь, что
+«Install missing packages on the fly» установлено в «Always», а не «Ask me first».
+Если проблемы сохраняются, один пользователь сообщил, что помог запуск Anki
+от имени администратора до завершения загрузки всех пакетов.</p>
+<p>В macOS LaTeX тестировался только с MacTeX и BasicTeX. Если вы используете
+BasicTeX, установите dvipng отдельно следующей командой:</p>
+<pre><code>sudo tlmgr update --self; sudo tlmgr install dvipng
+</code></pre>
+<p>Команда может отсутствовать в PATH, поэтому может потребоваться полный путь,
+например /usr/local/texlive/2014basic/bin/x86_64-darwin/tlmgr.</p>
+<p>Если вы не используете перечисленные выше пакеты LaTeX, вам понадобится
+дополнение <a href="https://ankiweb.net/shared/info/937148547">edit LaTeX</a>, чтобы
+указать полный путь к latex и dvipng.</p>
+<h3 id="webmobile"><a class="header" href="#webmobile">Web/Mobile</a></h3>
+<p>Когда вы повторяете карточку с LaTeX, Anki генерирует изображение и помещает
+его в папку медиа коллекции для дальнейшего использования. Веб- и мобильные
+клиенты могут отображать эти изображения, если они уже существуют, но не могут
+генерировать их самостоятельно.</p>
+<p>Чтобы не повторять все карточки хотя бы один раз перед обучением на других
+клиентах, Anki может сгенерировать изображения массово. Для генерации всех
+изображений откройте Tools&gt;Check Media.
+После этого синхронизация загрузит сгенерированные медиа в AnkiWeb и на другие
+клиенты.</p>
+<h3 id="Пример"><a class="header" href="#Пример">Пример</a></h3>
+<p>Самый универсальный способ ввода LaTeX — обрамить содержимое тегами
+[latex][/latex]. Для этого есть кнопка быстрого действия, описанная
+в разделе <a href="editing.html">редактора</a>.</p>
+<p>Теги [latex] нужно использовать внутри поля — размещение их в шаблоне
+карточки <a href="templates/fields.html">вызовет проблемы</a>.</p>
+<p>Например, если ввести на лицевой стороне карточки:</p>
+<pre><code>Сходится ли [latex]\begin{math}\sum_{k = 1}^{\infty}\frac{1}{k}\end{math}[/latex]?
+</code></pre>
+<p>при показе карточки получится:</p>
+<p><img src="math/convergence_question.png" alt="convergence question" /></p>
+<p>Формула выше называется «текстовой формулой», потому что отображается прямо
+внутри обычного текста. В отличие от неё, ниже показана «выносная формула»:</p>
+<pre><code>Сходится ли сумма ниже?
+
+[latex]\begin{displaymath}\sum_{k = 1}^{\infty}\frac{1}{k}\end{displaymath}[/latex]
+</code></pre>
+<p><img src="math/convergence_question_2.png" alt="convergence question 2" /></p>
+<p>«Текстовые» и «выносные» формулы — самые распространённые виды LaTeX-выражений,
+поэтому в Anki есть сокращённые варианты записи. Выражения вида:</p>
+<pre><code>[latex]\begin{math}...\end{math}[/latex]
+</code></pre>
+<p>можно сократить до</p>
+<pre><code>[$]...[/$]
+</code></pre>
+<p>а выражения вида</p>
+<pre><code>[latex]\begin{displaymath}...\end{displaymath}[/latex]
+</code></pre>
+<p>можно сократить до</p>
+<pre><code>[$$]...[/$$]
+</code></pre>
+<p>Например, два предыдущих фрагмента LaTeX эквивалентны:</p>
+<pre><code>Сходится ли [$]\sum_{k = 1}^{\infty}\frac{1}{k}[/$]?
+</code></pre>
+<p>и</p>
+<pre><code>Сходится ли сумма ниже?
+
+[$$]\sum_{k = 1}^{\infty}\frac{1}{k}[/$$]
+</code></pre>
+<p>соответственно.</p>
+<h3 id="Пакеты"><a class="header" href="#Пакеты">Пакеты</a></h3>
+<p>Anki позволяет настраивать LaTeX-преамбулу, чтобы подключать дополнительные
+пакеты для химии, музыки и т. д. Например, представим, что вы нашли в интернете
+пример файла для chemtex:</p>
+<pre><code>\documentclass[a4paper,12pt]{report}
+\usepackage{chemtex}
+\begin{document}
+
+\initial
+\begin{figure}[h]\centering
+\parbox{.3\textwidth}{\ethene{H}{H$_3$C}{CH$_3$}{Br}}
+\hfil
+\parbox{.3\textwidth}{\cbranch{H}{S}{H}{S}{C}{S}{}{S}{H}
+  \xi=-200 \cright{}{Q}{C}{D}{O}{S}{OH}}
+\hfil
+\parbox{.3\textwidth}{\hetisix{Q}{Q}{Q}{Q}{Q}{Q}{O}{Q}{O}
+  \xi=-171 \fuseup{Q}{Q}{Q}{Q}{D}{Q}{D}{Q}{D}}
+\caption{Chemie mit {\tt CHEMTEX}\label{a1}}
+\end{figure}
+
+\end{document}
+</code></pre>
+<p>Сначала установите пакет согласно его документации и документации MiKTeX/MacTeX.
+Чтобы убедиться, что пакет работает, поместите код вроде приведённого выше
+в файл .latex и проверьте, что он компилируется из командной строки.
+Когда убедитесь, что пакет доступен и работает, можно интегрировать его в Anki.</p>
+<p>Чтобы использовать пакет в Anki, нажмите «Add» в главном окне, затем кнопку
+выбора типа заметки. Нажмите «Manage», выберите нужный тип заметки и откройте
+«Options». Появятся LaTeX header и footer. Header будет выглядеть примерно так:</p>
+<pre><code>\documentclass[12pt]{article}
+\special{papersize=3in,5in}
+\usepackage{amssymb,amsmath}
+\pagestyle{empty}
+\setlength{\parindent}{0in}
+\begin{document}
+</code></pre>
+<p>Для chemtex добавьте строку usepackage в предыдущем примере, чтобы получилось:</p>
+<pre><code>\documentclass[12pt]{article}
+\special{papersize=3in,5in}
+\usepackage{amssymb,amsmath}
+\usepackage{chemtex}
+\pagestyle{empty}
+\setlength{\parindent}{0in}
+\begin{document}
+</code></pre>
+<p>После этого вы сможете вставлять в карточки Anki строки вида:</p>
+<pre><code>[latex]\ethene{H}{H$_3$C}{CH$_3$}{Br}[/latex]
+</code></pre>
+<h3 id="Конфликты-с-шаблонами"><a class="header" href="#Конфликты-с-шаблонами">Конфликты с шаблонами</a></h3>
+<p>Начиная с Anki 2.1.20 / AnkiMobile 2.0.56 / AnkiDroid 2.13 этот обходной путь
+больше не нужен: текст <code>{{field}}</code> внутри полей больше не вызывает проблем.
+Если вам нужно поддерживать старые версии и вы хотите оставить этот синтаксис,
+убедитесь, что строка <code>{{=&lt;% %&gt;=}}</code> находится в самом верху шаблонов лицевой
+и обратной сторон, поскольку в новых версиях Anki она распознаётся только в начале.</p>
+<p>Для старых версий:</p>
+<p>В LaTeX-коде математических выражений нередко встречаются <code>{{</code> и <code>}}</code>.
+Чтобы ваши формулы не конфликтовали с подстановкой полей Anki, можно изменить
+разделители на другие.</p>
+<p>Например, если у вас шаблон:</p>
+<pre><code>{{latex field}}
+</code></pre>
+<p>Если изменить его так, конфликтов с LaTeX, скорее всего, не будет:</p>
+<pre><code>{{=&lt;% %&gt;=}}
+&lt;%latex field%&gt;
+</code></pre>
+<h3 id="Конфликты-cloze"><a class="header" href="#Конфликты-cloze">Конфликты Cloze</a></h3>
+<p>Cloze-пропуски завершаются <code>}}</code>, что может конфликтовать с <code>}}</code> внутри LaTeX.
+Чтобы LaTeX не воспринимался как закрывающий cloze-маркер, можно вставить
+пробел между закрывающими двойными скобками, которые не означают конец cloze:</p>
+<pre><code>{{c1::[$]\frac{foo}{\frac{bar}{baz}}[/$] blah blah blah.}}
+</code></pre>
+<p>не сработает, а</p>
+<pre><code>{{c1::[$]\frac{foo}{\frac{bar}{baz} }[/$] blah blah blah.}}
+</code></pre>
+<p>сработает (LaTeX игнорирует пробелы в математическом режиме, поэтому формула
+визуально останется той же). Если вы не хотите добавлять лишний пробел в
+отображаемый текст (например, в Cloze-карточках по программированию),
+можно использовать HTML-комментарий при редактировании карточки в HTML-режиме:</p>
+<pre><code>{{c1::[$]\frac{foo}{\frac{bar}{baz}&lt;!-- --&gt;}[/$] blah blah blah.}}
+</code></pre>
+<p>Любой из этих обходных путей можно применить, если нужно использовать
+последовательность <code>::</code> внутри скрываемого текста Cloze. Первая карточка,
+сгенерированная из следующего текста заметки, будет содержать:
+<code>[type] in C++ is a type-safe union</code>:</p>
+<pre><code>{{c1::std:&lt;!-- --&gt;:variant::~type~}} in C++ is a {{c2::type-safe union}}
+</code></pre>
+<h3 id="Небезопасные-команды"><a class="header" href="#Небезопасные-команды">Небезопасные команды</a></h3>
+<p>Anki запрещает некоторые команды, например \input и \def, в карточках и
+шаблонах, потому что их разрешение может позволить вредоносным общим колодам
+повредить вашу систему. (Для безопасности эти команды запрещены даже в
+комментариях, поэтому если вы получаете такую ошибку и думаете, что не
+использовали их, проверьте комментарии в заголовках, шаблонах и карточках.)
+Если такие команды всё же нужны, добавьте их в системный пакет и импортируйте
+этот пакет, как описано в предыдущем разделе.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="media.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="leeches.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="media.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="leeches.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

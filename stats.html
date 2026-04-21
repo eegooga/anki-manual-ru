@@ -1,0 +1,698 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Статистика - Anki Manual</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Anki&#x27;s user manual. Anki is a flashcard program that makes learning easier.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="css/misc.css">
+        <link rel="stylesheet" href="css/mdbook-admonish.css">
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Anki Manual</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/ankitects/anki-manual/" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="Информация-о-карточке-графики-и-статистика"><a class="header" href="#Информация-о-карточке-графики-и-статистика">Информация о карточке, графики и статистика</a></h1>
+<ul>
+<li><a href="#%D0%98%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8F-%D0%BE-%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%BA%D0%B5">Информация о карточке</a></li>
+<li><a href="#%D0%A1%D1%82%D0%B0%D1%82%D0%B8%D1%81%D1%82%D0%B8%D0%BA%D0%B0">Статистика</a></li>
+<li><a href="#%D0%92%D1%8B%D0%B1%D0%BE%D1%80-%D0%BA%D0%BE%D0%BB%D0%BE%D0%B4--%D0%BA%D0%BE%D0%BB%D0%BB%D0%B5%D0%BA%D1%86%D0%B8%D0%B8">Выбор колод / коллекции</a>
+<ul>
+<li><a href="#%D0%9A%D0%BE%D0%BB%D0%BE%D0%B4%D0%B0">Колода</a></li>
+<li><a href="#%D0%9A%D0%BE%D0%BB%D0%BB%D0%B5%D0%BA%D1%86%D0%B8%D1%8F">Коллекция</a></li>
+<li><a href="#%D0%98%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%8F">История</a></li>
+<li><a href="#%D0%94%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE">Дополнительно</a></li>
+</ul>
+</li>
+<li><a href="#%D0%A1%D0%B5%D0%B3%D0%BE%D0%B4%D0%BD%D1%8F-today">Сегодня (Today)</a>
+<ul>
+<li><a href="#again-count">Again Count</a></li>
+<li><a href="#%D0%9E%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D0%B5%D1%80%D0%B5%D0%BE%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5">Обучение, повторение, переобучение, фильтрованные</a></li>
+</ul>
+</li>
+<li><a href="#%D0%93%D1%80%D0%B0%D1%84%D0%B8%D0%BA%D0%B8">Графики</a>
+<ul>
+<li><a href="#%D0%91%D1%83%D0%B4%D1%83%D1%89%D0%B8%D0%B5-%D1%81%D1%80%D0%BE%D0%BA%D0%B8">Будущие сроки</a></li>
+<li><a href="#%D0%9A%D0%B0%D0%BB%D0%B5%D0%BD%D0%B4%D0%B0%D1%80%D1%8C">Календарь</a></li>
+<li><a href="#%D0%9F%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%B5%D0%BD%D0%B8%D1%8F">Повторения</a></li>
+<li><a href="#%D0%9A%D0%BE%D0%BB%D0%B8%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%BE-%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%B5%D0%BA">Количество карточек</a></li>
+<li><a href="#%D0%92%D1%80%D0%B5%D0%BC%D1%8F-%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%B5%D0%BD%D0%B8%D1%8F-review-time">Время повторения (Review Time)</a></li>
+<li><a href="#%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B2%D0%B0%D0%BB%D1%8B-%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%B5%D0%BD%D0%B8%D0%B9-review-intervals">Интервалы повторений (Review Intervals)</a></li>
+<li><a href="#%D0%9B%D1%91%D0%B3%D0%BA%D0%BE%D1%81%D1%82%D1%8C-%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%B5%D0%BA-card-ease">Лёгкость карточек (Card Ease)</a></li>
+<li><a href="#%D0%A1%D1%82%D0%B0%D0%B1%D0%B8%D0%BB%D1%8C%D0%BD%D0%BE%D1%81%D1%82%D1%8C-%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%B5%D0%BA-card-stability">Стабильность карточек (Card Stability)</a></li>
+<li><a href="#%D0%A1%D0%BB%D0%BE%D0%B6%D0%BD%D0%BE%D1%81%D1%82%D1%8C-%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%B5%D0%BA-card-difficulty">Сложность карточек (Card Difficulty)</a></li>
+<li><a href="#%D0%98%D0%B7%D0%B2%D0%BB%D0%B5%D0%BA%D0%B0%D0%B5%D0%BC%D0%BE%D1%81%D1%82%D1%8C-%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%B5%D0%BA-card-retrievability">Извлекаемость карточек (Card Retrievability)</a></li>
+<li><a href="#%D0%A0%D0%B0%D1%81%D0%BF%D1%80%D0%B5%D0%B4%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D0%BE-%D1%87%D0%B0%D1%81%D0%B0%D0%BC-hourly-breakdown">Распределение по часам (Hourly Breakdown)</a></li>
+<li><a href="#%D0%9A%D0%BD%D0%BE%D0%BF%D0%BA%D0%B8-%D0%BE%D1%82%D0%B2%D0%B5%D1%82%D0%BE%D0%B2-answer-buttons">Кнопки ответов (Answer Buttons)</a></li>
+<li><a href="#%D0%A2%D0%B0%D0%B1%D0%BB%D0%B8%D1%86%D0%B0-true-retention">Таблица True Retention</a></li>
+</ul>
+</li>
+<li><a href="#%D0%A0%D1%83%D1%87%D0%BD%D0%BE%D0%B9-%D0%B0%D0%BD%D0%B0%D0%BB%D0%B8%D0%B7">Ручной анализ</a></li>
+</ul>
+<h2 id="Информация-о-карточке"><a class="header" href="#Информация-о-карточке">Информация о карточке</a></h2>
+<p>Вы можете отобразить информацию о карточке,
+используя пункт меню Cards&gt;Info,
+щелчок правой кнопкой по карточке с выбором <strong>Info</strong>,
+или клавишу <kbd>I</kbd> на экране обучения.</p>
+<p><img src="media/card_info.png" alt="Card Info" /></p>
+<p>Несколько замечаний:</p>
+<p><strong>Position</strong><br />
+Показывает порядок,
+в котором карточка появится
+относительно других новых карточек.
+Позицию можно изменить в браузере.
+После того как карточка была изучена,
+позиция не используется,
+если только карточку вручную
+не сбросили в состояние новой.</p>
+<p><strong>Interval</strong><br />
+Задержка между одним повторением и следующим.
+Время сокращено:
+<code>0s, 1m, 3h, 4d, 5mo, 6y</code>
+означает секунды, минуты, часы, дни, месяцы и годы.</p>
+<p><strong>Ease</strong><br />
+Приблизительное значение,
+на которое вырастет интервал,
+когда вы отвечаете review-карточку кнопкой <code>Good</code>.</p>
+<p>Нижняя секция показывает историю повторений карточки.
+Rating обозначает кнопку
+(1 = Again, 4 = Easy).
+Когда карточки вручную перераспределяются
+через действия <code>reset</code> или <code>set due date</code>,
+тип указывается как <code>Manual</code>,
+а rating как 0.</p>
+<h2 id="Статистика"><a class="header" href="#Статистика">Статистика</a></h2>
+<p>Окно статистики открывается
+кнопкой <strong>Stats</strong>
+в верхней части главного окна
+или клавишей <kbd>T</kbd>.</p>
+<p><img src="media/Statistics.png" alt="Statistics screen" /></p>
+<h2 id="Выбор-колод--коллекции"><a class="header" href="#Выбор-колод--коллекции">Выбор колод / коллекции</a></h2>
+<h3 id="Колода"><a class="header" href="#Колода">Колода</a></h3>
+<p>По умолчанию окно статистики
+показывает статистику текущей выбранной колоды
+и всех её подколод,
+но вы можете выбрать любую колоду коллекции,
+введя её имя в поле вверху экрана,
+или (с Anki 2.1.61)
+через селектор колод внизу.</p>
+<h3 id="Коллекция"><a class="header" href="#Коллекция">Коллекция</a></h3>
+<p>Если отметить этот флажок,
+статистика будет показана
+по всей коллекции.
+Также можно отображать графики
+для произвольных поисков,
+добавляя фильтры
+в поле поиска вверху (2.1.28+).</p>
+<h3 id="История"><a class="header" href="#История">История</a></h3>
+<p>По умолчанию Anki показывает статистику
+за последние 12 месяцев.
+Сверху можно изменить диапазон
+на всю историю
+или на срок жизни колоды.
+(Раздел <code>today</code> вверху,
+разумеется,
+этим выбором не затрагивается.)</p>
+<h3 id="Дополнительно"><a class="header" href="#Дополнительно">Дополнительно</a></h3>
+<ul>
+<li>
+<p>Нажатие <code>Save PDF</code> внизу
+сохранит PDF-документ статистики
+на рабочий стол,
+чтобы удобно делиться статистикой с другими.</p>
+</li>
+<li>
+<p>При удалении заметок
+их история повторений сохраняется в Anki.
+Она не будет включаться
+в статистику конкретной колоды
+(так как Anki не знает,
+к какой колоде принадлежали удалённые карточки),
+но будет включаться
+в статистику всей коллекции.</p>
+</li>
+<li>
+<p>В Anki 2.1.28+
+появились переработанные графики.
+Старые графики всё ещё доступны,
+если нажать Stats с зажатой <kbd>Shift</kbd>.</p>
+</li>
+</ul>
+<h2 id="Сегодня-today"><a class="header" href="#Сегодня-today">Сегодня (Today)</a></h2>
+<p>В верхней части окна статистики
+есть краткий список текстовой статистики
+по повторениям,
+которые вы завершили сегодня.
+<code>Review</code> в этом контексте —
+это «одно ответивание карточки»,
+поэтому одна карточка может учитываться
+как несколько review,
+если её нужно было показать несколько раз,
+и ответ по learning-карточке
+тоже считается review.
+Несколько показателей,
+смысл которых может быть неочевиден:</p>
+<h3 id="again-count"><a class="header" href="#again-count">Again Count</a></h3>
+<p>Это количество review,
+которые вы не прошли
+(т.е. нажали Again).
+Указанный рядом процент правильных ответов —
+это количество карточек,
+которые вы <strong>не</strong> провалили,
+делённое на общее количество изученных карточек.</p>
+<h3 id="Обучение-повторение-переобучение-фильтрованные"><a class="header" href="#Обучение-повторение-переобучение-фильтрованные">Обучение, повторение, переобучение, фильтрованные</a></h3>
+<p>Количество review,
+которые были learning-карточками,
+review-карточками,
+relearning-карточками,
+или изучались в filtered deck
+когда не были due.</p>
+<p>Статистика только за текущий день
+не является хорошим общим индикатором
+вашего прогресса обучения;
+у всех бывают хорошие и плохие дни,
+и более низкий процент правильных
+в конкретный день — не повод для беспокойства.
+Остальные разделы статистики,
+учитывающие более длинные периоды,
+дают более полезную информацию,
+если вы хотите изменить привычки обучения
+или настройки планирования
+на основе вашей эффективности.</p>
+<p>Статистика <code>today</code>
+не зависит от выбранного
+внизу окна периода времени.</p>
+<h2 id="Графики"><a class="header" href="#Графики">Графики</a></h2>
+<h3 id="Будущие-сроки"><a class="header" href="#Будущие-сроки">Будущие сроки</a></h3>
+<p>Этот график показывает
+оценочное количество review,
+которые будут due
+в определённый день в будущем,
+если вы не учите новые карточки
+и не проваливаете карточки.
+Столбцы и левая ось
+показывают количество карточек,
+назначенных на каждый день,
+если вы учитесь каждый день;
+серый затенённый регион и правая ось
+показывают количество карточек due в этот день,
+если вы вообще не учитесь до этого момента.
+Учтите,
+что прогнозный график
+не учитывает карточки,
+которые уже просрочены,
+поэтому при большом backlog
+просроченные карточки отображаться не будут.</p>
+<p>Daily load — это оценка
+среднего числа карточек,
+которые нужно повторять ежедневно.
+Если backlog нет,
+daily load примерно равен
+числу due-карточек.</p>
+<p>Вычисляется так:</p>
+<p>$$
+\frac{1}{I_1} + \frac{1}{I_2} + \frac{1}{I_3} + \dots + \frac{1}{I_n}
+$$</p>
+<p>Здесь (I_n) — интервал
+n-й карточки.
+Если интервал меньше одного дня,
+слагаемое берётся равным 1.
+Это предотвращает нереалистичное
+смещение значения daily load
+из-за карточек с короткими интервалами.</p>
+<p>Пример:
+есть карточка с интервалом 10 дней
+и карточка с интервалом 50 дней.
+Daily load = (\frac{1}{10} + \frac{1}{50} = 0.12),
+то есть <em>в среднем</em>
+у вас будет 0.12 due-карточек в день.</p>
+<h3 id="Календарь"><a class="header" href="#Календарь">Календарь</a></h3>
+<p>Этот график показывает прошлую активность повторений.
+При наведении на конкретный элемент
+можно увидеть количество повторений в этот день.
+Нажмите на день недели,
+чтобы сделать его начальным днём.</p>
+<h3 id="Повторения"><a class="header" href="#Повторения">Повторения</a></h3>
+<p>Этот график считает,
+сколько review карточек вы сделали.
+Столбцы могут соответствовать дням,
+неделям или месяцам —
+в зависимости от периода,
+выбранного внизу экрана.
+Блоки разных цветов показывают,
+сколько карточек,
+на которые вы отвечали в каждый день,
+были <a href="getting-started.html#card-states">mature</a>,
+young, relearning или learning.
+Есть отдельная группа
+для карточек,
+на которые отвечали
+в filtered/cram deck,
+когда они не были due.
+Серый затенённый регион и правая ось
+показывают накопительный итог
+для каждого типа review
+по мере движения по времени на графике
+(то есть на 0 дней
+показывается количество
+за весь период,
+который показан на графике).</p>
+<h3 id="Количество-карточек"><a class="header" href="#Количество-карточек">Количество карточек</a></h3>
+<p>Эта круговая диаграмма показывает,
+какой процент колоды или коллекции
+составляют mature, unseen,
+young/learn и suspended карточки.
+Если нужен более точный процент,
+легенда показывает точное количество карточек
+в каждом секторе,
+а общее число карточек
+показывается сбоку.</p>
+<h3 id="Время-повторения-review-time"><a class="header" href="#Время-повторения-review-time">Время повторения (Review Time)</a></h3>
+<p>Этот график работает так же,
+как Review Count,
+но показывает не число карточек,
+а время,
+потраченное на каждую карточку.</p>
+<h3 id="Интервалы-повторений-review-intervals"><a class="header" href="#Интервалы-повторений-review-intervals">Интервалы повторений (Review Intervals)</a></h3>
+<p>Этот график показывает количество карточек,
+имеющих определённый интервал
+(задержку между двумя повторениями).
+Серый затенённый регион и правая ось
+показывают,
+какой процент карточек
+имеет интервал
+меньше или равный времени
+ниже данной точки.
+Временной диапазон влияет на этот график
+иначе,
+чем на другие:
+вместо изменения периода/набора карточек
+он ограничивает,
+до каких интервалов идёт отображение
+(поэтому интервалы 14 месяцев
+вообще не показываются
+на графике за 1 год).</p>
+<h3 id="Лёгкость-карточек-card-ease"><a class="header" href="#Лёгкость-карточек-card-ease">Лёгкость карточек (Card Ease)</a></h3>
+<p>Этот график показывает,
+сколько карточек
+имеют определённый ease factor.
+Здесь также показывается
+средний ease
+для выбранной колоды / коллекции.</p>
+<h3 id="Стабильность-карточек-card-stability"><a class="header" href="#Стабильность-карточек-card-stability">Стабильность карточек (Card Stability)</a></h3>
+<p>Показывается только,
+если включён FSRS.
+Stability определяется
+как время,
+за которое вероятность воспоминания
+снижается со 100% до 90%.</p>
+<h3 id="Сложность-карточек-card-difficulty"><a class="header" href="#Сложность-карточек-card-difficulty">Сложность карточек (Card Difficulty)</a></h3>
+<p>Показывается только,
+если включён FSRS.
+Difficulty определяет,
+как быстро растёт интервал карточки
+после каждого повторения.</p>
+<h3 id="Извлекаемость-карточек-card-retrievability"><a class="header" href="#Извлекаемость-карточек-card-retrievability">Извлекаемость карточек (Card Retrievability)</a></h3>
+<p>Показывается только,
+если включён FSRS.
+<code>Retrievability</code> эквивалентно
+<code>probability of recall</code>.</p>
+<p>Estimated total knowledge —
+это общее число карточек,
+которые вы, вероятно,
+сейчас помните;
+оно вычисляется умножением
+средней retrievability
+на число карточек,
+которые были повторены
+хотя бы один раз.</p>
+<h3 id="Распределение-по-часам-hourly-breakdown"><a class="header" href="#Распределение-по-часам-hourly-breakdown">Распределение по часам (Hourly Breakdown)</a></h3>
+<p>Этот график показывает,
+какой процент общего числа review
+вы проходили успешно
+в определённые часы.</p>
+<ol>
+<li>ось X (снизу): время суток (по часам).</li>
+<li>ось Y (справа): количество изученных карточек.</li>
+<li>вторичная ось Y (слева): процент успешности.</li>
+</ol>
+<p>Синие столбцы показывают,
+сколько review вы делали в этот час
+(чтобы понимать,
+насколько результат значим).
+Серый затенённый регион показывает
+процент общего числа review,
+которые вы прошли
+(т.е. не нажали <em>Again</em>)
+в этот час.</p>
+<h3 id="Кнопки-ответов-answer-buttons"><a class="header" href="#Кнопки-ответов-answer-buttons">Кнопки ответов (Answer Buttons)</a></h3>
+<p>Этот график показывает,
+сколько раз вы выбирали
+кнопки Again, Hard, Good или Easy
+при изучении
+learning/new, young
+и <a href="getting-started.html#card-states">mature</a> карточек.
+Anki также показывает
+процент правильных review
+для каждого типа карточек.</p>
+<h3 id="Таблица-true-retention"><a class="header" href="#Таблица-true-retention">Таблица True Retention</a></h3>
+<p>Эта таблица показывает вашу retention
+для разных карточек
+и разных временных диапазонов.
+Карточка считается <code>mature</code>,
+если её интервал ≥21 дня.
+Считается только один review в день — первый.
+Again считается <code>Fail</code>;
+Hard, Good и Easy считаются <code>Pass</code>.
+Эта таблица помогает понять,
+насколько хорошо для вас работает
+<a href="https://faqs.ankiweb.net/what-spaced-repetition-algorithm.html">алгоритм интервальных повторений Anki</a>.</p>
+<p>Если вы используете FSRS,
+ваша true retention
+должна быть близка
+к <a href="deck-options.html#desired-retention">desired retention</a>.
+Учтите,
+что данные за один день шумные,
+поэтому лучше смотреть месячные данные.
+Если true retention плохо совпадает
+с desired retention,
+вот общие рекомендации:</p>
+<ol>
+<li>Оптимизировать параметры FSRS.</li>
+<li>Использовать разные presets
+со своими параметрами
+для разного материала.</li>
+<li>Suspend/reformulate <a href="leeches.html">leeches</a>.</li>
+<li>Убедиться,
+что вы <a href="studying.html#answer-buttons">используете кнопки ответа по назначению</a>.</li>
+</ol>
+<h2 id="Ручной-анализ"><a class="header" href="#Ручной-анализ">Ручной анализ</a></h2>
+<p>Если вы хотите получить из статистики
+информацию,
+отличную от той,
+которую даёт Anki,
+можно обратиться к данным напрямую.
+Из-за сложности процесса
+мы не можем предоставлять по нему поддержку.</p>
+<p>Один вариант —
+<a href="addons.html">написать дополнение</a>,
+которое добавит новый график
+или больше деталей
+в окно статистики.
+На AnkiWeb уже есть несколько дополнений
+такого рода,
+по которым можно понять,
+как это работает.</p>
+<p>Более мощный,
+но и более сложный вариант —
+извлечь данные журнала повторений напрямую
+из базы данных Anki
+и анализировать их во внешней программе.
+Anki использует формат базы SQLite.
+Есть много инструментов
+для работы с базами SQLite;
+один из самых простых для старта —
+<a href="http://sqlitebrowser.org/">SQLite Browser</a>,
+который позволяет просматривать базу
+и экспортировать таблицы в CSV
+для импорта в другую программу.</p>
+<p>Самая важная таблица для статистики —
+<code>revlog</code>,
+которая хранит запись
+для каждого выполненного повторения.
+Столбцы следующие:</p>
+<p><strong>id</strong><br />
+Время проведения review,
+как число миллисекунд,
+прошедших с полуночи UTC
+1 января 1970 года.
+(Это часто называют Unix epoch time,
+особенно в секундах,
+а не миллисекундах.)</p>
+<p><strong>cid</strong><br />
+ID карточки,
+которая была повторена.
+Это значение можно найти
+в поле id таблицы <code>cards</code>,
+чтобы получить больше информации о карточке,
+но учтите,
+что карточка могла измениться
+между записью в revlog
+и моментом,
+когда вы её просматриваете.
+Также это timestamp (в миллисекундах)
+времени создания карточки.</p>
+<p><strong>usn</strong><br />
+Этот столбец используется
+для отслеживания состояния синхронизации review
+и не даёт полезной информации
+для анализа.</p>
+<p><strong>ease</strong><br />
+Какую кнопку вы нажали
+в конце review
+(1 для Again, 4 для Easy).</p>
+<p><strong>ivl</strong><br />
+Новый интервал,
+на который была перемещена карточка
+после review.
+Положительные значения — в днях,
+отрицательные — в секундах
+(для learning-карточек).</p>
+<p><strong>lastIvl</strong><br />
+Интервал карточки до review.
+У карточек,
+показанных впервые,
+last interval равен задержке Again.</p>
+<p><strong>factor</strong><br />
+Новый ease factor карточки
+в промилле (частях на тысячу).
+Если ease factor = 2500,
+интервал карточки
+в следующий раз при нажатии Good
+умножится на 2.5.</p>
+<p><strong>time</strong><br />
+Количество времени (в миллисекундах),
+которое вы потратили
+на сторону вопроса и ответа карточки
+до выбора кнопки оценки.</p>
+<p><strong>type</strong><br />
+0 для learning-карточек,
+1 для review-карточек,
+2 для relearning-карточек,
+3 для ранних <code>cram</code>-карточек
+(карточек,
+изучаемых в filtered deck,
+когда они не due).</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="files.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="media.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="files.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="media.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

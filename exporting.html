@@ -1,0 +1,299 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Экспорт - Anki Manual</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Anki&#x27;s user manual. Anki is a flashcard program that makes learning easier.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="css/misc.css">
+        <link rel="stylesheet" href="css/mdbook-admonish.css">
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Anki Manual</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/ankitects/anki-manual/" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="Экспорт"><a class="header" href="#Экспорт">Экспорт</a></h1>
+<ul>
+<li><a href="#%D0%A2%D0%B5%D0%BA%D1%81%D1%82%D0%BE%D0%B2%D1%8B%D0%B5-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B">Текстовые файлы</a></li>
+<li><a href="#%D0%9F%D0%B0%D0%BA%D0%B5%D1%82%D1%8B-%D0%BA%D0%BE%D0%BB%D0%BE%D0%B4">Пакеты колод</a>
+<ul>
+<li><a href="#%D0%9A%D0%BE%D0%BB%D0%BB%D0%B5%D0%BA%D1%86%D0%B8%D1%8F-colpkg">Коллекция (.colpkg)</a></li>
+<li><a href="#%D0%9A%D0%BE%D0%BB%D0%BE%D0%B4%D0%B0-apkg">Колода (.apkg)</a></li>
+</ul>
+</li>
+</ul>
+<p>Экспорт позволяет сохранить часть вашей коллекции в текстовый файл
+или в пакет колоды Anki. Чтобы экспортировать, откройте меню «Файл»
+и выберите <strong>Экспорт</strong>.</p>
+<h2 id="Текстовые-файлы"><a class="header" href="#Текстовые-файлы">Текстовые файлы</a></h2>
+<p>Если выбрать «Notes in Plain Text», Anki запишет содержимое заметок
+в текстовый файл. Каждое поле разделяется табуляцией.
+Если вы отредактируете получившийся файл и не измените первое поле,
+позже его можно импортировать обратно в Anki,
+и Anki обновит ваши заметки на основе правок,
+если импорт производится в тот же тип заметки.</p>
+<p>Если вам всё же нужно редактировать и первое поле,
+придётся изменить формат типа заметки так,
+чтобы первое поле было ID-номером, а не обычным текстом.
+(Чтобы упростить это, можно установить дополнение
+<a href="https://ankiweb.net/shared/info/8897764">Add note id</a>.)</p>
+<p>Чтобы при обратном импорте форматирование сохранилось,
+текст экспортируется со встроенной HTML-разметкой.</p>
+<h2 id="Пакеты-колод"><a class="header" href="#Пакеты-колод">Пакеты колод</a></h2>
+<p>«Пакет колоды» состоит из карточек, заметок, типов заметок,
+а также любых звуков и изображений, объединённых в файл
+с расширением <code>.apkg</code> или <code>.colpkg</code>.
+Пакеты колод можно использовать для передачи карточек между людьми
+или для резервного копирования частей коллекции.</p>
+<p>Есть два вида пакетов колод.</p>
+<h3 id="Коллекция-colpkg"><a class="header" href="#Коллекция-colpkg">Коллекция (.colpkg)</a></h3>
+<p>Когда вы экспортируете все колоды с включённым расписанием,
+это называется «пакет коллекции».
+Anki копирует всю коллекцию в файл с расширением <code>.colpkg</code>
+и помещает его на рабочий стол.
+Пакет коллекции используется для резервного копирования коллекции
+или копирования на другое устройство.</p>
+<p>Пакеты коллекции, созданные старыми версиями Anki,
+назывались <code>collection.apkg</code>.</p>
+<p>Когда этот файл позже импортируется, Anki удаляет все текущие карточки
+из коллекции и заменяет коллекцию содержимым файла.
+Это полезно для переноса коллекции между устройствами.</p>
+<p>Существующие медиафайлы в коллекции не удаляются
+при импорте пакета коллекции.
+Чтобы удалить неиспользуемые медиафайлы,
+используйте Инструменты&gt;Проверка медиа.</p>
+<p>Если выбрать формат пакета коллекции Anki 2.1.50+,
+импорт и экспорт будут быстрее, а медиафайлы — сжаты,
+но итоговый файл <code>.colpkg</code> не будет читаться
+старыми клиентами Anki.</p>
+<h3 id="Колода-apkg"><a class="header" href="#Колода-apkg">Колода (.apkg)</a></h3>
+<p>Пакеты колод содержат одну колоду
+(и любые её дочерние колоды).
+Их имя файла заканчивается на <code>.apkg</code>,
+но это не <code>collection.apkg</code>.
+При импорте пакета колоды Anki добавляет его содержимое
+в вашу коллекцию, а не перезаписывает коллекцию целиком.</p>
+<p>Если некоторые заметки из пакета колоды импортировались ранее,
+Anki сохраняет версию с самым новым временем изменения.
+Поэтому если вы скачаете обновлённую колоду,
+правки из новой версии применятся в вашей коллекции,
+но если вы повторно импортируете неизменённую колоду
+после собственных правок в коллекции,
+ваши изменения будут сохранены.</p>
+<p>Если вы решите не включать информацию о расписании,
+Anki будет считать, что вы делитесь колодой с другими,
+и удалит теги <code>marked</code> и <code>leech</code>,
+чтобы пользователи получили «чистую» копию.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="importing/packaged-decks.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="backups.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="importing/packaged-decks.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="backups.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

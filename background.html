@@ -1,0 +1,390 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Общая информация - Anki Manual</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Anki&#x27;s user manual. Anki is a flashcard program that makes learning easier.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="css/misc.css">
+        <link rel="stylesheet" href="css/mdbook-admonish.css">
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Anki Manual</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/ankitects/anki-manual/" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="Общая-информация"><a class="header" href="#Общая-информация">Общая информация</a></h1>
+<ul>
+<li><a href="#%D0%90%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D0%B5-%D0%B2%D1%81%D0%BF%D0%BE%D0%BC%D0%B8%D0%BD%D0%B0%D0%BD%D0%B8%D0%B5">Активное вспоминание</a></li>
+<li><a href="#%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B9-%D0%B8%D0%BB%D0%B8-%D0%BF%D0%BE%D1%82%D0%B5%D1%80%D1%8F%D0%B5%D1%88%D1%8C">Используй или потеряешь</a></li>
+<li><a href="#%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B2%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5-%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%B5%D0%BD%D0%B8%D1%8F">Интервальные повторения</a></li>
+<li><a href="#%D0%9F%D0%BE%D1%87%D0%B5%D0%BC%D1%83-anki">Почему Anki?</a></li>
+</ul>
+<p>Anki — это программа, которая упрощает запоминание.
+Поскольку она намного эффективнее традиционных методов обучения,
+вы можете либо значительно сократить время на учёбу,
+либо значительно увеличить объём усвоенного материала.</p>
+<p>Anki полезен каждому, кому нужно что-то запоминать в повседневной жизни.
+Поскольку программа не привязана к конкретному типу контента
+и поддерживает изображения, аудио, видео и научную разметку,
+возможности практически безграничны. Например:</p>
+<ul>
+<li>
+<p>Изучение языка</p>
+</li>
+<li>
+<p>Подготовка к медицинским и юридическим экзаменам</p>
+</li>
+<li>
+<p>Запоминание имён и лиц людей</p>
+</li>
+<li>
+<p>Повторение географии</p>
+</li>
+<li>
+<p>Освоение длинных стихотворений</p>
+</li>
+<li>
+<p>И даже тренировка гитарных аккордов!</p>
+</li>
+</ul>
+<p>В основе Anki лежат две простые идеи: <strong>активное вспоминание</strong>
+и <strong>интервальные повторения</strong>. Несмотря на хорошую научную
+документированность, большинство учащихся о них не знают.
+Понимание этих концепций сделает вас более эффективным учеником.</p>
+<h2 id="Активное-вспоминание"><a class="header" href="#Активное-вспоминание">Активное вспоминание</a></h2>
+<p><em>Активное вспоминание</em> означает, что вам задают вопрос,
+и вы пытаетесь вспомнить ответ. Это противоположно <em>пассивному обучению</em>,
+когда мы читаем, смотрим или слушаем что-то, не останавливаясь,
+чтобы проверить, действительно ли знаем ответ.
+Исследования показали, что активное вспоминание гораздо эффективнее
+для формирования прочных воспоминаний, чем пассивное обучение.
+Причины две:</p>
+<ul>
+<li>
+<p>Сам акт вспоминания <em>укрепляет</em> память,
+повышая вероятность, что мы сможем вспомнить это снова.</p>
+</li>
+<li>
+<p>Когда мы не можем ответить на вопрос,
+это показывает, что нужно вернуться к материалу,
+чтобы повторить или заново выучить его.</p>
+</li>
+</ul>
+<p>Вероятно, вы сталкивались с активным вспоминанием ещё в школе,
+даже не осознавая этого. Когда хорошие учителя дают серию вопросов
+после прочтения статьи или устраивают еженедельные тесты,
+они делают это не только для проверки понимания материала.
+Проверяя вас, они повышают вероятность,
+что вы запомните материал в будущем.</p>
+<p>Хороший способ внедрить активное вспоминание в собственную учёбу —
+использовать <em>флешкарты</em>. В традиционных бумажных карточках
+на одной стороне пишется вопрос, на другой — ответ.
+Если не переворачивать карточку, пока не вспомнили ответ,
+учиться можно эффективнее, чем при пассивном наблюдении.</p>
+<h2 id="Используй-или-потеряешь"><a class="header" href="#Используй-или-потеряешь">Используй или потеряешь</a></h2>
+<p>Наш мозг — эффективная система, и он быстро забывает информацию,
+которая не кажется полезной. Скорее всего, вы не помните,
+что ели на ужин в понедельник две недели назад,
+потому что эта информация обычно не нужна. Однако если в тот день
+вы были в потрясающем ресторане и последние две недели
+рассказывали всем, как там было здорово,
+вы, вероятно, до сих пор помните это очень ярко.</p>
+<p>Принцип мозга «используй или потеряй» применим ко всему, что мы учим.
+Если вы проведёте день, запоминая научные термины,
+а потом не вспомните о них две недели,
+то, скорее всего, забудете большую часть.
+Более того, исследования показывают, что мы забываем около 75%
+изученного в течение 48 часов.
+Это может казаться очень удручающим,
+когда нужно выучить много информации.</p>
+<p>Однако решение простое: <em>повторение</em>.
+Повторяя недавно выученную информацию,
+мы можем значительно снизить забывание.</p>
+<p>Проблема лишь в том, что традиционно повторение было не слишком практичным.
+Если вы используете бумажные карточки,
+легко быстро пройтись по всем, когда их всего 30,
+но когда число растёт до 300 или 3000,
+это быстро становится неуправляемым.</p>
+<h2 id="Интервальные-повторения"><a class="header" href="#Интервальные-повторения">Интервальные повторения</a></h2>
+<p><em>Эффект распределения</em> был описан в 1885 году
+немецким психологом Германом Эббингаузом.
+Он заметил, что мы запоминаем информацию эффективнее,
+если распределяем повторения во времени,
+а не учим много раз за одну сессию.
+С 1930-х годов появилось множество предложений,
+как использовать этот эффект для улучшения обучения,
+что получило название <em>интервальные повторения</em>.</p>
+<p>Один из примеров появился в 1972 году,
+когда немецкий учёный Себастьян Лейтнер
+популяризовал метод интервальных повторений
+с бумажными карточками. Разделяя карточки
+по ряду коробок и перемещая их между коробками
+после успешного или неуспешного повторения,
+можно было быстро оценить, насколько хорошо карточка выучена
+и когда её стоит повторить снова.
+Это было большим шагом вперёд по сравнению
+с одной общей коробкой карточек,
+и подход широко приняли компьютерные программы флешкарт.
+Однако это всё же довольно грубый метод,
+так как он не даёт точной даты следующего повторения
+и плохо работает с материалом разной сложности.</p>
+<p>Крупнейшие достижения за последние 30 лет связаны
+с авторами SuperMemo — коммерческой программы флешкарт
+с интервальными повторениями.
+SuperMemo первым реализовал систему,
+которая отслеживает идеальный момент для повторения
+и оптимизируется на основе результатов пользователя.</p>
+<p>В системе интервальных повторений SuperMemo
+каждый раз, отвечая на вопрос, вы сообщаете программе,
+насколько хорошо смогли вспомнить ответ —
+полностью забыли, допустили небольшую ошибку,
+вспомнили с трудом, вспомнили легко и т. д.
+Программа использует эту обратную связь,
+чтобы определить оптимальное время,
+когда снова показать вам вопрос.
+Поскольку память укрепляется при каждом успешном вспоминании,
+интервалы между повторениями становятся всё больше:
+вы можете увидеть вопрос сегодня,
+затем через 3 дня, 15 дней, 45 дней и т. д.</p>
+<p>Это стало революцией в обучении,
+потому что позволило учить и удерживать материал
+с минимально необходимыми усилиями.
+Лозунг SuperMemo это хорошо передаёт:
+с интервальными повторениями можно «забыть о забывании».</p>
+<h2 id="Почему-anki"><a class="header" href="#Почему-anki">Почему Anki?</a></h2>
+<p>Нельзя отрицать огромное влияние SuperMemo на эту область,
+но у него есть и проблемы. Программу часто критикуют
+за баги и сложную навигацию.
+Она работает только на Windows.
+Это проприетарное ПО, то есть конечные пользователи
+не могут расширять его или получать доступ к сырым данным.
+И хотя очень старые версии доступны бесплатно,
+для современных задач они довольно ограничены.</p>
+<p>Anki решает эти проблемы.
+Для Anki есть бесплатные клиенты на многих платформах,
+поэтому учащиеся и преподаватели с ограниченным бюджетом
+не остаются за бортом.
+Anki — open source-проект,
+с уже активно развивающейся библиотекой дополнений
+от пользователей.
+Это мультиплатформенное решение:
+Windows, macOS, Linux/FreeBSD и некоторые мобильные устройства.
+И пользоваться Anki заметно проще, чем SuperMemo.</p>
+<p>Система интервальных повторений в Anki основана
+на более старой версии алгоритма SuperMemo,
+называемой <a href="https://faqs.ankiweb.net/what-spaced-repetition-algorithm">SM-2</a>.
+Недавно в качестве альтернативы устаревшему SM-2
+был интегрирован новый алгоритм <a href="https://docs.ankiweb.net/deck-options.html?highlight=FSRS#fsrs">FSRS</a>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="intro.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="platform/intro.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="intro.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="platform/intro.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

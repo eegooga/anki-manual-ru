@@ -1,0 +1,584 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Подстановки полей - Anki Manual</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Anki&#x27;s user manual. Anki is a flashcard program that makes learning easier.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../css/misc.css">
+        <link rel="stylesheet" href="../css/mdbook-admonish.css">
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Anki Manual</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/ankitects/anki-manual/" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="Подстановки-полей"><a class="header" href="#Подстановки-полей">Подстановки полей</a></h1>
+<ul>
+<li><a href="#%D0%91%D0%B0%D0%B7%D0%BE%D0%B2%D1%8B%D0%B5-%D0%BF%D0%BE%D0%B4%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B8">Базовые подстановки</a></li>
+<li><a href="#%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%BE%D1%81%D1%8B-%D1%81%D1%82%D1%80%D0%BE%D0%BA">Переносы строк</a></li>
+<li><a href="#text-to-speech-%D0%B4%D0%BB%D1%8F-%D0%BE%D1%82%D0%B4%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D1%85-%D0%BF%D0%BE%D0%BB%D0%B5%D0%B9">Text to Speech для отдельных полей</a></li>
+<li><a href="#text-to-speech-%D0%B4%D0%BB%D1%8F-%D0%BD%D0%B5%D1%81%D0%BA%D0%BE%D0%BB%D1%8C%D0%BA%D0%B8%D1%85-%D0%BF%D0%BE%D0%BB%D0%B5%D0%B9-%D0%B8-%D1%81%D1%82%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B3%D0%BE-%D1%82%D0%B5%D0%BA%D1%81%D1%82%D0%B0">Text to Speech для нескольких полей и статического текста</a></li>
+<li><a href="#%D0%A1%D0%BF%D0%B5%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5-%D0%BF%D0%BE%D0%BB%D1%8F">Специальные поля</a></li>
+<li><a href="#%D0%9F%D0%BE%D0%BB%D1%8F-%D0%BF%D0%BE%D0%B4%D1%81%D0%BA%D0%B0%D0%B7%D0%BA%D0%B8">Поля-подсказки</a></li>
+<li><a href="#%D0%A1%D1%81%D1%8B%D0%BB%D0%BA%D0%B8-%D0%BD%D0%B0-%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D1%80%D1%8C">Ссылки на словарь</a></li>
+<li><a href="#%D0%A3%D0%B4%D0%B0%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-html">Удаление HTML</a></li>
+<li><a href="#%D0%A2%D0%B5%D0%BA%D1%81%D1%82-%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B5%D0%B2%D0%BE">Текст справа налево</a></li>
+<li><a href="#ruby-%D1%81%D0%B8%D0%BC%D0%B2%D0%BE%D0%BB%D1%8B">Ruby-символы</a>
+<ul>
+<li><a href="#%D0%94%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5-%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D1%8B-ruby-%D1%81%D0%B8%D0%BC%D0%B2%D0%BE%D0%BB%D0%BE%D0%B2">Дополнительные фильтры ruby-символов</a></li>
+</ul>
+</li>
+<li><a href="#%D0%9C%D0%B5%D0%B4%D0%B8%D0%B0-%D0%B8-latex">Медиа и LaTeX</a>
+<ul>
+<li><a href="#%D0%A1%D1%82%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5-%D0%B7%D0%B2%D1%83%D0%BA%D0%B8%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F">Статические звуки/изображения</a></li>
+<li><a href="#%D0%A1%D1%81%D1%8B%D0%BB%D0%BA%D0%B8-%D1%87%D0%B5%D1%80%D0%B5%D0%B7-%D0%BF%D0%BE%D0%BB%D1%8F">Ссылки через поля</a></li>
+</ul>
+</li>
+<li><a href="#%D0%9F%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%BA%D0%B0-%D0%B2%D0%B0%D1%88%D0%B5%D0%B3%D0%BE-%D0%BE%D1%82%D0%B2%D0%B5%D1%82%D0%B0">Проверка вашего ответа</a>
+<ul>
+<li><a href="#%D0%98%D0%B3%D0%BD%D0%BE%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D0%B4%D0%B8%D0%B0%D0%BA%D1%80%D0%B8%D1%82%D0%B8%D0%BA%D0%B8">Игнорирование диакритики</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="Базовые-подстановки"><a class="header" href="#Базовые-подстановки">Базовые подстановки</a></h2>
+<p>Самый простой шаблон выглядит так:</p>
+<pre><code>{{Front}}
+</code></pre>
+<p>Когда вы помещаете текст в фигурные скобки, Anki ищет поле с таким именем
+и заменяет текст фактическим содержимым этого поля.</p>
+<p>Имена полей чувствительны к регистру. Если поле называется <code>Front</code>,
+запись <code>{{front}}</code> не сработает как нужно.</p>
+<p>Шаблоны не ограничиваются только списком полей. В них можно добавлять
+произвольный текст. Например, если вы учите столицы и создали тип заметки
+с полем «Country», лицевая сторона может выглядеть так:</p>
+<pre><code>What's the capital city of {{Country}}?
+</code></pre>
+<p>Шаблон обратной стороны по умолчанию выглядит примерно так:</p>
+<pre><code>{{FrontSide}}
+
+&lt;hr id=answer&gt;
+
+{{Back}}
+</code></pre>
+<p>Это означает: «покажи текст с лицевой стороны, затем разделитель,
+а потом поле Back».</p>
+<p>Часть <code>"id=answer"</code> указывает Anki, где проходит граница между вопросом
+и ответом. Благодаря этому Anki может автоматически прокрутить карточку к
+месту начала ответа при нажатии <strong>show answer</strong> на длинной карточке
+(особенно полезно на мобильных устройствах с небольшим экраном). Если
+горизонтальная линия в начале ответа не нужна, используйте другой
+HTML-элемент, например абзац или <code>div</code>.</p>
+<h2 id="Переносы-строк"><a class="header" href="#Переносы-строк">Переносы строк</a></h2>
+<p>Шаблоны карточек похожи на веб-страницы, поэтому для новой строки нужен
+специальный код. Например, если в шаблоне написать:</p>
+<pre><code>one
+two
+</code></pre>
+<p>В предпросмотре вы увидите:</p>
+<pre><code>one two
+</code></pre>
+<p>Чтобы добавить новую строку, в конец строки нужно поставить код <code>&amp;lt;br&amp;gt;</code>,
+вот так:</p>
+<pre><code>one&lt;br&gt;
+two
+</code></pre>
+<p>Код <code>br</code> означает <code>(line) br(eak)</code>.</p>
+<p>То же самое относится к полям. Если нужно показать два поля, по одному
+в каждой строке, используйте:</p>
+<pre><code>{{Field 1}}&lt;br&gt;
+{{Field 2}}
+</code></pre>
+<h2 id="text-to-speech-для-отдельных-полей"><a class="header" href="#text-to-speech-для-отдельных-полей">Text to Speech для отдельных полей</a></h2>
+<p>Эта возможность требует Anki 2.1.20, AnkiMobile 2.0.56 или AnkiDroid 2.17.</p>
+<p>Чтобы Anki озвучивал поле Front голосом американского английского, добавьте
+в шаблон:</p>
+<pre><code>{{tts en_US:Front}}
+</code></pre>
+<p>На Windows, macOS и iOS Anki использует встроенные голоса ОС. На Linux
+встроенных голосов нет, но их можно добавить через дополнения, например
+<a href="https://ankiweb.net/shared/info/391644525">это</a>.</p>
+<p>Чтобы увидеть список доступных языков/голосов, добавьте в шаблон:</p>
+<pre><code>{{tts-voices:}}
+</code></pre>
+<p>Если выбранный язык поддерживают несколько голосов, можно перечислить их
+списком, и Anki выберет первый доступный. Например:</p>
+<pre><code>{{tts ja_JP voices=Apple_Otoya,Microsoft_Haruka:Field}}
+</code></pre>
+<p>В этом случае на устройстве Apple будет использован Otoya, а на
+Windows-ПК — Haruka.</p>
+<p>В некоторых реализациях TTS можно указать другую скорость:</p>
+<pre><code>{{tts fr_FR speed=0.8:SomeField}}
+</code></pre>
+<p>Параметры <code>speed</code> и <code>voices</code> опциональны, но язык указывать обязательно.</p>
+<p>На Mac доступные голоса можно настроить:</p>
+<ul>
+<li>
+<p>Откройте окно System Preferences.</p>
+</li>
+<li>
+<p>Нажмите Accessibility.</p>
+</li>
+<li>
+<p>Нажмите Speech.</p>
+</li>
+<li>
+<p>Откройте выпадающий список системного голоса и выберите Customize.</p>
+</li>
+</ul>
+<p>Одни голоса звучат лучше других, поэтому стоит попробовать несколько вариантов.
+Обратите внимание: голос Siri доступен только приложениям Apple. После
+установки новых голосов перезапустите Anki, чтобы они появились в списке.</p>
+<p>На Windows некоторые голоса (например, Cortana) выбрать нельзя, потому что
+Microsoft не предоставляет их другим приложениям.</p>
+<p>В типе заметки cloze можно озвучивать только скрытые фрагменты через
+фильтр <code>cloze-only</code>:</p>
+<pre><code>{{tts en_US:cloze-only:Text}}
+</code></pre>
+<p>Фильтр <code>cloze-only</code> поддерживается в Anki 2.1.29+, AnkiMobile 2.0.65+
+и AnkiDroid 2.17+.</p>
+<h2 id="text-to-speech-для-нескольких-полей-и-статического-текста"><a class="header" href="#text-to-speech-для-нескольких-полей-и-статического-текста">Text to Speech для нескольких полей и статического текста</a></h2>
+<p>Эта возможность требует Anki 2.1.50+, AnkiMobile 2.0.84+ или AnkiDroid 2.17+.</p>
+<p>Если нужно, чтобы TTS озвучивал несколько полей и/или статический текст
+из шаблона, используйте:</p>
+<pre><code>[anki:tts lang=en_US] This text should be read. Here is {{Field1}} and {{Field2}}[/anki:tts]
+
+This is other text on the template. It is outside of the tags so it should not be read.
+</code></pre>
+<h2 id="Специальные-поля"><a class="header" href="#Специальные-поля">Специальные поля</a></h2>
+<p>В шаблонах можно использовать специальные поля:</p>
+<pre><code>Теги заметки: {{Tags}}
+
+Тип заметки: {{Type}}
+
+Колода карточки: {{Deck}}
+
+Подколода карточки: {{Subdeck}}
+
+Флаг карточки: {{CardFlag}}
+
+Тип карточки ("Forward" и т.д.): {{Card}}
+
+Содержимое шаблона лицевой стороны
+(работает только в шаблоне обратной стороны): {{FrontSide}}
+</code></pre>
+<p><code>FrontSide</code> не воспроизводит автоматически аудио, которое было на лицевой
+стороне карточки. Если нужно, чтобы одно и то же аудио автоматически
+проигрывалось и спереди, и сзади, добавьте аудиополя на обратную сторону вручную.</p>
+<p>Как и обычные поля, специальные поля чувствительны к регистру — нужно писать
+<code>{{Tags}}</code>, а не <code>{{tags}}</code>.</p>
+<h2 id="Поля-подсказки"><a class="header" href="#Поля-подсказки">Поля-подсказки</a></h2>
+<p>Можно добавить поле на лицевую или обратную сторону карточки, но скрыть его,
+пока вы явно не раскроете его. Это называется <em>поле-подсказка</em>.
+Перед добавлением подсказок помните: чем проще ответить на вопрос в Anki,
+тем ниже шанс вспомнить его в реальной ситуации. Перед продолжением полезно
+прочитать о «принципе минимальной информации»:
+<a href="https://super-memory.com/articles/20rules.htm">https://super-memory.com/articles/20rules.htm</a>.</p>
+<p>Сначала добавьте поле для хранения подсказки, если его ещё нет.
+Если не уверены, как это сделать, см. раздел <a href="../editing.html#customizing-fields">fields</a>.</p>
+<p>Предположим, вы создали поле <code>MyField</code>. Чтобы включить его в карточку, но
+скрыть по умолчанию, добавьте в шаблон:</p>
+<pre><code>{{hint:MyField}}
+</code></pre>
+<p>Появится ссылка «show hint»; при нажатии содержимое поля будет показано
+на карточке. (Если <code>MyField</code> пустое, не покажется ничего.)</p>
+<p>Если раскрыть подсказку на вопросе, а затем показать ответ, подсказка снова
+скроется. Если хотите, чтобы при показе ответа подсказка оставалась открытой,
+удалите <code>{{FrontSide}}</code> из шаблона обратной стороны и вручную добавьте
+нужные поля.</p>
+<p>Сейчас нельзя использовать поле-подсказку для аудио — звук воспроизводится
+вне зависимости от нажатия ссылки подсказки.</p>
+<p>Если нужно изменить внешний вид или поведение, поле-подсказку придётся
+реализовать самостоятельно. Мы не можем поддерживать такой сценарий, но
+следующий код поможет начать:</p>
+<pre><code>{{#Back}}
+&lt;a class=hint href="#"
+onclick="this.style.display='none';document.getElementById('hint4753594160').style.display='inline-block';return false;"&gt;
+Show Back&lt;/a&gt;&lt;div id="hint4753594160" class=hint style="display: none"&gt;{{Back}}&lt;/div&gt;
+{{/Back}}
+</code></pre>
+<h2 id="Ссылки-на-словарь"><a class="header" href="#Ссылки-на-словарь">Ссылки на словарь</a></h2>
+<p>Подстановки полей можно использовать и для создания ссылок на словарь.
+Представьте, что вы изучаете язык, и ваш любимый онлайн-словарь позволяет
+искать слово по URL вида:</p>
+<pre><code>http://example.com/search?q=myword
+</code></pre>
+<p>Тогда можно добавить автоматическую ссылку в шаблон:</p>
+<pre><code>{{Expression}}
+
+&lt;a href="http://example.com/search?q={{Expression}}"&gt;check in dictionary&lt;/a&gt;
+</code></pre>
+<p>Такой шаблон позволит искать выражение из каждой заметки по клику во время
+повторения. Но есть важный нюанс — см. следующий раздел.</p>
+<h2 id="Удаление-html"><a class="header" href="#Удаление-html">Удаление HTML</a></h2>
+<p>Как и шаблоны, поля хранятся в формате HTML. В примере со словарной ссылкой
+выше, если выражение содержит слово “myword” без форматирования, HTML будет
+таким же: “myword”. Но при наличии форматирования добавляется лишний HTML.
+Например, если “myword” выделено жирным, фактический HTML будет
+“&lt;b&gt;myword&lt;/b&gt;”.</p>
+<p>Это может создавать проблемы для словарных ссылок. В примере выше ссылка
+получится такой:</p>
+<pre><code>&lt;a href="http://example.com/search?q=&lt;b&gt;myword&lt;/b&gt;"&gt;check in dictionary&lt;/a&gt;
+</code></pre>
+<p>Лишние символы в ссылке, скорее всего, «собьют» словарь, и совпадений вы не получите.</p>
+<p>Чтобы решить это, в Anki есть возможность удалять форматирование при
+подстановке полей. Если добавить к имени поля префикс <code>text:</code>, Anki не будет
+включать форматирование. Тогда словарная ссылка будет работать даже с
+форматированным текстом:</p>
+<pre><code>&lt;a href="http://example.com/search?q={{text:Expression}}"&gt;check in dictionary&lt;/a&gt;
+</code></pre>
+<h2 id="Текст-справа-налево"><a class="header" href="#Текст-справа-налево">Текст справа налево</a></h2>
+<p>Если вы используете язык с письмом справа налево, шаблон нужно настроить так:</p>
+<pre><code>&lt;div dir=rtl&gt;{{FieldThatHasRTLTextInIt}}&lt;/div&gt;
+</code></pre>
+<h2 id="ruby-символы"><a class="header" href="#ruby-символы">Ruby-символы</a></h2>
+<p>В некоторых языках над текстом используют надписи, показывающие произношение
+символов. Такие надписи называются
+<a href="https://en.wikipedia.org/wiki/Ruby_character">ruby characters</a>.
+В японском они известны как <a href="https://en.wikipedia.org/wiki/Furigana">furigana</a>.</p>
+<p>В Anki ruby-символы можно отображать таким синтаксисом:</p>
+<pre><code>Text[Ruby]
+</code></pre>
+<p>Предположим, такой текст записан в <code>MyField</code>. По умолчанию, если просто
+использовать <code>{{Myfield}}</code>, поле будет показано «как есть». Чтобы корректно
+разместить ruby-символы над текстом, примените в шаблоне фильтр <code>furigana</code>:</p>
+<pre><code>{{furigana:MyField}}
+</code></pre>
+<p>Примеры:</p>
+<!-- prettier-ignore -->
+<div class="table-wrapper"><table><thead><tr><th>Исходный текст</th><th>Отображаемый текст</th></tr></thead><tbody>
+<tr><td><code>Text[Ruby]</code></td><td><ruby><rb>Text</rb><rt>Ruby</rt></ruby></td></tr>
+<tr><td><code>日本語[にほんご]</code></td><td><ruby><rb>日本語</rb><rt>にほんご</rt></ruby></td></tr>
+<tr><td><code>世[よ]の 中[なか]</code></td><td><ruby><rb>世</rb><rt>よ</rt></ruby>の<ruby><rb>中</rb><rt>なか</rt></ruby></td></tr>
+<tr><td><code>世[よ]の中[なか]</code></td><td><ruby><rb>世</rb><rt>よ</rt></ruby><ruby><rb>の中</rb><rt>なか</rt></ruby> <em>(incorrect!)</em></td></tr>
+</tbody></table>
+</div>
+<p>Обратите внимание: в третьем примере перед символом 中 есть пробел.
+Это нужно, чтобы ruby-текст применялся только к этому символу.
+Без пробела ruby-текст будет смещён над символом の, как в четвёртом примере.</p>
+<h3 id="Дополнительные-фильтры-ruby-символов"><a class="header" href="#Дополнительные-фильтры-ruby-символов">Дополнительные фильтры ruby-символов</a></h3>
+<p>Помимо фильтра <code>furigana</code>, можно показывать только определённые части ruby-текста
+через фильтры <code>kana</code> и <code>kanji</code>. <code>kana</code> показывает только ruby-текст,
+а <code>kanji</code> полностью убирает ruby-подписи.</p>
+<!-- prettier-ignore -->
+<div class="table-wrapper"><table><thead><tr><th>Исходный текст</th><th>Фильтр поля</th><th>Отображаемый текст</th></tr></thead><tbody>
+<tr><td><code>日本語[にほんご]</code></td><td><code>{{furigana:MyField}}</code></td><td><ruby><rb>日本語</rb><rt>にほんご</rt></ruby></td></tr>
+<tr><td><code>日本語[にほんご]</code></td><td><code>{{kana:MyField}}</code></td><td>にほんご</td></tr>
+<tr><td><code>日本語[にほんご]</code></td><td><code>{{kanji:MyField}}</code></td><td>日本語</td></tr>
+</tbody></table>
+</div>
+<p>Эти названия, как и раньше, взяты из японского.
+Термин <a href="https://en.wikipedia.org/wiki/Kana">kana</a> обозначает фонетическую
+систему записи произношения, а <a href="https://en.wikipedia.org/wiki/Kanji">kanji</a> —
+китайские иероглифы, используемые в японском.</p>
+<h2 id="Медиа-и-latex"><a class="header" href="#Медиа-и-latex">Медиа и LaTeX</a></h2>
+<p>Anki не сканирует шаблоны на медиа-ссылки, потому что это медленно.
+Из-за этого есть особенности при добавлении медиа в шаблон.</p>
+<h3 id="Статические-звукиизображения"><a class="header" href="#Статические-звукиизображения">Статические звуки/изображения</a></h3>
+<p>Если нужно добавить на карточки одинаковые для всех элементы
+(например, логотип вверху каждой карточки):</p>
+<ol>
+<li>
+<p>Переименуйте файл так, чтобы имя начиналось с подчёркивания,
+например <code>\_logo.jpg</code>.
+Подчёркивание сообщает Anki, что файл используется шаблоном и должен
+экспортироваться при публикации колоды.</p>
+</li>
+<li>
+<p>Добавьте ссылку на медиа в шаблон лицевой или обратной стороны:</p>
+</li>
+</ol>
+<!-- -->
+<pre><code>&lt;img src="_logo.jpg"&gt;
+</code></pre>
+<h3 id="Ссылки-через-поля"><a class="header" href="#Ссылки-через-поля">Ссылки через поля</a></h3>
+<p>Медиа-ссылки через поля не поддерживаются. Они могут показываться или не
+показываться при повторении и не будут работать при проверке неиспользуемых
+медиа, импорте/экспорте и т. д. Примеры, которые не работают:</p>
+<pre><code>&lt;img src="{{Expression}}.jpg"&gt;
+
+[sound:{{Word}}]
+
+[latex]{{Field 1}}[/latex]
+</code></pre>
+<p>Вместо этого добавляйте медиа-ссылки прямо в поле.
+Подробнее см. раздел <a href="../importing/text-files.html#importing-media">importing</a>.</p>
+<h2 id="Проверка-вашего-ответа"><a class="header" href="#Проверка-вашего-ответа">Проверка вашего ответа</a></h2>
+<p>Можно посмотреть <a href="http://www.youtube.com/watch?v=5tYObQ3ocrw&amp;yt:cc=on">видео об этой функции</a>
+на YouTube.</p>
+<p>Самый простой способ включить проверку ответа — нажать «Basic» в левом
+верхнем углу окна добавления карточки и выбрать
+«Basic (type in the answer)».</p>
+<p>Если вы скачали общую колоду и хотите вводить ответ в ней, измените шаблон
+карточки. Если сейчас он выглядит так:</p>
+<pre><code>{{Native Word}}
+
+{{FrontSide}}
+
+&lt;hr id=answer&gt;
+
+{{Foreign Word}}
+</code></pre>
+<p>Чтобы вводить иностранное слово и проверять правильность, отредактируйте
+лицевой шаблон так:</p>
+<pre><code>{{Native Word}}
+{{type:Foreign Word}}
+</code></pre>
+<p>Здесь мы добавили <code>type:</code> перед полем, которое нужно сравнить.
+Так как <code>FrontSide</code> находится на обратной стороне карточки, поле ввода
+ответа тоже появится на обратной стороне.</p>
+<p>Во время повторения Anki покажет текстовое поле для ввода ответа. После
+нажатия <kbd>Enter</kbd> или показа ответа Anki отметит, какие части верные,
+а какие нет. Размер шрифта поля ввода будет таким, какой вы задали для этого
+поля (через кнопку «Fields» при редактировании).</p>
+<p>Обратите внимание: поля ввода ответа не отображаются в окне предпросмотра
+и в AnkiWeb.</p>
+<p>Эта функция не меняет сам процесс выставления оценки карточке, поэтому
+решение о том, насколько хорошо вы вспомнили ответ, остаётся за вами.</p>
+<p>На одной карточке можно использовать только одно сравнение ввода.
+Если добавить этот текст несколько раз, это не сработает. Также поддерживается
+только одна строка, поэтому функция плохо подходит для сравнения с полем,
+состоящим из нескольких строк.</p>
+<p>Anki использует моноширинный шрифт для сравнения ответов, чтобы блоки
+«provided» и «correct» выравнивались. Чтобы переопределить шрифт сравнения,
+добавьте в конец раздела стилей:</p>
+<pre><code>code#typeans { font-family: "myfontname"; }
+</code></pre>
+<p>Это повлияет на следующий HTML, используемый для сравнения ответа:</p>
+<pre><code>&lt;code id=typeans&gt;...&lt;/code&gt;
+</code></pre>
+<p>Продвинутые пользователи могут переопределить стандартные цвета через CSS-классы
+<code>typeGood</code>, <code>typeBad</code> и <code>typeMissed</code>. AnkiMobile поддерживает <code>typeGood</code>
+и <code>typeBad</code>, но не <code>typeMissed</code>.</p>
+<p>Если вы хотите изменить размер поля ввода и не менять шрифт в диалоге Fields,
+можно переопределить встроенный inline-стиль через <code>!important</code>:</p>
+<pre><code>#typeans { font-size: 50px !important; }
+</code></pre>
+<p>Ввод ответа доступен и для cloze-карточек. Для этого добавьте
+<code>{{type:cloze:Text}}</code> и в лицевой, и в обратный шаблон; обратная сторона
+будет выглядеть примерно так:</p>
+<pre><code>{{cloze:Text}}
+{{type:cloze:Text}}
+{{Extra}}
+</code></pre>
+<p>Если скрытых фрагментов несколько, ответы в поле ввода можно разделять запятыми.</p>
+<h3 id="Игнорирование-диакритики"><a class="header" href="#Игнорирование-диакритики">Игнорирование диакритики</a></h3>
+<p>Если вы не хотите, чтобы Anki сравнивал диакритику в введённом ответе с
+правильным, используйте <code>type:nc</code> в полях.</p>
+<pre><code>{{type:nc:Front}}
+</code></pre>
+<p>Это гарантирует, что различия в диакритике не будут считаться ошибкой.
+Например, <code>بطيخ</code> будет считаться тем же, что <code>بَطِّيخ</code>, а <code>elite</code> —
+тем же, что <code>élite</code>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../templates/intro.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../templates/generation.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../templates/intro.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../templates/generation.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

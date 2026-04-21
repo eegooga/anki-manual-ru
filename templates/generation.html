@@ -1,0 +1,468 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Генерация карточек - Anki Manual</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Anki&#x27;s user manual. Anki is a flashcard program that makes learning easier.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../css/misc.css">
+        <link rel="stylesheet" href="../css/mdbook-admonish.css">
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Anki Manual</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/ankitects/anki-manual/" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="Генерация-карточек"><a class="header" href="#Генерация-карточек">Генерация карточек</a></h1>
+<ul>
+<li><a href="#%D0%9E%D0%B1%D1%80%D0%B0%D1%82%D0%BD%D1%8B%D0%B5-%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%BA%D0%B8">Обратные карточки</a></li>
+<li><a href="#%D0%93%D0%B5%D0%BD%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D1%8F-%D0%B8-%D1%83%D0%B4%D0%B0%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%B5%D0%BA">Генерация и удаление карточек</a></li>
+<li><a href="#%D0%92%D1%8B%D0%B1%D0%BE%D1%80%D0%BE%D1%87%D0%BD%D0%B0%D1%8F-%D0%B3%D0%B5%D0%BD%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D1%8F-%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%B5%D0%BA">Выборочная генерация карточек</a></li>
+<li><a href="#%D0%A3%D1%81%D0%BB%D0%BE%D0%B2%D0%BD%D0%B0%D1%8F-%D0%BF%D0%BE%D0%B4%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0">Условная подстановка</a></li>
+<li><a href="#%D0%9F%D1%83%D1%81%D1%82%D0%B0%D1%8F-%D0%BE%D0%B1%D0%BE%D1%80%D0%BE%D1%82%D0%BD%D0%B0%D1%8F-%D1%81%D1%82%D0%BE%D1%80%D0%BE%D0%BD%D0%B0">Пустая оборотная сторона</a></li>
+<li><a href="#%D0%94%D0%BE%D0%B1%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D1%83%D1%81%D1%82%D1%8B%D1%85-%D0%B7%D0%B0%D0%BC%D0%B5%D1%82%D0%BE%D0%BA">Добавление пустых заметок</a></li>
+<li><a href="#%D0%A8%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D1%8B-cloze">Шаблоны Cloze</a></li>
+</ul>
+<h2 id="Обратные-карточки"><a class="header" href="#Обратные-карточки">Обратные карточки</a></h2>
+<p>Вы можете посмотреть <a href="http://www.youtube.com/watch?v=DnbKwHEQ1mA&amp;yt:cc=on">видео про обратные карточки</a> на YouTube.</p>
+<p>Если вы хотите создавать карточки в обоих направлениях
+(например, и <code>ookii</code>→<code>big</code>, и <code>big</code>→<code>ookii</code>),
+есть несколько вариантов.
+Самый простой — выбрать встроенный тип заметки
+<code>Basic (and reversed card)</code>.
+Он создаст две карточки, по одной в каждом направлении.</p>
+<p>Если вы хотите создавать обратные карточки
+только для части материала
+(например, только для самых важных элементов,
+или если некоторые карточки не имеют смысла в обратном виде),
+можно выбрать тип заметки <code>Basic (optional reversed card)</code>.
+Этот тип создаёт только прямую карточку,
+если заполнены лишь первые два поля;
+если дополнительно заполнить поле <code>Add Reverse</code>
+(например, символом <code>y</code>),
+Anki также создаст обратную карточку.
+Содержимое этого поля никогда не отображается на карточке.</p>
+<h2 id="Генерация-и-удаление-карточек"><a class="header" href="#Генерация-и-удаление-карточек">Генерация и удаление карточек</a></h2>
+<p>Anki не создаёт карточки с пустой лицевой стороной.
+Поэтому если <code>My Field</code> было пустым,
+и лицевая сторона карточки состояла только из этого поля,
+карточка создана не будет.</p>
+<p>Когда вы редактируете уже добавленную заметку,
+Anki автоматически создаёт дополнительные карточки,
+если раньше они были пустыми, а теперь нет.
+Однако если ваши правки сделали некоторые карточки пустыми,
+которые раньше пустыми не были,
+Anki не удалит их сразу,
+так как это может привести к случайной потере данных.
+Чтобы удалить пустые карточки,
+в главном окне выберите Инструменты → Empty Cards.
+Вам покажут список пустых карточек
+и предложат удалить их.</p>
+<p>Из-за механики генерации карточек
+невозможно вручную удалить отдельные карточки:
+они просто будут пересозданы
+при следующем редактировании заметки.
+Вместо этого нужно очистить соответствующие поля
+условной подстановки,
+а затем использовать функцию Empty Cards.</p>
+<p>Anki не учитывает специальные поля
+или текст, не являющийся полем,
+для целей генерации карточек.
+Поэтому если лицевая сторона шаблона выглядела так,
+при пустом <code>Country</code> карточка не будет создана:</p>
+<pre><code>Where is {{Country}} on the map?
+</code></pre>
+<h2 id="Выборочная-генерация-карточек"><a class="header" href="#Выборочная-генерация-карточек">Выборочная генерация карточек</a></h2>
+<p>Иногда нужно создавать дополнительные карточки
+только для части материала,
+например, чтобы проверять воспроизведение
+только самых важных слов набора.
+Это можно сделать,
+добавив в заметку дополнительное поле
+и заполнив его текстом (например, <code>1</code>)
+только у нужных заметок.
+Затем в шаблоне карточки
+можно сделать генерацию карточки
+зависимой от того,
+что это поле не пустое.
+Подробнее см. раздел об условных подстановках ниже.</p>
+<h2 id="Условная-подстановка"><a class="header" href="#Условная-подстановка">Условная подстановка</a></h2>
+<p>Можно включать определённый текст,
+поля или HTML на карточках
+только если поле пустое или непустое.
+Пример:</p>
+<pre><code>This text is always shown.
+
+{{#FieldName}}
+    This text is only shown if FieldName has text in it
+{{/FieldName}}
+
+{{^FieldName}}
+    This text is only shown if FieldName is empty
+{{/FieldName}}
+</code></pre>
+<p>Пример из практики:
+показывать метку только если поле непустое:</p>
+<pre><code>{{#Tags}}
+    Tags: {{Tags}}
+{{/Tags}}
+</code></pre>
+<p>Или, например, вы хотите отображать
+определённое поле синим цветом на лицевой стороне,
+если на обороте есть дополнительные заметки
+(возможно, наличие заметок напоминает,
+что стоит дольше подумать над ответом).
+Можно оформить поле так:</p>
+<pre><code>{{#Notes}}
+    &lt;span style="color:blue;"&gt;
+{{/Notes}}
+
+{{FieldToFormat}}
+
+{{#Notes}}
+    &lt;/span&gt;
+{{/Notes}}
+</code></pre>
+<p>Условную подстановку также можно использовать
+для управления тем,
+какие карточки будут создаваться.
+Это работает потому,
+что Anki не создаёт карточки
+с пустой лицевой стороной.
+Например, рассмотрим карточку
+с двумя полями на лицевой стороне:</p>
+<pre><code>{{Expression}}
+{{Notes}}
+</code></pre>
+<p>Обычно карточка создастся,
+если в <code>Expression</code> или <code>Notes</code> есть текст.
+Если вы хотите создавать карточку
+только когда <code>Expression</code> не пустое,
+шаблон можно изменить так:</p>
+<pre><code>{{#Expression}}
+    {{Expression}}
+    {{Notes}}
+{{/Expression}}
+</code></pre>
+<p>А если вы хотите требовать заполнение обоих полей,
+можно использовать две условные подстановки:</p>
+<pre><code>{{#Expression}}
+    {{#Notes}}
+        {{Expression}}
+        {{Notes}}
+    {{/Notes}}
+{{/Expression}}
+</code></pre>
+<p>Помните, что это работает только,
+если условная подстановка размещена
+на <em>лицевой</em> стороне карточки;
+если сделать так на обороте,
+вы получите карточки с пустой оборотной стороной.
+Аналогично, поскольку проверка идёт по пустоте
+лицевой стороны,
+важно оборачивать условием <em>всю</em> лицевую сторону;
+например, следующий вариант
+не сработает так, как ожидается:</p>
+<pre><code>{{#Expression}}
+    {{Expression}}
+{{/Expression}}
+{{Notes}}
+</code></pre>
+<h2 id="Пустая-оборотная-сторона"><a class="header" href="#Пустая-оборотная-сторона">Пустая оборотная сторона</a></h2>
+<p>Генерация карточек учитывает только лицевую сторону.
+Например, если у вас есть лицевая сторона:</p>
+<pre><code>{{Field 1}}
+</code></pre>
+<p>и оборотная сторона:</p>
+<pre><code>{{Field 2}}
+</code></pre>
+<p>тогда карточка будет создана,
+если <code>Field 1</code> непустое.
+Если <code>Field 2</code> пустое,
+карточка всё равно создастся,
+и у неё будет пустая оборотная сторона.</p>
+<p>Если вы хотите избежать пустой оборотной стороны,
+нужно разместить обязательное поле
+на лицевой стороне как условие,
+например так:</p>
+<pre><code>{{#Field 2}}
+    {{Field 1}}
+{{/Field 2}}
+</code></pre>
+<p>Это гарантирует,
+что карточка будет создана
+только если <code>Field 2</code> и <code>Field 1</code> непустые.</p>
+<h2 id="Добавление-пустых-заметок"><a class="header" href="#Добавление-пустых-заметок">Добавление пустых заметок</a></h2>
+<p>Когда вы добавляете новую заметку в Anki,
+если комбинация шаблонов карточек и полей заметки
+не приводит к созданию ни одной карточки,
+будет создана пустая карточка по первому шаблону.
+Это позволяет добавлять материал,
+даже если он пока неполный,
+и позже исправить его или шаблон,
+чтобы он стал валидным.
+Если вы не хотите хранить пустую заметку,
+можно удалить её функцией Empty Cards.</p>
+<h2 id="Шаблоны-cloze"><a class="header" href="#Шаблоны-cloze">Шаблоны Cloze</a></h2>
+<p>Базовую информацию см. в разделе
+<a href="../editing.html#cloze-deletion">cloze deletion</a>.</p>
+<p>Тип заметки cloze работает иначе,
+чем обычные типы заметок.
+Вместо настраиваемого количества типов карточек
+у него один тип,
+общий для всех cloze-удалений в заметке.</p>
+<p>Как было сказано выше в разделе генерации,
+генерация обычных карточек зависит от того,
+что одно или несколько полей вопроса непустые.
+Типы заметок cloze генерируются иначе:</p>
+<ul>
+<li>
+<p>Anki смотрит в лицевой шаблон
+на наличие одной или нескольких подстановок cloze,
+например <code>{{cloze:FieldName}}</code>.</p>
+</li>
+<li>
+<p>Затем смотрит в поле <code>FieldName</code>
+и ищет все cloze-ссылки,
+например <code>{{c1::text}}</code>.</p>
+</li>
+<li>
+<p>Для каждого отдельного номера
+будет создана карточка.</p>
+</li>
+</ul>
+<p>Поскольку генерация карточек
+для cloze-удалений работает иначе,
+теги <code>{{cloze:...}}</code> нельзя использовать
+с обычным типом заметки —
+они работают корректно
+только с типом заметки cloze.</p>
+<p>Условная генерация предоставляет специальное поле,
+по которому можно определить,
+какую карточку вы рендерите.
+Например, если вы хотите показывать поле <code>hint1</code>
+на первом cloze,
+а <code>hint2</code> на втором,
+можно использовать следующий шаблон:</p>
+<pre><code>{{cloze:Text}}
+
+{{#c1}}
+    {{Hint1}}
+{{/c1}}
+
+{{#c2}}
+    {{Hint2}}
+{{/c2}}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../templates/fields.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../templates/styling.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../templates/fields.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../templates/styling.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

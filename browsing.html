@@ -1,0 +1,497 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Обзор (Browser) - Anki Manual</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Anki&#x27;s user manual. Anki is a flashcard program that makes learning easier.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="css/misc.css">
+        <link rel="stylesheet" href="css/mdbook-admonish.css">
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Anki Manual</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/ankitects/anki-manual/" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="Обзор"><a class="header" href="#Обзор">Обзор</a></h1>
+<ul>
+<li><a href="#%D0%A0%D0%B5%D0%B6%D0%B8%D0%BC%D1%8B-%D1%82%D0%B0%D0%B1%D0%BB%D0%B8%D1%86%D1%8B">Режимы таблицы</a></li>
+<li><a href="#%D0%91%D0%BE%D0%BA%D0%BE%D0%B2%D0%B0%D1%8F-%D0%BF%D0%B0%D0%BD%D0%B5%D0%BB%D1%8C">Боковая панель</a>
+<ul>
+<li><a href="#%D0%98%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82-%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%B0">Инструмент поиска</a></li>
+<li><a href="#%D0%98%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82-%D0%B2%D1%8B%D0%B4%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F">Инструмент выделения</a></li>
+<li><a href="#%D0%A1%D0%BE%D1%85%D1%80%D0%B0%D0%BD%D1%91%D0%BD%D0%BD%D1%8B%D0%B5-%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%B8">Сохранённые поиски</a></li>
+<li><a href="#%D0%A0%D0%B5%D0%B4%D0%B0%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D1%8D%D0%BB%D0%B5%D0%BC%D0%B5%D0%BD%D1%82%D0%BE%D0%B2">Редактирование элементов</a></li>
+<li><a href="#%D0%9F%D0%BE%D0%B8%D1%81%D0%BA-%D1%8D%D0%BB%D0%B5%D0%BC%D0%B5%D0%BD%D1%82%D0%BE%D0%B2">Поиск элементов</a></li>
+</ul>
+</li>
+<li><a href="#%D0%9F%D0%BE%D0%BB%D0%B5-%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%B0">Поле поиска</a></li>
+<li><a href="#%D0%A2%D0%B0%D0%B1%D0%BB%D0%B8%D1%86%D0%B0-%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%B5%D0%BA%D0%B7%D0%B0%D0%BC%D0%B5%D1%82%D0%BE%D0%BA">Таблица карточек/заметок</a>
+<ul>
+<li><a href="#%D0%A1%D1%82%D1%80%D0%BE%D0%BA%D0%B8">Строки</a></li>
+<li><a href="#%D0%A1%D1%82%D0%BE%D0%BB%D0%B1%D1%86%D1%8B">Столбцы</a></li>
+</ul>
+</li>
+<li><a href="#%D0%9E%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C-%D1%80%D0%B5%D0%B4%D0%B0%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F">Область редактирования</a></li>
+<li><a href="#%D0%9C%D0%B5%D0%BD%D1%8E-%D0%B8-%D0%B4%D0%B5%D0%B9%D1%81%D1%82%D0%B2%D0%B8%D1%8F">Меню и действия</a>
+<ul>
+<li><a href="#%D0%9F%D1%80%D0%B0%D0%B2%D0%BA%D0%B0">Правка</a></li>
+<li><a href="#%D0%97%D0%B0%D0%BC%D0%B5%D1%82%D0%BA%D0%B8">Заметки</a></li>
+<li><a href="#%D0%9A%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%BA%D0%B8">Карточки</a></li>
+<li><a href="#%D0%9F%D0%B5%D1%80%D0%B5%D1%85%D0%BE%D0%B4">Переход</a></li>
+</ul>
+</li>
+<li><a href="#%D0%9F%D0%BE%D0%B8%D1%81%D0%BA-%D0%B8-%D0%B7%D0%B0%D0%BC%D0%B5%D0%BD%D0%B0">Поиск и замена</a></li>
+<li><a href="#%D0%9F%D0%BE%D0%B8%D1%81%D0%BA-%D0%B4%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0%D1%82%D0%BE%D0%B2">Поиск дубликатов</a></li>
+</ul>
+<p>Окно «Обзор» позволяет искать по карточкам и заметкам, а также редактировать их.
+Оно открывается нажатием <strong>Browse</strong> в главном окне или клавишей
+<kbd>B</kbd>. Окно состоит из трёх частей: <em>боковая панель</em> слева,
+<em>таблица карточек/заметок</em> справа сверху и <em>область редактирования</em> справа снизу.
+Если навести курсор между двумя секциями, можно зажать кнопку мыши и перетащить
+границу, чтобы увеличить одну секцию и уменьшить другую.</p>
+<h2 id="Режимы-таблицы"><a class="header" href="#Режимы-таблицы">Режимы таблицы</a></h2>
+<p><img src="media/browser_table_modes.png" alt="Table Modes" /></p>
+<p>В Anki 2.1.45+ доступны два режима: в таблице данных показываются либо карточки,
+либо заметки. Переключить режим можно переключателем сверху слева от поля поиска
+или сочетанием <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>T</kbd> /
+<kbd>Cmd</kbd>+<kbd>Opt</kbd>+<kbd>T</kbd>. Переключатель также показывает,
+что сейчас отображается: <strong>C</strong>ards или <strong>N</strong>otes.</p>
+<p><strong>Примечание</strong>: для простоты в этом руководстве обычно подразумевается, что
+активен режим Cards. Везде, где упоминается выбор/поиск и т. п. «карточек»,
+можно читать это как «карточки или заметки в зависимости от активного режима».</p>
+<h2 id="Боковая-панель"><a class="header" href="#Боковая-панель">Боковая панель</a></h2>
+<p><em>Боковая панель</em> слева предоставляет быстрый доступ к частым условиям поиска.
+В Anki 2.1.45+ в ней также есть строка поиска, средства редактирования тегов и
+колод и выбор из двух инструментов, описанных ниже.
+Переключать инструменты можно через панель сверху на боковой панели или
+сочетаниями <kbd>Alt</kbd>+<kbd>1</kbd>/<kbd>2</kbd>.</p>
+<h3 id="Инструмент-поиска"><a class="header" href="#Инструмент-поиска">Инструмент поиска</a></h3>
+<p><img src="media/browser_search_tool.png" alt="Search Tool" /></p>
+<p>С этим инструментом боковая панель работает как в предыдущих версиях:
+щелчок по элементу запускает поиск по нему.</p>
+<p>Если удерживать <kbd>Ctrl</kbd> (на Mac — <kbd>Command</kbd>) при щелчке,
+выбранный элемент добавится к текущему запросу через AND вместо запуска нового
+поиска. Например, чтобы показать <em>изучаемые</em> карточки из колоды German, нажмите
+«Learning», затем <kbd>Ctrl</kbd>-клик по «German».</p>
+<p>Удерживайте <kbd>Shift</kbd>, чтобы использовать OR вместо AND.
+Например, кликните по одной колоде, затем <kbd>Shift</kbd>-кликните по другой —
+и увидите карточки из обеих колод в одном списке.</p>
+<p>Можно удерживать <kbd>Alt</kbd> (на Mac — <kbd>Option</kbd>), чтобы инвертировать
+условие (добавить префикс <code>-</code>): например, показать все карточки текущей колоды,
+которые <em>не</em> имеют определённого тега. <kbd>Alt</kbd>/<kbd>Option</kbd> можно
+комбинировать с <kbd>Ctrl</kbd> или <kbd>Shift</kbd> (например,
+<kbd>Ctrl</kbd>+<kbd>Alt</kbd> добавит новое отрицательное условие поиска).</p>
+<p>В Anki 2.1.39+ можно также удерживать одновременно <kbd>Ctrl</kbd> и
+<kbd>Shift</kbd> при нажатии на условие поиска, чтобы заменить все вхождения
+того же типа новым значением.
+Предположим, вы ввели сложное выражение:
+<code>deck:Swahili (is:due or tag:important)</code>
+и теперь хотите выполнить тот же поиск для колоды Urdu. Удерживайте
+<kbd>Ctrl</kbd>+<kbd>Shift</kbd> и нажмите на Urdu в боковой панели — получите:
+<code>deck:Urdu (is:due or tag:important)</code>.</p>
+<h3 id="Инструмент-выделения"><a class="header" href="#Инструмент-выделения">Инструмент выделения</a></h3>
+<p><img src="media/browser_selection_tool2.png" alt="Selection Tool" /></p>
+<p>Инструмент выделения позволяет выбирать сразу несколько элементов, удерживая
+<kbd>Ctrl</kbd> или <kbd>Shift</kbd> во время клика. Также он поддерживает
+перетаскивание для изменения порядка колод и тегов.</p>
+<p>Пример: у вас есть теги <code>Math</code>, <code>Calculus</code> и <code>Algebra</code>.
+Нажмите <code>Calculus</code>, затем <kbd>Ctrl</kbd>-кликните <code>Algebra</code>. Теперь оба тега
+выделены; перетащите любой из них на <code>Math</code>, чтобы сделать их дочерними.
+В результате Anki переименует теги в <code>Math::Calculus</code> и <code>Math::Algebra</code>
+и обновит ваши заметки.</p>
+<p>Ещё один сценарий множественного выбора — поиск: если щёлкнуть правой кнопкой
+по выделению, можно выбрать <strong>Search &gt; All/Any Selected</strong>.
+Это можно комбинировать с модификаторами клавиатуры, как описано в
+<a href="#%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82-%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%B0">Инструмент поиска</a>, чтобы добавить полученный запрос к текущему.</p>
+<h3 id="Сохранённые-поиски"><a class="header" href="#Сохранённые-поиски">Сохранённые поиски</a></h3>
+<p>Если вы регулярно выполняете один и тот же поиск,
+сохраните текущий запрос: щёлкните правой кнопкой по верхнему элементу боковой
+панели, выберите <strong>Save Current Search</strong> и задайте имя.
+Также можно перетащить любой элемент боковой панели в эту область, чтобы добавить
+эквивалентный сохранённый поиск и закрепить его сверху.</p>
+<h3 id="Редактирование-элементов"><a class="header" href="#Редактирование-элементов">Редактирование элементов</a></h3>
+<p>Теги, колоды и сохранённые поиски можно удалять и переименовывать прямо на
+боковой панели: через контекстное меню или горячими клавишами
+(<kbd>Del</kbd> и <kbd>F2</kbd> в Windows). Удаление работает и для нескольких
+элементов сразу (см. <a href="#%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82-%D0%B2%D1%8B%D0%B4%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F">Инструмент выделения</a>).</p>
+<h3 id="Поиск-элементов"><a class="header" href="#Поиск-элементов">Поиск элементов</a></h3>
+<p>Чтобы найти элемент в дереве боковой панели, введите часть его названия
+в строку поиска сверху.</p>
+<h2 id="Поле-поиска"><a class="header" href="#Поле-поиска">Поле поиска</a></h2>
+<p>Над списком карточек находится поле поиска. Введите в него запрос для поиска
+карточек. О синтаксисе см. раздел <a href="searching.html">Поиск</a>.</p>
+<h2 id="Таблица-карточекзаметок"><a class="header" href="#Таблица-карточекзаметок">Таблица карточек/заметок</a></h2>
+<p>Строки таблицы представляют карточки или заметки, соответствующие текущему
+поиску. При клике по строке соответствующая заметка показывается в нижней части.</p>
+<h3 id="Строки"><a class="header" href="#Строки">Строки</a></h3>
+<p>Если выделить несколько строк (протягиванием мышью либо с
+<kbd>Ctrl</kbd>/<kbd>Command</kbd>), редактор временно скроется. Разные операции
+(например, смена колоды) могут применяться сразу к нескольким карточкам или
+заметкам, независимо от текущего режима. Поэтому в режиме Cards заметка считается
+выбранной, если выбрана хотя бы одна её карточка, а в режиме Notes карточка
+считается выбранной, если выбрана её заметка.</p>
+<p>Другие операции (например, показ информации о карточке) работают только с одной
+карточкой или заметкой. Она называется <em>текущей</em> и обычно является последней
+выбранной/нажатой.
+В режиме Cards текущая заметка — это заметка текущей карточки, а в режиме Notes
+текущая карточка — первая карточка текущей заметки.</p>
+<p>Цвет фона меняется в зависимости от состояния карточки и заметки. В режиме Cards
+используется первое подходящее условие:</p>
+<ol>
+<li>если карточка <strong>помечена флагом</strong>, используется цвет флага;</li>
+<li>если карточка <strong>приостановлена</strong>, жёлтый;</li>
+<li>если заметка карточки <strong>отмечена</strong>, фиолетовый.</li>
+</ol>
+<p>В режиме Notes цвет применяется только к отмеченным заметкам.<br />
+Подробнее об отмеченных заметках и приостановленных карточках:
+<a href="studying.html#editing-and-more">Редактирование и другое</a>.</p>
+<h3 id="Столбцы"><a class="header" href="#Столбцы">Столбцы</a></h3>
+<p>Набор столбцов настраивается: нажмите правой кнопкой на заголовок столбца
+(или <kbd>Ctrl</kbd>-клик на Mac), чтобы выбрать, какие столбцы показывать.
+Столбцы можно перетаскивать для изменения порядка. Клик по столбцу сортирует по
+нему; повторный клик меняет порядок сортировки. По столбцам Question и Answer
+сортировка недоступна.</p>
+<p>Все столбцы доступны и в режиме <a href="#%D1%80%D0%B5%D0%B6%D0%B8%D0%BC%D1%8B-%D1%82%D0%B0%D0%B1%D0%BB%D0%B8%D1%86%D1%8B">Cards, и в режиме Notes</a>,
+но иногда имеют немного разные названия и данные. В таблице ниже показано
+поведение в обоих режимах.</p>
+<!-- prettier-ignore -->
+<div class="table-wrapper"><table><thead><tr><th>Столбец</th><th>Режим Cards</th><th>Режим Notes</th></tr></thead><tbody>
+<tr><td>Answer</td><td>Обратная сторона карточки в одну строку, без вопроса. Можно также выбрать <a href="templates/styling.html#browser-appearance">пользовательский формат</a> в редакторе типа карточки.</td><td>То же, что в режиме Cards, но только для первой карточки заметки.</td></tr>
+<tr><td>Card(s)</td><td>Имя шаблона карточки.</td><td>Количество карточек у заметки.</td></tr>
+<tr><td>Card Modified</td><td>Время последнего изменения карточки (например, когда после повторения обновились история и интервал).</td><td>Время последнего изменения одной из карточек заметки.</td></tr>
+<tr><td>Created</td><td>То же, что в режиме Notes, для заметки текущей карточки.</td><td>Дата создания заметки.</td></tr>
+<tr><td>Deck</td><td>Имя колоды, в которой находится карточка.</td><td>Количество разных колод, в которых находятся карточки заметки, либо имя колоды, если все карточки в одной колоде.</td></tr>
+<tr><td>Due</td><td>Срок для карточек на повторении/переобучении и позиция в очереди новых карточек для новых. Строка берётся в скобки, если карточка приостановлена или зарыта. Сортировка сначала по типу, затем по дате/позиции.</td><td>Дата ближайшей карточки заметки на повторении/переобучении, которая не приостановлена, не зарыта и не находится в фильтрованной колоде.</td></tr>
+<tr><td>(Avg.) Ease</td><td>Лёгкость карточки, если она не новая.</td><td>Средняя лёгкость карточек заметки, которые не являются новыми.</td></tr>
+<tr><td>(Avg.) Interval</td><td>Интервал карточки, если она на повторении или переобучении.</td><td>Средний интервал карточек заметки, которые на повторении или переобучении.</td></tr>
+<tr><td>Lapses</td><td>Сколько раз карточке ставили оценку «Again».</td><td>Суммарное число lapses по всем карточкам заметки.</td></tr>
+<tr><td>Note</td><td>То же, что в режиме Notes, для заметки карточки.</td><td>Имя типа заметки.</td></tr>
+<tr><td>Note Modified</td><td>То же, что в режиме Notes, для заметки карточки.</td><td>Время последнего редактирования заметки (например, содержимого поля).</td></tr>
+<tr><td>Question</td><td>Лицевая сторона карточки в одну строку. Можно также выбрать <a href="templates/styling.html#browser-appearance">пользовательский формат</a> в редакторе типа карточки.</td><td>То же, что в режиме Cards, но только для первой карточки заметки.</td></tr>
+<tr><td>Reviews</td><td>Сколько раз карточка повторялась.</td><td>Общее число повторений всех карточек заметки.</td></tr>
+<tr><td>Sort Field</td><td>То же, что в режиме Notes, для заметки карточки.</td><td>Содержимое поля заметки, выбранного как поле сортировки для типа заметки. Показывать и сортировать можно только по этому полю. Поле меняется через <strong>Fields…</strong> в области редактирования.</td></tr>
+<tr><td>Tags</td><td>То же, что в режиме Notes, для заметки карточки.</td><td>Теги заметки.</td></tr>
+</tbody></table>
+</div>
+<h2 id="Область-редактирования"><a class="header" href="#Область-редактирования">Область редактирования</a></h2>
+<p>В правой нижней области отображается заметка выбранной строки.
+Подробнее о карточках и заметках см. в <a href="getting-started.html">Начало работы</a>.
+Подробнее о кнопках форматирования см. в <a href="editing.html">Редактирование</a>.</p>
+<p>Вы можете увидеть предварительный просмотр выбранной карточки в режиме
+повторения, нажав кнопку <strong>Preview</strong> в верхней части области редактирования.
+Обратите внимание: поля с вводом ответа в этом режиме не отображаются,
+что ускоряет просмотр карточек.
+В режиме Notes предпросмотр показывается для первой карточки выбранной заметки.</p>
+<h2 id="Меню-и-действия"><a class="header" href="#Меню-и-действия">Меню и действия</a></h2>
+<p>В верхней части окна обзора находится панель инструментов с различными меню,
+которые содержат действия, доступные в этом окне.</p>
+<h3 id="Правка"><a class="header" href="#Правка">Правка</a></h3>
+<!-- prettier-ignore -->
+<div class="table-wrapper"><table><thead><tr><th>Название</th><th>Действие</th></tr></thead><tbody>
+<tr><td>Undo</td><td>Отменить последнее выполненное действие.</td></tr>
+<tr><td>Select All</td><td>Выделить все отображаемые строки.</td></tr>
+<tr><td>Select Notes</td><td>Показать только выбранные заметки и выделить все строки.</td></tr>
+<tr><td>Invert Selection</td><td>Выделить невыделенные строки и снять выделение с уже выбранных.</td></tr>
+<tr><td>Create Filtered Deck</td><td>Открыть диалог <a href="filtered-decks.html#creating-manually">фильтрованной колоды</a> и установить текущий поиск из обзора как фильтр. Используйте <kbd>Alt</kbd> / <kbd>Option</kbd>, чтобы задать второй фильтр.</td></tr>
+</tbody></table>
+</div>
+<h3 id="Заметки"><a class="header" href="#Заметки">Заметки</a></h3>
+<p>Большинство следующих действий применяется к выбранным заметкам. Они также
+доступны в контекстном меню при щелчке правой кнопкой по выбранной строке в
+режиме Notes. В режиме Cards эти команды находятся в подменю контекстного меню.</p>
+<!-- prettier-ignore -->
+<div class="table-wrapper"><table><thead><tr><th>Название</th><th>Действие</th></tr></thead><tbody>
+<tr><td>Add Notes</td><td>Открыть диалог <a href="editing.html#adding-cards-and-notes">Add</a>.</td></tr>
+<tr><td>Create Copy</td><td>Открыть <a href="browsing.html#finding-duplicates">дубликат</a> текущей заметки в <a href="editing.html#adding-cards-and-notes">редакторе</a>, чтобы слегка изменить его и быстро получить варианты карточек. По умолчанию дубликат создаётся в той же колоде, что и оригинал.</td></tr>
+<tr><td>Export Notes</td><td>Открыть диалог <a href="exporting.html">Export</a>.</td></tr>
+<tr><td>Add Tags</td><td>Добавить указанные теги ко всем выбранным заметкам.</td></tr>
+<tr><td>Remove Tags</td><td>Ввести теги и удалить их у всех выбранных заметок.</td></tr>
+<tr><td>Clear Unused Tags</td><td>Удалить с боковой панели все теги, которые не используются ни в одной заметке.</td></tr>
+<tr><td>Toggle Mark</td><td>Если текущая заметка отмечена (имеет тег <em>Marked</em>), снять отметку со всех выбранных заметок. Если текущая заметка не отмечена — отметить все выбранные заметки.</td></tr>
+<tr><td>Change Note Type</td><td>Преобразовать выбранные заметки из одного типа в другой. Например, если у вас есть типы <em>Russian</em> и <em>Computer</em> и вы случайно добавили «компьютерный» текст в заметку <em>Russian</em>, это действие поможет исправить ошибку. Расписание карточек не меняется. Изменение типа заметки требует односторонней синхронизации.</td></tr>
+<tr><td>Find Duplicates</td><td>Открыть диалог <a href="#finding-duplicates">Duplicates</a>.</td></tr>
+<tr><td>Find and Replace</td><td>Открыть диалог <a href="#find-and-replace">Find and Replace</a>.</td></tr>
+<tr><td>Manage Note Types</td><td>Открыть диалог <a href="editing.html#adding-a-note-type">Note Types</a>.</td></tr>
+<tr><td>Delete</td><td>Удалить все выбранные заметки и их карточки. Удалять отдельные карточки нельзя, так как они управляются <a href="templates/intro.html">шаблонами</a>.</td></tr>
+</tbody></table>
+</div>
+<h3 id="Карточки"><a class="header" href="#Карточки">Карточки</a></h3>
+<p>Следующие действия применяются к выбранным карточкам. Они также доступны
+в контекстном меню при щелчке правой кнопкой по выбранной строке в режиме Cards.
+В режиме Notes эти действия находятся в подменю контекстного меню.</p>
+<!-- prettier-ignore -->
+<div class="table-wrapper"><table><thead><tr><th>Название</th><th>Действие</th></tr></thead><tbody>
+<tr><td>Change Deck</td><td>Переместить выбранные карточки в другую колоду.</td></tr>
+<tr><td>Set Due Date</td><td>Превратить новые карточки в карточки повторения и назначить срок на определённую дату. Это полезно, если нужно сдвинуть карточки вперёд или назад на несколько дней при перерыве в расписании. Диапазон <code>60-90</code> сделает выбранные карточки сроком от 60 до 90 дней от текущей даты. Для новых карточек интервал будет установлен равным этой задержке, а карточки повторения будут переназначены без изменения текущего интервала, если только в конце диапазона не добавить восклицательный знак (<code>!</code>). Обратите внимание: время ответа при ручном назначении не записывается, так как операция может выполняться вне режима повторения, и Anki не знает, какая карточка показывалась в этот момент.</td></tr>
+<tr><td>Reset</td><td>Переместить выбранные карточки в конец очереди новых. История повторений сохраняется. В 2.1.50+ есть опции восстановить исходную позицию карточки и сбросить счётчики lapses и повторов.</td></tr>
+<tr><td>Reposition</td><td>Изменить порядок появления новых карточек. Текущие позиции можно увидеть, включив столбец <em>due</em>, как описано в разделе <a href="#%D1%82%D0%B0%D0%B1%D0%BB%D0%B8%D1%86%D0%B0-%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%B5%D0%BA%D0%B7%D0%B0%D0%BC%D0%B5%D1%82%D0%BE%D0%BA">таблицы</a>. Если выполнить команду для нескольких карточек, им по очереди назначатся возрастающие номера. По умолчанию шаг увеличения — 1, но его можно изменить параметром «step». Опция <strong>Shift position of existing cards</strong> позволяет вставлять карточки между уже существующими, раздвигая их. Например, если у вас есть карточки 1–5 и вы хотите поместить 3, 4 и 5 между 1 и 2, при включённой опции порядок станет 1, 3, 4, 5, 2. Если опцию выключить, 1 и 2 получат одинаковый номер позиции, и порядок их появления станет непредсказуемым. При включённой опции изменяются все карточки с более высокой позицией, и их нужно будет отправить при следующей синхронизации.</td></tr>
+<tr><td>Toggle Suspend</td><td><a href="studying.html#editing-and-more">Приостановить</a> или снять приостановку со всех выбранных карточек — в зависимости от того, приостановлена ли текущая карточка.</td></tr>
+<tr><td>Flag</td><td>Переключить флаги у всех выбранных карточек. Добавление или снятие зависит от того, есть ли выбранный флаг у текущей карточки.</td></tr>
+<tr><td>Info</td><td>Показать различную информацию о текущей карточке, включая историю повторений. Подробнее см. <a href="stats.html#card-info">Card Info</a>.</td></tr>
+</tbody></table>
+</div>
+<h3 id="Переход"><a class="header" href="#Переход">Переход</a></h3>
+<p>Это меню предназначено для горячих клавиш перехода к разным частям окна
+обзора и перемещения вверх/вниз по списку карточек.</p>
+<h2 id="Поиск-и-замена"><a class="header" href="#Поиск-и-замена">Поиск и замена</a></h2>
+<p>Этот диалог позволяет заменять текст в заметках. Как описано выше, он доступен
+с панели инструментов и из контекстного меню таблицы.</p>
+<p>Первое поле ввода — текст, который нужно заменить, второе — текст замены.
+Далее идёт выпадающее меню, где задаётся область поиска: в тегах заметки
+(требуется Anki 2.1.45+), во всех полях или только в конкретном поле
+(в списке будут только поля выбранной заметки).</p>
+<p>По умолчанию изменения применяются только к выбранным заметкам.
+Чтобы снять это ограничение, уберите флажок «selected notes only»
+(требуется Anki 2.1.45+).</p>
+<p>Опция регулярных выражений позволяет выполнять сложные замены.
+Например, пусть в поле есть такой текст:</p>
+<pre><code>&lt;img src="pic.jpg" /&gt;
+</code></pre>
+<p>Используем такие настройки:</p>
+<p><img src="media/find_and_replace.png" alt="Find and Replace dialog" /></p>
+<p>(Примечание: в версиях Anki до 2.1.28 вместо <code>${1}</code> нужно использовать <code>\1</code>.)</p>
+<p>Тогда содержимое поля изменится на:</p>
+<pre><code>pic.jpg
+</code></pre>
+<p>Подробный разбор регулярных выражений выходит за рамки этого руководства.
+В интернете есть множество справочников по синтаксису:</p>
+<ul>
+<li>Для Anki 2.1.28+ см. <a href="https://docs.rs/regex/latest/regex/index.html#syntax">https://docs.rs/regex/latest/regex/index.html#syntax</a>.</li>
+<li>Для старых версий Anki см. <a href="http://docs.python.org/library/re.html">http://docs.python.org/library/re.html</a>.</li>
+</ul>
+<h2 id="Поиск-дубликатов"><a class="header" href="#Поиск-дубликатов">Поиск дубликатов</a></h2>
+<p>Вы можете использовать <strong>Notes &gt; Find Duplicates</strong> для поиска заметок
+с одинаковым содержимым. Когда вы откроете окно, Anki проверит все типы заметок
+и покажет список всех возможных полей. Если вы хотите искать дубликаты по полю
+<em>Back</em>, выберите его из списка и нажмите <strong>Search</strong>.</p>
+<p>По умолчанию поиск выполняется по всем типам заметок, где есть указанное поле.
+Это отличается от проверки дубликатов при ручном добавлении карточек,
+которая ограничена одним типом заметок.</p>
+<p>Поле <strong>Optional filter</strong> позволяет сузить область поиска дубликатов.
+Если нужно искать только в типах заметок «French Vocab» и «French Verbs»,
+введите:</p>
+<pre><code>"note:french vocab" or "note:french verbs"
+</code></pre>
+<p>Или, например, вы хотите искать дубликаты только в определённой колоде:</p>
+<pre><code>"deck:myDeck"
+</code></pre>
+<p>Синтаксис здесь такой же, как в поиске окна обзора.
+Подробнее см. <a href="searching.html">Поиск</a>.</p>
+<p>Вы можете нажать на одну из ссылок в списке результатов, чтобы показать
+дубликаты из соответствующей группы. Если найдено слишком много дубликатов,
+удобнее нажать <strong>Tag Duplicates</strong> — тогда всем совпадающим заметкам будет
+добавлен тег <em>duplicate</em>. После этого можно найти этот тег в обзоре и
+обработать всё с одного экрана.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="profiles.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="filtered-decks.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="profiles.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="filtered-decks.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

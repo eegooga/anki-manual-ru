@@ -1,0 +1,624 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Фильтрованные колоды - Anki Manual</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Anki&#x27;s user manual. Anki is a flashcard program that makes learning easier.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="css/misc.css">
+        <link rel="stylesheet" href="css/mdbook-admonish.css">
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Anki Manual</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/ankitects/anki-manual/" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="Фильтрованные-колоды-и-cram"><a class="header" href="#Фильтрованные-колоды-и-cram">Фильтрованные колоды и cram</a></h1>
+<ul>
+<li><a href="#%D0%92%D1%8B%D0%B1%D0%BE%D1%80%D0%BE%D1%87%D0%BD%D0%BE%D0%B5-%D0%BE%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5">Выборочное обучение</a></li>
+<li><a href="#%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D1%8B%D0%B5-%D0%BA%D0%BE%D0%BB%D0%BE%D0%B4%D1%8B">Исходные колоды</a></li>
+<li><a href="#%D0%A0%D1%83%D1%87%D0%BD%D0%BE%D0%B5-%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5">Ручное создание</a></li>
+<li><a href="#%D0%9F%D0%BE%D1%80%D1%8F%D0%B4%D0%BE%D0%BA">Порядок</a></li>
+<li><a href="#steps-%D0%B8-%D0%B2%D0%BE%D0%B7%D0%B2%D1%80%D0%B0%D1%82">Steps и возврат</a></li>
+<li><a href="#%D0%9F%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%B5%D0%BD%D0%B8%D1%8F-%D0%BA-%D1%81%D1%80%D0%BE%D0%BA%D1%83">Повторения к сроку</a></li>
+<li><a href="#%D0%9F%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B7%D0%B0%D1%80%D0%B0%D0%BD%D0%B5%D0%B5">Повторение заранее</a></li>
+<li><a href="#%D0%9F%D0%B5%D1%80%D0%B5%D0%BF%D0%BB%D0%B0%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5">Перепланирование</a></li>
+<li><a href="#%D0%A0%D0%B0%D0%B7%D0%B1%D0%BE%D1%80-%D0%BE%D1%82%D1%81%D1%82%D0%B0%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F">Разбор отставания</a></li>
+</ul>
+<p>Когда вы учите обычную колоду в Anki,
+показывается лишь ограниченное число карточек:
+карточки, которые Anki считает
+близкими к забыванию,
+и дневной лимит новых карточек.
+Обычно это полезно,
+так как не позволяет тратить
+больше времени,
+чем необходимо.
+Но иногда полезно выйти за эти ограничения,
+например при подготовке к тесту,
+фокусе на конкретном материале и т. д.
+Для этого в Anki есть другой тип колоды —
+«filtered deck».</p>
+<p>Filtered decks дают много возможностей.
+Их можно использовать
+для предварительного просмотра карточек,
+зубрёжки перед тестом,
+изучения конкретных тегов,
+разбора backlog
+с определённым порядком сортировки,
+повторов заранее,
+повтора карточек,
+на которых вы ошиблись сегодня,
+и многого другого.</p>
+<h2 id="Выборочное-обучение"><a class="header" href="#Выборочное-обучение">Выборочное обучение</a></h2>
+<p>Самый простой способ создать filtered deck —
+кнопка <code>Custom Study</code>,
+которая появляется внизу экрана,
+когда вы нажимаете на колоду.
+Она предлагает удобные преднастроенные фильтры
+для частых задач,
+например повтор карточек,
+на которых вы ошиблись в этот день.
+Будет создана filtered deck
+<code>Custom Study Session</code>,
+и она автоматически откроется.</p>
+<p>Если уже существует
+<code>Custom Study Session</code>,
+она будет очищена
+перед созданием новой.
+Если вы хотите сохранить custom study колоду,
+можно переименовать её
+в списке колод.</p>
+<p>Кратко по каждой опции:</p>
+<p><strong>Increase today’s new card limit</strong><br />
+Добавляет больше новых карточек
+в текущую изучаемую колоду.
+Обратите внимание:
+в отличие от других опций,
+это <strong>не</strong> создаёт новую filtered deck,
+а изменяет существующую колоду.</p>
+<p><strong>Increase today’s review card limit</strong><br />
+Если не все review-карточки due на сегодня
+были показаны из-за дневного лимита,
+эта опция позволяет показать больше.
+Как и в случае с новыми карточками,
+изменяется существующая колода.</p>
+<p><strong>Review forgotten cards</strong><br />
+Показывает все карточки,
+по которым вы нажали Again (1)
+за указанное вами число дней.</p>
+<p><strong>Review ahead</strong><br />
+Показывает карточки,
+которые будут due в ближайшем будущем
+(число дней задаёте вы).
+Это полезно,
+чтобы пройти часть старых карточек
+перед отпуском,
+но не поможет с карточками,
+которые вы недавно выучили.
+Подробнее см. раздел
+<a href="#reviewing-ahead">reviewing ahead</a> ниже.</p>
+<p><strong>Preview new cards</strong><br />
+Показывает недавно добавленные карточки,
+не переводя их в review-карточки
+при ответе.</p>
+<p><strong>Study by card state or tag</strong><br />
+Выбирает определённое число карточек
+из текущей колоды для изучения.
+Можно выбрать
+только новые,
+только due
+или все карточки;
+после нажатия <code>Choose Tags</code>
+можно дополнительно ограничить выбор тегами.
+Если вы хотите увидеть все карточки колоды
+(например, перед большим тестом),
+можно поставить число карточек
+больше фактического количества
+в колоде.</p>
+<h2 id="Исходные-колоды"><a class="header" href="#Исходные-колоды">Исходные колоды</a></h2>
+<p>Когда карточка перемещается в filtered deck,
+она сохраняет ссылку на колоду,
+из которой пришла.
+Эта предыдущая колода
+называется «home deck» карточки.</p>
+<p>Карточки автоматически возвращаются
+в home deck
+после изучения в filtered deck.
+Это может происходить
+после одного review
+или после нескольких,
+в зависимости от ваших настроек.</p>
+<p>Также можно вернуть сразу все карточки
+в home decks:</p>
+<ul>
+<li>
+<p>Кнопка <code>Empty</code> в обзоре обучения
+возвращает все карточки filtered deck
+в home deck,
+но не удаляет пустую filtered deck.
+Это полезно,
+если вы хотите позже снова заполнить её
+(кнопкой Rebuild).</p>
+</li>
+<li>
+<p>Удаление filtered deck
+делает то же,
+что и <code>Empty</code>,
+но также удаляет
+опустошённую колоду из списка.
+При удалении filtered deck
+карточки не удаляются.</p>
+</li>
+</ul>
+<h2 id="Ручное-создание"><a class="header" href="#Ручное-создание">Ручное создание</a></h2>
+<p>Продвинутые пользователи могут создавать filtered decks
+с произвольными поисковыми строками
+(«filters»),
+а не полагаться
+на преднастроенные фильтры.
+Чтобы создать filtered deck вручную,
+выберите <code>Create Filtered Deck</code>
+в меню Tools.</p>
+<p>Когда вы нажимаете Build,
+Anki находит карточки,
+соответствующие указанным настройкам,
+и временно переносит их
+из исходных колод
+в новую filtered deck для обучения.</p>
+<p>Если вы хотите снова получить карточки
+с теми же фильтрами
+(например,
+чтобы каждый день учить
+все карточки с определённым тегом),
+используйте кнопку Rebuild
+внизу экрана обзора колоды.</p>
+<p>Область <strong>search</strong>
+управляет тем,
+какие карточки Anki соберёт.
+Для filtered decks доступны
+все поиски,
+которые доступны в браузере:
+ограничение по тегам,
+поиск карточек,
+забытых определённое число раз,
+и т. д.
+Подробнее см. раздел
+<a href="searching.html">поиск</a> руководства.</p>
+<p>Filtered decks не могут подтягивать карточки,
+которые suspended,
+buried
+или уже находятся
+в другой filtered deck.
+Поэтому в браузере поиск
+может показывать карточки,
+которые в filtered deck
+в итоге не попадут.</p>
+<p>Опция <strong>limit</strong>
+управляет количеством карточек,
+которые будут собраны в колоду.
+Выбранный порядок управляет и тем,
+в каком порядке карточки собираются,
+и тем,
+в каком порядке вы будете их повторять.
+Например,
+если выбрать <code>most lapses</code>
+и лимит 20,
+Anki покажет только 20 карточек
+с наибольшим числом lapses.</p>
+<p>Опция <strong>enable second filter</strong>
+позволяет создать filtered deck
+из двух разных поисков,
+так что можно,
+например,
+включить due-карточки
+с одним порядком,
+и меньшее число новых карточек
+с другим порядком.</p>
+<h2 id="Порядок"><a class="header" href="#Порядок">Порядок</a></h2>
+<p>Опция <code>cards selected by</code>
+управляет порядком,
+в котором карточки будут показаны.
+Если максимальное число выбранных карточек
+меньше числа карточек,
+подходящих под фильтр,
+Anki сначала исключит карточки
+в конце этого отсортированного списка.</p>
+<p><strong>Oldest seen first</strong><br />
+Сначала показывает карточки,
+которые вы не видели в повторениях
+дольше всего.</p>
+<p><strong>Random</strong><br />
+Случайно перемешивает порядок
+всех карточек,
+подходящих фильтру
+(без фиксированного порядка).</p>
+<p><strong>Increasing intervals</strong><br />
+Сначала показывает карточки
+с наименьшим интервалом.</p>
+<p><strong>Decreasing intervals</strong><br />
+Сначала показывает карточки
+с наибольшим интервалом.</p>
+<p><strong>Most lapses</strong><br />
+Сначала показывает карточки,
+которые вы чаще всего проваливали.</p>
+<p><strong>Order added</strong><br />
+Сначала показывает карточки,
+которые вы добавили раньше
+(т.е. с наиболее ранней датой создания).</p>
+<p><strong>Order due</strong><br />
+Сначала показывает карточки
+с наиболее ранней due-датой.</p>
+<p><strong>Latest added first</strong><br />
+Сначала показывает карточки,
+которые вы добавили в колоду последними.
+(Это противоположность <code>Order added</code>.)</p>
+<p><strong>Relative overdueness</strong><br />
+Сначала показывает карточки,
+которые вы вероятнее всего забыли.
+Это полезно,
+если у вас большой backlog,
+и его разбор займёт время,
+а вы хотите уменьшить вероятность
+забывания большего числа карточек.</p>
+<p>При использовании алгоритма SM-2
+overdueness определяется
+сравнением просрочки карточки
+и длины её интервала.
+Например,
+карточка с текущим интервалом 5 дней,
+просроченная на 2 дня,
+будет показана раньше карточки
+с интервалом 10 дней,
+просроченной на 3 дня.</p>
+<p>При использовании FSRS
+overdueness рассчитывается
+на основе retrievability каждой карточки
+и desired retention
+в preset колоды.</p>
+<h2 id="steps-и-возврат"><a class="header" href="#steps-и-возврат">Steps и возврат</a></h2>
+<p>По умолчанию
+Anki использует steps
+из home deck карточки.
+Если новая карточка
+в обычных условиях
+должна быть повторена дважды
+при изучении,
+то же будет и в filtered deck.
+О том,
+как работают шаги (пере)обучения,
+см. раздел <a href="deck-options.html#learning-steps">Deck Options</a>.</p>
+<p>Карточки возвращаются в home deck,
+когда (пере)обучение завершено.
+То есть,
+если у вас 3 шага обучения,
+новая карточка вернётся домой
+после трёх нажатий <code>Good</code>
+или одного нажатия <code>Easy</code>.</p>
+<p>Filtered decks
+с отключённым rescheduling
+показывают 4 кнопки.
+Для <strong>Again</strong>, <strong>Hard</strong> и <strong>Good</strong>
+задержки настраиваемые.
+Кнопка <strong>Easy</strong>
+удаляет карточки
+из filtered deck.</p>
+<h2 id="Повторения-к-сроку"><a class="header" href="#Повторения-к-сроку">Повторения к сроку</a></h2>
+<p>Если filtered deck включает карточки,
+которые были due для review,
+они показываются так же,
+как в исходной колоде:
+учитываются в счётчике review-карточек
+внизу экрана,
+и доступно четыре варианта оценки,
+насколько хорошо вы вспомнили.
+При правильном ответе
+карточка возвращается в home deck,
+а её следующая задержка
+настраивается по параметрам home deck.
+Если вы забыли карточку,
+она будет показана
+согласно шагам relearning,
+определённым в home deck.</p>
+<h2 id="Повторение-заранее"><a class="header" href="#Повторение-заранее">Повторение заранее</a></h2>
+<p>Если ваш поиск включает карточки,
+которые ещё не due,
+Anki покажет их заранее.</p>
+<p>Для таких review
+Anki использует специальный алгоритм,
+который учитывает,
+насколько рано вы повторяете.
+Если карточки почти должны были появиться,
+они получат новую задержку,
+похожую на ту,
+которую получили бы
+при повторении вовремя.
+Если же карточки повторяются
+сразу после назначения,
+их новая задержка
+будет похожа на предыдущую.
+Этот расчёт работает
+по скользящей шкале.</p>
+<p>Поскольку повтор карточки
+вскоре после назначения
+мало влияет на расписание
+(например,
+карточка due завтра
+с интервалом 1 день
+останется due завтра,
+если повторить её заранее),
+<strong>настройка custom study <code>review ahead</code>
+не подходит для регулярного использования</strong>.
+Если вы использовали её,
+чтобы пройти неделю карточек
+перед поездкой,
+mature-карточки будут переназначены в будущее,
+а новые карточки останутся
+с малыми интервалами,
+потому что вы ещё не знаете их
+достаточно хорошо,
+чтобы их интервал существенно вырос.
+Если на следующий день
+снова повторять ahead,
+вы в основном будете
+снова проходить те же новые карточки,
+с небольшим эффектом.</p>
+<h2 id="Перепланирование"><a class="header" href="#Перепланирование">Перепланирование</a></h2>
+<p>По умолчанию
+Anki возвращает карточки
+в home decks
+с изменённым расписанием,
+на основе вашей успешности
+в filtered deck.</p>
+<p>Чтобы изменить это поведение,
+выключите
+<strong>Reschedule cards based on my answers</strong>.
+Когда эта опция выключена,
+карточки показываются
+в простом <code>preview mode</code>,
+и при возврате
+в исходную колоду
+они возвращаются
+точно в том состоянии,
+в каком были до этого.</p>
+<h2 id="Разбор-отставания"><a class="header" href="#Разбор-отставания">Разбор отставания</a></h2>
+<p>Фильтрованные колоды могут быть полезны,
+когда вы отстали по повторениям.
+Один пользователь Anki
+описывает,
+как он использует фильтрованные колоды
+для разбора накопившегося отставания:</p>
+<pre><code>Я делал так с отставанием в 800 карточек и с фильтрованными подколодами.
+Для меня это сработало очень хорошо.
+
+Фильтр для «только что просроченных»: "is:due prop:due&gt;-7"
+
+Фильтр для «давно просроченных»: "is:due prop:due&lt;=-7"
+
+Колода «только что просроченные» будет содержать карточки, срок которых
+наступил за последнюю неделю. Именно её стоит учить каждый день, потому что
+туда попадают карточки, которые регулярно становятся срочными. Так можно
+учиться так, как будто отставания вообще нет.
+
+Колода «давно просроченные» будет содержать ваше отставание — карточки,
+которые вы не выучили вовремя. Их можно учить так же, как новые карточки.
+После ответа они возвращаются в обычные колоды, поэтому число просроченных
+не будет расти, пока вы держите под контролем колоду «только что просроченные».
+
+Сколько времени это займёт, зависит от того, сколько просроченных карточек
+в день вы проходите помимо тех, что становятся срочными регулярно. Можно
+проходить их рывками, когда есть желание, а можно задать фиксированное
+количество в день — как с новыми карточками. Выбор за вами.
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="browsing.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="searching.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="browsing.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="searching.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

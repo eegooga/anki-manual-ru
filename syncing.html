@@ -1,0 +1,543 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Синхронизация с AnkiWeb - Anki Manual</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Anki&#x27;s user manual. Anki is a flashcard program that makes learning easier.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="css/misc.css">
+        <link rel="stylesheet" href="css/mdbook-admonish.css">
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Anki Manual</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/ankitects/anki-manual/" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="Синхронизация-с-ankiweb"><a class="header" href="#Синхронизация-с-ankiweb">Синхронизация с AnkiWeb</a></h1>
+<ul>
+<li><a href="#%D0%92%D0%B2%D0%BE%D0%B4%D0%BD%D1%8B%D0%B5-%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE">Вводные видео</a></li>
+<li><a href="#%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0">Настройка</a></li>
+<li><a href="#%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F-%D1%81%D0%B8%D0%BD%D1%85%D1%80%D0%BE%D0%BD%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F">Автоматическая синхронизация</a></li>
+<li><a href="#%D0%A6%D0%B2%D0%B5%D1%82-%D0%BA%D0%BD%D0%BE%D0%BF%D0%BA%D0%B8">Цвет кнопки</a></li>
+<li><a href="#%D0%9C%D0%B5%D0%B4%D0%B8%D0%B0">Медиа</a></li>
+<li><a href="#%D0%9A%D0%BE%D0%BD%D1%84%D0%BB%D0%B8%D0%BA%D1%82%D1%8B">Конфликты</a></li>
+<li><a href="#%D0%9E%D0%B1%D1%8A%D0%B5%D0%B4%D0%B8%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BA%D0%BE%D0%BD%D1%84%D0%BB%D0%B8%D0%BA%D1%82%D0%BE%D0%B2">Объединение конфликтов</a></li>
+<li><a href="#%D0%A3%D0%B4%D0%B0%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85-ankiweb">Удаление данных AnkiWeb</a>
+<ul>
+<li><a href="#%D0%A7%D1%82%D0%BE-%D1%83%D0%B4%D0%B0%D0%BB%D1%8F%D0%B5%D1%82%D1%81%D1%8F">Что удаляется</a></li>
+<li><a href="#%D0%92%D0%BE%D0%B7%D0%B2%D1%80%D0%B0%D1%89%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B2-ankiweb">Возвращение в AnkiWeb</a></li>
+<li><a href="#%D0%9A%D0%B0%D0%BA-%D0%B8%D0%B7%D0%B1%D0%B5%D0%B6%D0%B0%D1%82%D1%8C-%D1%83%D0%B4%D0%B0%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F-%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85">Как избежать удаления данных</a></li>
+</ul>
+</li>
+<li><a href="#%D0%A4%D0%B0%D0%B5%D1%80%D0%B2%D0%BE%D0%BB%D1%8B">Фаерволы</a></li>
+<li><a href="#%D0%9F%D1%80%D0%BE%D0%BA%D1%81%D0%B8">Прокси</a></li>
+</ul>
+<p>AnkiWeb — это сервис,
+который позволяет синхронизировать вашу коллекцию
+между несколькими устройствами
+и учиться онлайн.
+Перед выполнением шагов ниже
+создайте <a href="https://ankiweb.net/">бесплатный аккаунт</a>.</p>
+<h2 id="Вводные-видео"><a class="header" href="#Вводные-видео">Вводные видео</a></h2>
+<p>Для быстрого знакомства с синхронизацией
+посмотрите <a href="https://www.youtube.com/watch?v=YkiM4DPzSVc&amp;list=PLGgmaKOIHykFoomqkBJAyGiDQ2kyiuTao&amp;yt:cc=on">вводные видео по синхронизации</a>.</p>
+<h2 id="Настройка"><a class="header" href="#Настройка">Настройка</a></h2>
+<p>Чтобы начать синхронизацию коллекции между устройствами,
+нажмите кнопку синхронизации
+(правый верхний угол <a href="studying.html#decks">главного экрана</a>
+или <kbd>Y</kbd> на клавиатуре).
+Вас попросят ввести AnkiWeb ID и пароль,
+созданные при регистрации.</p>
+<p>При первой синхронизации коллекции
+Anki спросит,
+нужно ли <strong>загрузить (Upload)</strong> или <strong>скачать (Download)</strong>.
+Если карточки есть на компьютере,
+а аккаунт AnkiWeb пуст,
+выберите <strong>Upload</strong>,
+чтобы отправить данные в AnkiWeb.
+Если карточки уже есть в AnkiWeb
+(например, с другого устройства),
+а на компьютере их нет,
+выберите <strong>Download</strong>,
+чтобы заменить пустую локальную коллекцию
+карточками из AnkiWeb.
+Если на обоих устройствах есть разные карточки,
+<a href="#merging-conflicts">понадобятся дополнительные шаги</a>,
+чтобы не потерять данные.</p>
+<p>После завершения начальной односторонней синхронизации
+Anki сможет объединять изменения
+из нескольких мест,
+за некоторыми исключениями.</p>
+<p>Если Anki на одной машине используют несколько людей,
+и для каждого создан отдельный профиль,
+каждому пользователю нужен свой аккаунт AnkiWeb
+для синхронизации.
+Если синхронизировать несколько профилей
+с одним аккаунтом AnkiWeb,
+произойдёт потеря данных.</p>
+<h2 id="Автоматическая-синхронизация"><a class="header" href="#Автоматическая-синхронизация">Автоматическая синхронизация</a></h2>
+<p>После включения синхронизации
+Anki автоматически синхронизируется
+при каждом закрытии и открытии коллекции.
+Если вы хотите синхронизировать вручную,
+отключите автосинхронизацию
+в <a href="preferences.html#syncing">настройках</a>.</p>
+<h2 id="Цвет-кнопки"><a class="header" href="#Цвет-кнопки">Цвет кнопки</a></h2>
+<p>Кнопка синхронизации становится синей,
+когда нужна обычная синхронизация,
+и красной,
+когда нужна полная синхронизация.</p>
+<h2 id="Медиа"><a class="header" href="#Медиа">Медиа</a></h2>
+<p>Можно посмотреть <a href="https://www.youtube.com/watch?v=phP9GGG-PxY">видео по теме</a>.</p>
+<p>Anki синхронизирует все звуки и изображения,
+используемые в ваших заметках.
+Он замечает добавление, удаление или замену медиа
+в <a href="files.html#user-data">папке media</a>,
+но не замечает изменений внутри уже существующих файлов.
+Чтобы синхронизировать такие правки,
+нужно также добавить, удалить или заменить файл.</p>
+<p>Односторонняя синхронизация
+(когда вам предлагают Upload или Download)
+не влияет на механизм синхронизации медиа —
+изменения медиа всегда объединяются.</p>
+<p>Чтобы предотвратить случайную потерю данных,
+удаления синхронизируются на другие устройства
+только если медиа уже полностью синхронизированы.
+Если вы удалите файлы до полной синхронизации устройства,
+а удалённые файлы уже есть на AnkiWeb,
+они будут скачаны снова при следующей синхронизации.</p>
+<p>Если вы случайно удалили медиафайлы
+и хотите восстановить их,
+откройте настройки и выйдите из аккаунта.
+При следующей синхронизации Anki восстановит удалённые файлы,
+если они всё ещё есть в AnkiWeb.</p>
+<p>Если вы запускаете Anki с <a href="files.html#running-from-a-flash-drive">USB-флешки</a>,
+используйте файловую систему NTFS,
+так как Anki может не обнаруживать изменения медиа
+на FAT32.</p>
+<h2 id="Конфликты"><a class="header" href="#Конфликты">Конфликты</a></h2>
+<p>Можно посмотреть <a href="https://www.youtube.com/watch?v=UEAcpfMQnjo">видео по теме</a>.</p>
+<p>В обычных условиях повторы и правки заметок объединяются,
+поэтому если вы повторяли/редактировали на двух устройствах
+до синхронизации,
+Anki сохранит изменения из обоих мест.
+Если одна и та же карточка повторялась в двух местах,
+оба повторения будут отмечены в истории,
+а карточка сохранится в том состоянии,
+в котором по ней ответили последним.</p>
+<p>Есть изменения,
+которые Anki объединять не умеет.
+Они в основном связаны с форматом заметок:
+например, добавление нового поля
+или удаление шаблона карточки.
+Когда вы выполняете операцию,
+которую нельзя объединить,
+Anki предупредит вас
+и предложит отменить операцию.
+Если продолжить,
+при следующей синхронизации коллекции
+попросят выбрать,
+оставить локальную копию
+или копию на AnkiWeb.</p>
+<p>Если при синхронизации обнаружены определённые проблемы,
+Anki принудительно включает
+одностороннюю синхронизацию.
+Если это происходит постоянно,
+напишите на наш <a href="https://forums.ankiweb.net">сайт поддержки</a>.</p>
+<p>Когда требуется односторонняя синхронизация,
+нужно выбрать,
+сохранять коллекцию на локальном устройстве
+или коллекцию на AnkiWeb.
+Если изменения есть в обоих местах,
+можно сохранить изменения только одной стороны.</p>
+<p>Если выбрать <strong>Upload</strong>,
+содержимое локального устройства
+будет отправлено в AnkiWeb.
+Затем нужно синхронизировать другие устройства
+и выбрать <strong>Download</strong>,
+чтобы получить копию этих данных.</p>
+<p>Если выбрать <strong>Download</strong>,
+локальные изменения будут заменены
+данными из AnkiWeb.</p>
+<p>Когда все устройства снова синхронизированы,
+последующие синхронизации
+вернутся к обычному режиму
+с объединением изменений с обеих сторон.</p>
+<p>Если вы хотите принудительно выполнить
+полную загрузку или скачивание
+(например, случайно удалили колоду на одной стороне
+и хотите восстановить её,
+а не синхронизировать удаление),
+можно включить флажок
+<code>On next sync, force changes in one direction</code>
+в <strong>Tools &gt; Preferences &gt; Network</strong>,
+а затем синхронизироваться как обычно.
+(Вам предложат выбрать нужную сторону.)</p>
+<p>Принудительная односторонняя синхронизация
+влияет только на синхронизацию карточек —
+медиа синхронизируются как обычно.
+Если вы хотите удалить файлы из AnkiWeb,
+сначала убедитесь,
+что клиент полностью синхронизирован.
+После полной синхронизации
+любые удалённые вами файлы
+(например, через <strong>Check Media</strong>)
+будут удалены из AnkiWeb
+при следующей синхронизации.</p>
+<h2 id="Объединение-конфликтов"><a class="header" href="#Объединение-конфликтов">Объединение конфликтов</a></h2>
+<p>Поскольку <a href="#setup">первая синхронизация</a>
+умеет синхронизировать изменения только в одну сторону,
+если до настройки синхронизации
+вы добавили разный контент
+на разных устройствах или профилях,
+контент на одном устройстве будет потерян,
+если вы перезапишете его контентом другого устройства.
+При определённых усилиях
+можно вручную объединить данные в одну коллекцию.</p>
+<p>Сначала сделайте резервную копию
+на каждом устройстве/профиле,
+на случай если что-то пойдёт не так.
+В компьютерной версии можно использовать <strong>File &gt; Export</strong>,
+экспортировав «all decks»
+с расписанием и медиа,
+и сохранить файл в безопасном месте.
+В AnkiMobile кнопка Add/Export
+на экране списка колод
+позволяет экспортировать все колоды с медиа.</p>
+<p>Далее, если одно из устройств мобильное,
+синхронизируйте его первым.
+Если возникнет конфликт,
+выберите <strong>Upload</strong>,
+чтобы перезаписать данные на AnkiWeb
+данными с мобильного устройства.
+Если оба устройства/профиля на компьютере,
+сначала синхронизируйте устройство/профиль
+с большим количеством колод.</p>
+<p>Теперь вернитесь ко второму устройству/профилю.
+Если включена автосинхронизация,
+может появиться вопрос Upload/Download.
+Нажмите cancel —
+пока синхронизироваться не нужно.</p>
+<p>Когда откроется список колод,
+нажмите значок шестерёнки рядом с первой колодой
+и выберите <strong>Export</strong>.
+Экспортируйте содержимое
+с расписанием и медиа,
+сохраните файл <code>.apkg</code>.
+Повторите это для каждой колоды верхнего уровня.</p>
+<p>После экспорта всех верхнеуровневых колод
+нажмите кнопку синхронизации в правом верхнем углу
+и выберите <strong>Download</strong>,
+чтобы перезаписать локальное содержимое
+данными, синхронизированными с другого устройства.</p>
+<p>Теперь можно использовать <strong>File &gt; Import</strong>
+для импорта ранее экспортированных <code>.apkg</code>-файлов,
+что объединит экспортированный контент
+с уже существующим,
+и всё окажется в одном месте.</p>
+<h2 id="Удаление-данных-ankiweb"><a class="header" href="#Удаление-данных-ankiweb">Удаление данных AnkiWeb</a></h2>
+<p>Поскольку AnkiWeb — бесплатный сервис,
+нам приходится периодически удалять неиспользуемые данные аккаунтов,
+чтобы снижать затраты.
+Если вы не заходили в аккаунт
+и не синхронизировались последние 6 месяцев,
+данные аккаунта могут быть удалены.</p>
+<h3 id="Что-удаляется"><a class="header" href="#Что-удаляется">Что удаляется</a></h3>
+<p>Удаляются только данные,
+хранящиеся на AnkiWeb.
+Сам аккаунт остаётся
+и может снова использоваться.</p>
+<p>Карточки, сохранённые на компьютере,
+телефоне или планшете,
+останутся на этих устройствах.
+Материалы, опубликованные с вашего аккаунта,
+включая колоды и дополнения,
+также останутся на AnkiWeb.</p>
+<h3 id="Возвращение-в-ankiweb"><a class="header" href="#Возвращение-в-ankiweb">Возвращение в AnkiWeb</a></h3>
+<p>После удаления данных колод
+мы не можем восстановить их из AnkiWeb,
+но вы можете восстановить их,
+если у вас есть локальная копия
+или <a href="./backups.html">резервная копия</a>.</p>
+<h3 id="Как-избежать-удаления-данных"><a class="header" href="#Как-избежать-удаления-данных">Как избежать удаления данных</a></h3>
+<p>Каждый раз,
+когда вы заходите на ankiweb.net
+или используете синхронизацию
+в Anki, AnkiMobile или AnkiDroid,
+ваш аккаунт автоматически помечается как активный.</p>
+<p>Если аккаунт неактивен 6 месяцев и более,
+и вы пользовались сервисом неделю или дольше,
+мы отправим письмо,
+что удаление запланировано.
+Если вы хотите сохранить активность аккаунта,
+войдите на ankiweb.net
+и выучите карточку,
+или синхронизируйте одно из устройств
+в течение 30 дней.</p>
+<h2 id="Фаерволы"><a class="header" href="#Фаерволы">Фаерволы</a></h2>
+<p>Для синхронизации Anki должен уметь
+выполнять исходящие HTTPS-подключения.
+Он должен иметь доступ к <code>ankiweb.net</code>,
+<code>sync.ankiweb.net</code>, <code>sync2.ankiweb.net</code> и т. д.
+Эти домены могут меняться,
+как и IP-адреса,
+поэтому рекомендуем разрешить wildcard-доступ
+к <code>*.ankiweb.net</code>,
+чтобы снизить вероятность,
+что правила фаервола придётся обновлять в будущем.</p>
+<p>Если на вашем устройстве есть фаервол,
+добавьте исключение для Anki.
+Если вы в рабочей или учебной сети,
+обратитесь к сетевому администратору —
+мы не можем помочь с этим.</p>
+<h2 id="Прокси"><a class="header" href="#Прокси">Прокси</a></h2>
+<p>Если для доступа в интернет нужен прокси,
+Anki на Windows/macOS обычно автоматически
+подхватывает системные настройки прокси,
+а на других платформах учитывает
+переменную окружения <code>HTTP_PROXY</code>.</p>
+<p>Anki сможет использовать системные настройки
+только если прокси настроен вручную
+и не требует пароль.
+Если используется автоматическая настройка прокси,
+или прокси требует логин и пароль,
+нужно вручную передать конфигурацию прокси в Anki.</p>
+<p>Чтобы указать прокси для Anki,
+задайте переменную окружения <code>HTTPS_PROXY</code>,
+указывающую на прокси-сервер.
+Она выглядит так:</p>
+<pre><code>http://user:pass@proxy.company.com:8080
+</code></pre>
+<p>Если логин или пароль содержит <code>@</code>
+(например, <code>user@workdomain.com</code>),
+нужно заменить его на <code>%40</code>, например:</p>
+<pre><code>http://user%40workdomain.com:pass@proxy.company.com:8080
+</code></pre>
+<p>Anki 2.0 ожидает <code>HTTP_PROXY</code> вместо <code>HTTPS_PROXY</code>.</p>
+<p>Чтобы задать переменные окружения на Windows,
+см. <a href="https://www.google.com/search?q=windows+set+environmental+variable">https://www.google.com/search?q=windows+set+environmental+variable</a></p>
+<p>Если вы на Mac, см.
+<a href="http://stackoverflow.com/questions/135688/setting-environment-variables-in-os-x">http://stackoverflow.com/questions/135688/setting-environment-variables-in-os-x</a></p>
+<p>Сильно ограниченные сети,
+которые перехватывают защищённые соединения
+и подставляют свои сертификаты,
+могут вызывать SSL-ошибки в Anki.
+В таких условиях проблему иногда можно обойти
+с помощью <a href="https://ankiweb.net/shared/info/1332261690">этого дополнения</a>.</p>
+<p>Альтернативный вариант — установить локальный прокси-сервер
+и направить его на ваш обычный прокси-сервер.
+Тогда Anki можно настроить на локальный прокси,
+который будет перенаправлять запросы
+к прокси, используемому обычно.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="deck-options.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="profiles.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="deck-options.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="profiles.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

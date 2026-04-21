@@ -1,0 +1,633 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Обучение - Anki Manual</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Anki&#x27;s user manual. Anki is a flashcard program that makes learning easier.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="css/misc.css">
+        <link rel="stylesheet" href="css/mdbook-admonish.css">
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Anki Manual</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/ankitects/anki-manual/" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="Обучение"><a class="header" href="#Обучение">Обучение</a></h1>
+<ul>
+<li><a href="#%D0%9A%D0%BE%D0%BB%D0%BE%D0%B4%D1%8B">Колоды</a></li>
+<li><a href="#%D0%9E%D0%B1%D0%B7%D0%BE%D1%80-%D0%BE%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D1%8F">Обзор обучения</a></li>
+<li><a href="#%D0%92%D0%BE%D0%BF%D1%80%D0%BE%D1%81%D1%8B">Вопросы</a></li>
+<li><a href="#%D0%9A%D0%BD%D0%BE%D0%BF%D0%BA%D0%B8-%D0%BE%D1%82%D0%B2%D0%B5%D1%82%D0%B0">Кнопки ответа</a></li>
+<li><a href="#%D0%9A%D0%BE%D1%8D%D1%84%D1%84%D0%B8%D1%86%D0%B8%D0%B5%D0%BD%D1%82-%D1%80%D0%B0%D0%B7%D0%B1%D1%80%D0%BE%D1%81%D0%B0-fuzz-factor">Коэффициент разброса (Fuzz Factor)</a></li>
+<li><a href="#%D0%A0%D0%B5%D0%B4%D0%B0%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D0%B8-%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B5">Редактирование и другое</a></li>
+<li><a href="#%D0%9F%D0%BE%D1%80%D1%8F%D0%B4%D0%BE%D0%BA-%D0%BE%D1%82%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F">Порядок отображения</a></li>
+<li><a href="#siblings-%D0%B8-bury">Siblings и bury</a></li>
+<li><a href="#%D0%93%D0%BE%D1%80%D1%8F%D1%87%D0%B8%D0%B5-%D0%BA%D0%BB%D0%B0%D0%B2%D0%B8%D1%88%D0%B8">Горячие клавиши</a></li>
+<li><a href="#%D0%9E%D1%82%D1%81%D1%82%D0%B0%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5">Отставание</a></li>
+</ul>
+<p>Когда вы нашли подходящую колоду
+или ввели несколько заметок,
+время начинать учиться.</p>
+<h2 id="Колоды"><a class="header" href="#Колоды">Колоды</a></h2>
+<p>В Anki обучение ограничено
+текущей выбранной колодой
+и всеми содержащимися в ней подколодами.</p>
+<p>На экране колод ваши колоды и подколоды
+показываются списком.
+Карточки <a href="getting-started.html#card-states">New, Learn и Due (To Review)</a>
+на текущий день также отображаются здесь.</p>
+<p><img src="media/decks_screen.png" alt="" /></p>
+<p>Когда вы нажимаете на колоду,
+она становится «текущей колодой»,
+и Anki переходит на экран обучения.
+Вы можете в любой момент вернуться к списку колод,
+нажав «Колоды» в верхней части главного окна.
+(Также можно использовать пункт меню Study Deck,
+чтобы выбрать новую колоду с клавиатуры,
+или нажать <kbd>S</kbd> для обучения
+по текущей выбранной колоде.)</p>
+<p>Нажав кнопку-шестерёнку справа от колоды,
+можно переименовать или удалить колоду,
+изменить её <a href="deck-options.html">параметры</a>
+или <a href="exporting.html">экспортировать</a>.</p>
+<h2 id="Обзор-обучения"><a class="header" href="#Обзор-обучения">Обзор обучения</a></h2>
+<p>После нажатия на колоду для обучения
+вы увидите экран,
+который показывает,
+сколько карточек назначено на сегодня.
+Он называется экраном «обзор колоды»:</p>
+<p><img src="media/study_overview.png" alt="" /></p>
+<p>Карточки разделены на <a href="getting-started.html#card-states">три типа</a>:
+New, Learning и To Review.
+Если в параметрах колоды включено
+<a href="#siblings-and-burying">Bury siblings</a>,
+вы можете увидеть,
+сколько карточек будет закопано (bury)
+серым цветом:</p>
+<p><img src="media/study_overview_buried_cards.png" alt="" /></p>
+<p>Чтобы начать сессию обучения,
+нажмите кнопку <strong>Учить сейчас</strong>.
+Anki будет показывать карточки,
+пока карточки на сегодня не закончатся.</p>
+<p>Во время обучения
+можно вернуться к обзору,
+нажав <kbd>S</kbd> на клавиатуре.</p>
+<h2 id="Вопросы"><a class="header" href="#Вопросы">Вопросы</a></h2>
+<p>Когда карточка показывается,
+сначала отображается только вопрос.
+После того как вы подумаете над ответом,
+нажмите кнопку <strong>Показать ответ</strong>
+или клавишу <kbd>Space</kbd>.
+Затем будет показан ответ.
+Ничего страшного,
+если на вспоминание уходит немного времени,
+но как общее правило:
+если вы не можете ответить примерно за 10 секунд,
+обычно лучше показать ответ
+и перейти дальше,
+чем продолжать бороться с попыткой вспомнить.</p>
+<h2 id="Кнопки-ответа"><a class="header" href="#Кнопки-ответа">Кнопки ответа</a></h2>
+<p>После показа ответа
+сравните ответ,
+который вы подумали,
+с отображённым ответом
+и выберите одну из кнопок:</p>
+<ul>
+<li>
+<p><strong>Again</strong>: выбирайте,
+когда ответ неправильный
+или вы не смогли вспомнить его.
+Если ответ частично верный,
+будьте строги к себе:
+если в реальном контексте вне Anki
+это считается ошибкой,
+в Anki это тоже ошибка.
+Обычно эту кнопку используют примерно в 5–20% случаев.</p>
+<p>Горячая клавиша: <kbd>1</kbd></p>
+</li>
+<li>
+<p><strong>Hard</strong>: выбирайте,
+когда ответ правильный,
+но вы сомневались или вспоминали долго.</p>
+<p>Горячая клавиша: <kbd>2</kbd></p>
+</li>
+<li>
+<p><strong>Good</strong>: выбирайте,
+когда ответ правильный,
+но потребовал умственного усилия.
+При правильном использовании Anki
+это самая часто используемая кнопка.
+Обычно её используют примерно в 80–95% случаев.</p>
+<p>Горячая клавиша: <kbd>3</kbd>, <kbd>Space</kbd>, <kbd>Enter</kbd></p>
+</li>
+<li>
+<p><strong>Easy</strong>: выбирайте,
+если ответ правильный
+и вспоминается без усилий.</p>
+<p>Горячая клавиша: <kbd>4</kbd></p>
+</li>
+</ul>
+<p>Если вам сложно использовать четыре кнопки,
+можно использовать только <strong>Again</strong> и <strong>Good</strong>.
+Для неправильных ответов — <strong>Again</strong>,
+для правильных — <strong>Good</strong>.</p>
+<p>Каждая кнопка ответа показывает,
+когда карточка будет повторена снова,
+если выбрать именно её.
+О настройках,
+которые управляют следующими интервалами,
+см. темы <a href="deck-options.html#learning-steps">Learning Steps</a>,
+<a href="deck-options.html#lapses">Lapses</a>,
+<a href="deck-options.html#fsrs">FSRS</a>
+и <a href="deck-options.html#advanced">Advanced</a>
+в разделе параметров колоды.</p>
+<h2 id="Коэффициент-разброса-fuzz-factor"><a class="header" href="#Коэффициент-разброса-fuzz-factor">Коэффициент разброса (Fuzz Factor)</a></h2>
+<p>Когда вы выбираете кнопку ответа
+для карточки review,
+Anki также применяет небольшой случайный «fuzz»,
+чтобы карточки,
+которые появились одновременно
+и получили одинаковые оценки,
+не склеивались и не попадали
+на повтор в один и тот же день.</p>
+<p>Карточкам в learning также даётся
+до 5 минут дополнительной задержки,
+чтобы они не всегда появлялись в одном порядке,
+но кнопки ответа это не отражают.
+Отключить эту функцию нельзя.</p>
+<h2 id="Редактирование-и-другое"><a class="header" href="#Редактирование-и-другое">Редактирование и другое</a></h2>
+<p>Вы можете нажать кнопку <strong>Edit</strong> внизу слева,
+чтобы отредактировать текущую заметку.
+После завершения редактирования
+вы вернётесь к обучению.
+Экран редактирования работает
+очень похоже на экран <a href="editing.html">добавления заметок</a>.</p>
+<p>Внизу справа на экране обучения
+есть кнопка <strong>More</strong>.
+Она предоставляет дополнительные операции
+для текущей карточки или заметки:</p>
+<ul>
+<li>
+<p><a href="editing.html#using-flags"><strong>Flag Card</strong></a>: добавляет цветную метку карточке
+или отключает её.
+Флаги отображаются во время обучения,
+а в браузере можно искать карточки с флагами.
+Это полезно,
+когда вы хотите позже сделать что-то с карточкой,
+например проверить слово дома.
+Если у вас Anki 2.1.45+,
+названия флагов можно переименовать
+из <a href="browsing.html">браузера</a>.</p>
+</li>
+<li>
+<p><strong>Bury Card / Note</strong>: скрывает карточку
+или все карточки заметки
+до следующего дня.
+(Если нужно раскопать карточки раньше,
+нажмите кнопку “unbury”
+на экране <a href="studying.html#study-overview">обзора колоды</a>.)
+Это полезно,
+если вы не можете ответить на карточку сейчас
+или хотите вернуться к ней позже.
+Bury также может <a href="studying.html#siblings-and-burying">происходить автоматически</a>
+для карточек той же заметки.</p>
+</li>
+<li>
+<p><strong>Reset card</strong>: перемещает текущую карточку
+<a href="browsing.html#cards">в конец очереди новых</a>.</p>
+<p>Опция “Restore original position”
+позволяет вернуть карточку
+на исходную позицию при сбросе.</p>
+<p>Опция “Reset repetition and lapse count”,
+если включена,
+сбрасывает счётчики повторений и ошибок карточки до нуля.
+Историю повторений,
+отображаемую внизу экрана card info,
+она не удаляет.</p>
+</li>
+<li>
+<p><strong>Set Due Date</strong>: помещает карточки в очередь review
+и <a href="browsing.html#cards">назначает им срок на конкретную дату</a>.</p>
+</li>
+<li>
+<p><strong>Suspend Card / Note</strong>: скрывает карточку
+или все карточки заметки
+до ручного снятия приостановки
+(кнопкой suspend в браузере).
+Это полезно,
+если вы хотите временно не повторять заметку,
+но не удалять её.</p>
+</li>
+<li>
+<p><strong>Options</strong>: редактирует <a href="deck-options.html">параметры</a>
+текущей колоды.</p>
+</li>
+<li>
+<p><strong>Card Info</strong>: показывает <a href="stats.html#card-info">статистическую информацию</a>
+по карточке.</p>
+</li>
+<li>
+<p><strong>Previous Card Info</strong>: показывает <a href="stats.html#card-info">статистическую информацию</a>
+по предыдущей карточке.</p>
+</li>
+<li>
+<p><a href="editing.html#the-marked-tag"><strong>Mark Note</strong></a>: добавляет тег <code>marked</code>
+к текущей заметке,
+чтобы её было легко найти в браузере.
+Это похоже на флаги отдельных карточек,
+но работает через тег,
+поэтому если у заметки несколько карточек,
+они все появятся в поиске по тегу <code>marked</code>.
+Большинству пользователей
+удобнее использовать флаги.</p>
+</li>
+<li>
+<p><strong>Create Copy</strong>: открывает <a href="browsing.html#finding-duplicates">дубликат</a>
+текущей заметки в редакторе,
+который можно немного изменить,
+чтобы быстро получить вариации карточек.
+По умолчанию дубликат карточки
+создаётся в той же колоде,
+что и оригинал.</p>
+</li>
+<li>
+<p><strong>Delete Note</strong>: удаляет заметку
+и все её карточки.</p>
+</li>
+<li>
+<p><strong>Replay Audio</strong>: если у карточки есть аудио
+на лицевой или оборотной стороне,
+воспроизводит его снова.</p>
+</li>
+<li>
+<p><strong>Pause Audio</strong>: ставит аудио на паузу,
+если оно воспроизводится.</p>
+</li>
+<li>
+<p><strong>Audio -5s / +5s</strong>: перемещает
+воспроизведение на 5 секунд назад/вперёд.</p>
+</li>
+<li>
+<p><strong>Record Own Voice</strong>: записывает звук с микрофона
+для проверки произношения.
+Эта запись временная
+и исчезает при переходе к следующей карточке.
+Если вы хотите добавить аудио к карточке постоянно,
+это можно сделать в окне редактирования.</p>
+</li>
+<li>
+<p><strong>Replay Own Voice</strong>: повторно воспроизводит
+предыдущую запись вашего голоса
+(обычно после показа ответа).</p>
+</li>
+</ul>
+<h2 id="Порядок-отображения"><a class="header" href="#Порядок-отображения">Порядок отображения</a></h2>
+<p>При обучении показываются карточки
+из выбранной колоды
+и всех колод внутри неё.
+Поэтому если выбрана колода <code>French</code>,
+подколоды <code>French::Vocab</code>
+и <code>French::My Textbook::Lesson 1</code>
+тоже будут показаны.</p>
+<p>По умолчанию для новых карточек
+Anki собирает карточки из колод
+в алфавитном порядке.
+Поэтому в примере выше
+сначала будут карточки из <code>French</code>,
+потом <code>My Textbook</code>,
+и затем <code>Vocab</code>.
+Это можно использовать,
+чтобы управлять порядком появления карточек,
+размещая более приоритетные
+в колодах выше по списку.
+При алфавитной сортировке
+символ <code>-</code> идёт перед буквами,
+а <code>~</code> — после них.
+Поэтому можно назвать колоду <code>-Vocab</code>,
+чтобы она показывалась первой,
+а другую — <code>~My Textbook</code>,
+чтобы она была последней.</p>
+<p>Новые карточки и карточки review
+собираются отдельно,
+и Anki не ждёт,
+пока обе очереди опустеют,
+перед переходом к следующей колоде,
+поэтому возможно,
+что вы видите новые карточки из одной колоды,
+а review из другой, или наоборот.
+Если вы этого не хотите,
+нажимайте непосредственно на нужную колоду,
+а не на родительскую.</p>
+<p>Поскольку карточки в learning чувствительны ко времени,
+они извлекаются сразу из всех колод
+и показываются в порядке due.</p>
+<p>Чтобы управлять порядком появления карточек,
+см. <a href="./deck-options.html#display-order">Display Order</a>.
+Для более точного контроля порядка новых карточек
+можно изменить порядок в <a href="browsing.html">браузере</a>.</p>
+<h2 id="siblings-и-bury"><a class="header" href="#siblings-и-bury">Siblings и bury</a></h2>
+<p>Как сказано в <a href="getting-started.html">базовом разделе</a>,
+Anki может создавать больше одной карточки
+для одного введённого элемента,
+например front→back и back→front,
+или два разных cloze-удаления из одного текста.
+Такие связанные карточки называются <code>siblings</code>.</p>
+<p>Когда вы отвечаете на карточку,
+у которой есть siblings,
+Anki может не показывать siblings
+в той же сессии,
+автоматически «захоранивая» (<code>bury</code>) их.
+Захороненные карточки скрыты до следующего дня
+(когда наступит новый день)
+или пока вы не раскопаете их вручную
+кнопкой <strong>Unbury</strong>,
+которая видна внизу экрана
+<a href="studying.html#study-overview">обзора колоды</a>.
+Anki будет bury siblings,
+даже если siblings находятся не в одной колоде
+(например, если используется
+<a href="templates/intro.html">deck override</a>).</p>
+<p>Включить bury можно на экране
+<a href="deck-options.html">параметров колоды</a> —
+для новых карточек и review есть отдельные настройки.</p>
+<p>Anki будет bury только siblings,
+которые являются new или review.
+Карточки в learning он не скрывает,
+так как для них время критично.
+С другой стороны,
+когда вы учите learning-карточку,
+все её siblings типа new/review будут buried.</p>
+<p>Также учтите,
+что карточка не может одновременно
+быть buried и suspended.
+При suspend buried-карточка будет unbury.
+Suspended-карточки нельзя bury.</p>
+<h2 id="Горячие-клавиши"><a class="header" href="#Горячие-клавиши">Горячие клавиши</a></h2>
+<p>Большинство распространённых действий в Anki
+имеют горячие клавиши.
+Большая часть из них видна в интерфейсе:
+у пунктов меню клавиши указаны рядом,
+а при наведении на кнопку
+обычно показывается подсказка с горячей клавишей.</p>
+<p>Во время обучения
+клавиши <kbd>Space</kbd> или <kbd>Enter</kbd>
+показывают ответ.
+Когда ответ показан,
+<kbd>Space</kbd> или <kbd>Enter</kbd>
+выбирают кнопку Good.
+Клавиши <kbd>1</kbd>-<kbd>4</kbd>
+выбирают конкретную кнопку оценки.
+Многим удобно отвечать
+на большинство карточек через <kbd>Space</kbd>
+и держать палец на <kbd>1</kbd>
+для случаев, когда они забыли ответ.</p>
+<p>Пункт меню <strong>Study Deck</strong>
+позволяет быстро переключаться на колоду
+с клавиатуры.
+Его можно вызвать клавишей <kbd>/</kbd>.
+После открытия
+показываются все ваши колоды
+и поле фильтра вверху.
+По мере ввода символов
+Anki показывает только подходящие колоды.
+Можно добавить пробел,
+чтобы разделить несколько поисковых терминов,
+и Anki покажет только колоды,
+которые соответствуют всем терминам.
+Например,
+<code>ja 1</code> или <code>on1 ja</code>
+обе соответствуют колоде
+<code>Japanese::Lesson1</code>.</p>
+<h2 id="Отставание"><a class="header" href="#Отставание">Отставание</a></h2>
+<p>Если вы отстали по повторениям,
+Anki по умолчанию ставит в приоритет
+карточки, которые ждут дольше всего.
+Такой порядок гарантирует,
+что никакие карточки не будут ждать бесконечно,
+но это также означает,
+что при добавлении новых карточек
+их повторы не будут появляться,
+пока вы не разгребёте backlog.</p>
+<p>Когда вы отвечаете на карточки,
+которые долго ждали,
+Anki учитывает эту задержку
+при расчёте следующего показа карточки.
+Это означает,
+что если вы возвращаетесь в Anki
+после длинного перерыва,
+вам не нужно начинать заново —
+можно продолжить с того места,
+где вы остановились.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="getting-help.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="editing.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="getting-help.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="editing.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

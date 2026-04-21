@@ -1,0 +1,713 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Добавление/редактирование - Anki Manual</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Anki&#x27;s user manual. Anki is a flashcard program that makes learning easier.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="css/misc.css">
+        <link rel="stylesheet" href="css/mdbook-admonish.css">
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Anki Manual</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/ankitects/anki-manual/" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="Добавлениередактирование"><a class="header" href="#Добавлениередактирование">Добавление/редактирование</a></h1>
+<ul>
+<li><a href="#%D0%94%D0%BE%D0%B1%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%B5%D0%BA-%D0%B8-%D0%B7%D0%B0%D0%BC%D0%B5%D1%82%D0%BE%D0%BA">Добавление карточек и заметок</a>
+<ul>
+<li><a href="#%D0%9F%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%BA%D0%B0-%D0%B4%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0%D1%82%D0%BE%D0%B2">Проверка дубликатов</a></li>
+<li><a href="#%D0%AD%D1%84%D1%84%D0%B5%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D0%B5-%D0%BE%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5">Эффективное обучение</a></li>
+</ul>
+</li>
+<li><a href="#%D0%94%D0%BE%D0%B1%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D1%82%D0%B8%D0%BF%D0%B0-%D0%B7%D0%B0%D0%BC%D0%B5%D1%82%D0%BA%D0%B8">Добавление типа заметки</a></li>
+<li><a href="#%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0-%D0%BF%D0%BE%D0%BB%D0%B5%D0%B9">Настройка полей</a></li>
+<li><a href="#%D0%A1%D0%BC%D0%B5%D0%BD%D0%B0-%D0%BA%D0%BE%D0%BB%D0%BE%D0%B4%D1%8B--%D1%82%D0%B8%D0%BF%D0%B0-%D0%B7%D0%B0%D0%BC%D0%B5%D1%82%D0%BA%D0%B8">Смена колоды / типа заметки</a></li>
+<li><a href="#%D0%9E%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F-%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D0%B0">Организация материала</a>
+<ul>
+<li><a href="#%D0%9F%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D1%8C%D0%BD%D0%BE%D0%B5-%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BA%D0%BE%D0%BB%D0%BE%D0%B4">Правильное использование колод</a></li>
+<li><a href="#%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D1%82%D0%B5%D0%B3%D0%BE%D0%B2">Использование тегов</a></li>
+<li><a href="#%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D1%84%D0%BB%D0%B0%D0%B3%D0%BE%D0%B2">Использование флагов</a></li>
+<li><a href="#%D0%A2%D0%B5%D0%B3-marked">Тег “Marked”</a></li>
+<li><a href="#%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BF%D0%BE%D0%BB%D0%B5%D0%B9">Использование полей</a></li>
+<li><a href="#custom-study-%D0%B8-%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5-%D0%BA%D0%BE%D0%BB%D0%BE%D0%B4%D1%8B">Custom Study и фильтрованные колоды</a></li>
+</ul>
+</li>
+<li><a href="#%D0%92%D0%BE%D0%B7%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE%D1%81%D1%82%D0%B8-%D1%80%D0%B5%D0%B4%D0%B0%D0%BA%D1%82%D0%BE%D1%80%D0%B0">Возможности редактора</a></li>
+<li><a href="#cloze-deletion-%D0%9F%D1%80%D0%BE%D0%BF%D1%83%D1%81%D0%BA%D0%B8">Cloze deletion (Пропуски)</a></li>
+<li><a href="#%D0%A1%D0%BA%D1%80%D1%8B%D1%82%D0%B8%D0%B5-%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F-image-occlusion">Скрытие изображения (Image Occlusion)</a>
+<ul>
+<li><a href="#%D0%94%D0%BE%D0%B1%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F">Добавление изображения</a></li>
+<li><a href="#%D0%94%D0%BE%D0%B1%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-io-%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%B5%D0%BA">Добавление IO-карточек</a></li>
+</ul>
+</li>
+<li><a href="#%D0%A0%D0%B5%D0%B4%D0%B0%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-io-%D0%B7%D0%B0%D0%BC%D0%B5%D1%82%D0%BE%D0%BA">Редактирование IO-заметок</a></li>
+<li><a href="#%D0%92%D0%B2%D0%BE%D0%B4-%D0%BD%D0%B5%D0%BB%D0%B0%D1%82%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D1%85-%D1%81%D0%B8%D0%BC%D0%B2%D0%BE%D0%BB%D0%BE%D0%B2-%D0%B8-%D0%B4%D0%B8%D0%B0%D0%BA%D1%80%D0%B8%D1%82%D0%B8%D0%BA%D0%B8">Ввод нелатинских символов и диакритики</a>
+<ul>
+<li><a href="#%D0%94%D0%BE%D0%B1%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%D0%BD%D0%B0%D1%80%D0%BE%D0%B4%D0%BD%D1%8B%D1%85-%D1%80%D0%B0%D1%81%D0%BA%D0%BB%D0%B0%D0%B4%D0%BE%D0%BA">Добавление международных раскладок</a></li>
+<li><a href="#%D0%94%D0%BE%D0%B1%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D1%80%D0%B0%D1%81%D0%BA%D0%BB%D0%B0%D0%B4%D0%BE%D0%BA-%D0%B4%D0%BB%D1%8F-%D0%BA%D0%BE%D0%BD%D0%BA%D1%80%D0%B5%D1%82%D0%BD%D1%8B%D1%85-%D1%8F%D0%B7%D1%8B%D0%BA%D0%BE%D0%B2">Добавление раскладок для конкретных языков</a></li>
+<li><a href="#%D0%AF%D0%B7%D1%8B%D0%BA%D0%B8-%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B0-%D0%BD%D0%B0%D0%BB%D0%B5%D0%B2%D0%BE">Языки справа налево</a></li>
+<li><a href="#%D0%9E%D0%B3%D1%80%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D0%BD%D0%B8%D1%8F">Ограничения</a></li>
+</ul>
+</li>
+<li><a href="#%D0%9D%D0%BE%D1%80%D0%BC%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F-unicode">Нормализация Unicode</a></li>
+</ul>
+<h2 id="Добавление-карточек-и-заметок"><a class="header" href="#Добавление-карточек-и-заметок">Добавление карточек и заметок</a></h2>
+<p>Напомним из <a href="getting-started.html">основ</a>: в Anki мы добавляем заметки, а не
+карточки, и Anki создаёт карточки автоматически. Нажмите <strong>Add</strong> в
+<a href="studying.html#decks">главном окне</a> — откроется окно Add Notes.</p>
+<p><img src="media/add_screen.png" alt="Add Screen" /></p>
+<p>В левом верхнем углу показан текущий <a href="getting-started.html#note-types">тип заметки</a>.
+Если там не «Basic», возможно, вы добавили другие типы заметок при загрузке
+общей колоды. Ниже предполагается, что выбран «Basic».</p>
+<p>В правом верхнем углу показана <a href="getting-started.html#decks">колода</a>, куда будут
+добавлены карточки. Если нужна новая колода, нажмите на имя колоды и затем <strong>Add</strong>.</p>
+<p>Под типом заметки вы увидите кнопки и область с надписями «Front» и «Back».
+Front и Back — это <a href="getting-started.html#notes--fields">поля</a>; их можно добавлять,
+удалять и переименовывать кнопкой «Fields…» выше.</p>
+<p>Под полями находится область «<strong>tags</strong>». Теги — это метки, которые можно
+прикреплять к заметкам для удобной организации и поиска. Можно оставить
+их пустыми или добавить один/несколько тегов. Теги разделяются пробелом.
+Если в поле тегов написано</p>
+<pre><code>vocab check_with_tutor
+</code></pre>
+<p>…то добавленная заметка получит два тега.</p>
+<p>Когда вы ввели текст в Front и Back, нажмите <strong>Add</strong> или
+<kbd>Ctrl</kbd>+<kbd>Enter</kbd> (на Mac — <kbd>Command</kbd>+<kbd>Enter</kbd>),
+чтобы добавить заметку в коллекцию. Одновременно будет создана карточка и
+помещена в выбранную колоду. Чтобы отредактировать добавленную карточку,
+можно нажать кнопку истории и найти её в <a href="browsing.html">обзоре</a>.</p>
+<p>Подробнее о кнопках между типом заметки и полями см. в разделе
+<a href="editing.html">editor</a>.</p>
+<h3 id="Проверка-дубликатов"><a class="header" href="#Проверка-дубликатов">Проверка дубликатов</a></h3>
+<p>Anki проверяет уникальность первого поля, поэтому предупредит, если вы
+добавите две карточки с Front = «apple» (например). Проверка уникальности
+ограничена текущим типом заметки, поэтому при изучении нескольких языков
+карточки с одинаковым Front не будут считаться дубликатами, если у каждого
+языка свой тип заметки.</p>
+<p>По соображениям производительности Anki не проверяет дубликаты в других
+полях автоматически, но в окне обзора есть функция “Find Duplicates”,
+которую можно запускать периодически.</p>
+<h3 id="Эффективное-обучение"><a class="header" href="#Эффективное-обучение">Эффективное обучение</a></h3>
+<p>Люди повторяют по-разному, но есть общие принципы. Отличное введение —
+<a href="https://super-memory.com/articles/20rules.htm">эта статья</a> на сайте SuperMemo.
+В частности:</p>
+<ul>
+<li>
+<p><strong>Делайте проще</strong>: чем короче карточки, тем легче повторять. Может
+возникнуть соблазн добавить много информации «на всякий случай», но
+повторение быстро станет тяжёлым.</p>
+</li>
+<li>
+<p><strong>Не заучивайте без понимания</strong>: если вы изучаете язык, старайтесь
+избегать больших списков слов. Лучший способ учить язык — в контексте,
+то есть видеть слова в предложениях. То же относится и к другим темам:
+если пытаться зубрить гору аббревиатур, прогресс будет медленным.
+Но если сначала понять стоящие за ними концепции, запоминать станет
+гораздо проще.</p>
+</li>
+</ul>
+<h2 id="Добавление-типа-заметки"><a class="header" href="#Добавление-типа-заметки">Добавление типа заметки</a></h2>
+<p>Базовых типов заметок достаточно для простых карточек (слово/фраза на каждой
+стороне). Но если вам нужно больше одного элемента информации на Front или Back,
+лучше разделить её на несколько полей.</p>
+<p>Можно подумать: «Мне нужна одна карточка — почему бы не поместить в Front
+аудио, картинку, подсказку и перевод вместе?» Так сделать можно, но минус в том,
+что данные «склеятся». Например, вы не сможете сортировать карточки по подсказке,
+потому что она смешана с остальным текстом. Также будет сложно, к примеру,
+перенести аудио с лицевой стороны на обратную без ручного копирования для
+каждой заметки. Разделяя контент по полям, вы сильно упрощаете будущую
+перестройку карточек.</p>
+<p>Чтобы создать новый тип заметки, выберите в главном окне Anki
+<strong>Tools &gt; Manage Note Types</strong>. Затем нажмите <strong>Add</strong>. Появится экран выбора
+базы для нового типа: “Add” — создать на основе стандартного типа из Anki;
+“Clone” — на основе типа, который уже есть в вашей коллекции. Например,
+если у вас уже есть тип для французской лексики, при создании типа для
+немецкой можно сделать clone.</p>
+<p>После OK вас попросят назвать новый тип. Удобно использовать название темы,
+которую вы учите: «Japanese», «Trivia» и т. п. После выбора имени закройте
+окно Note Types — вы вернётесь к окну добавления.</p>
+<h2 id="Настройка-полей"><a class="header" href="#Настройка-полей">Настройка полей</a></h2>
+<p>Чтобы настроить поля, нажмите <strong>Fields…</strong> при добавлении/редактировании
+заметки или когда тип заметки выбран в окне Manage Note Types.</p>
+<p><img src="media/fields.png" alt="Fields" /></p>
+<p>Поля можно добавлять, удалять и переименовывать соответствующими кнопками.</p>
+<p>Чтобы изменить порядок полей в этом диалоге и в окне добавления заметок,
+используйте кнопку reposition: она запросит числовую позицию поля.
+Например, чтобы сделать поле первым, введите “1”.</p>
+<p>Также можно менять порядок полей перетаскиванием их названий. Перетащите
+поле мышью/пальцем в нужное место; индикатор покажет новую позицию.</p>
+<p>Не используйте имена “Tags”, “Type”, “Deck”, “Card”, “FrontSide” для полей:
+это <a href="templates/fields.html#special-fields">специальные поля</a>, и всё будет работать
+некорректно.</p>
+<p>Параметры внизу экрана настраивают свойства полей при добавлении и
+редактировании карточек. Это <em>не</em> место для настройки внешнего вида
+карточек во время повторения; для этого см. <a href="templates/intro.html">templates</a>.</p>
+<ul>
+<li>
+<p><strong>Editing Font</strong> позволяет настроить шрифт и размер текста при
+редактировании заметок. Это полезно, если вы хотите сделать менее важную
+информацию мельче или увеличить размер трудно читаемых нелатинских символов.
+Эти изменения не влияют на вид карточек в повторении: для этого см.
+<a href="templates/intro.html">templates</a>. Однако при включённой функции “type in the
+answer” введённый текст будет использовать размер шрифта, заданный здесь.
+(О смене самого шрифта при вводе ответа см. <a href="templates/fields.html#checking-your-answer">checking your answer</a>.)</p>
+</li>
+<li>
+<p><strong>Sort by this field…</strong> сообщает Anki, что это поле нужно показывать в
+столбце Sort Field окна обзора. По нему можно сортировать карточки.
+Полем сортировки одновременно может быть только одно поле.</p>
+</li>
+<li>
+<p><strong>Reverse text direction</strong> полезно для языков с письмом справа налево (RTL),
+например арабского или иврита. Эта настройка влияет только на редактирование;
+чтобы текст корректно отображался в повторении, настройте
+<a href="templates/styling.html#text-direction">template</a>.</p>
+</li>
+<li>
+<p><strong>Use HTML editor by default</strong> полезно, если вы предпочитаете редактировать
+поля напрямую в HTML.</p>
+</li>
+<li>
+<p><strong>Collapse by default</strong>: поля можно сворачивать/разворачивать.
+Анимацию можно отключить в <a href="preferences.html">preferences</a>.</p>
+</li>
+<li>
+<p><strong>Exclude from unqualified searches (slower)</strong> можно использовать, если
+содержимое определённого поля не должно появляться в неуточнённом
+<a href="searching.html#limiting-to-a-field">(не ограниченном конкретным полем)</a> поиске.</p>
+</li>
+</ul>
+<p>После добавления полей вы, скорее всего, захотите вывести их на Front/Back
+карточки. Подробнее см. раздел <a href="templates/intro.html">templates</a>.</p>
+<h2 id="Смена-колоды--типа-заметки"><a class="header" href="#Смена-колоды--типа-заметки">Смена колоды / типа заметки</a></h2>
+<p>При добавлении заметки верхняя левая кнопка меняет тип заметки, а верхняя
+правая — колоду. В открывшемся окне можно не только выбрать колоду/тип,
+но и создать новые колоды или управлять типами заметок.</p>
+<h2 id="Организация-материала"><a class="header" href="#Организация-материала">Организация материала</a></h2>
+<h3 id="Правильное-использование-колод"><a class="header" href="#Правильное-использование-колод">Правильное использование колод</a></h3>
+<p><a href="getting-started.html#decks">Decks</a> предназначены для деления материала на
+крупные категории, которые вы хотите учить отдельно: English, Geography и т. п.
+Может возникнуть желание создать много маленьких колод (например,
+“my geography book chapter 1” или “food verbs”), но это не рекомендуется
+по следующим причинам:</p>
+<ul>
+<li>
+<p>Множество маленьких колод часто приводит к предсказуемому порядку карточек.
+В старых версиях планировщика новые карточки вводятся только в порядке колод.
+А если вы открываете колоды по очереди (что медленно), то все повторения
+“chapter 1” или “food verb” будут идти группами. Это облегчает угадывание
+по контексту и формирует более слабую память. В реальной жизни у вас не
+будет «подсказки» в виде связанных карточек перед ответом.</p>
+</li>
+<li>
+<p>Хотя это меньше проблема, чем в старых версиях Anki, сотни колод могут
+замедлять работу, а огромные деревья колод с тысячами элементов в версиях
+до 2.1.50 могут даже ломать отображение списка колод.</p>
+</li>
+</ul>
+<h3 id="Использование-тегов"><a class="header" href="#Использование-тегов">Использование тегов</a></h3>
+<p>Вместо множества маленьких колод лучше использовать теги и/или поля для
+классификации материала. Теги помогают уточнять поиск, находить нужный
+контент и поддерживать порядок в коллекции.
+Существует много эффективных способов использования тегов и флагов, и
+заранее продуманная схема поможет выбрать лучший вариант для вас.</p>
+<p>Некоторые предпочитают организовывать карточки колодами и подколодами, но у
+тегов есть важное преимущество: одной заметке можно назначить несколько тегов,
+а карточка может принадлежать только одной колоде. Поэтому в большинстве случаев
+теги — более мощная и гибкая система классификации. Теги также можно
+организовывать в дерево <a href="getting-started.html#decks">так же, как и колоды</a>.</p>
+<p>Например, вместо колоды “food verbs” можно положить карточки в основную
+языковую колоду и присвоить теги “food” и “verb”. Поскольку тегов может быть
+несколько, вы сможете <a href="searching.html#tags-decks-cards-and-notes">искать</a> все
+глаголы, всю лексику про еду или только глаголы на тему еды.</p>
+<p>Теги можно добавлять в окне Edit и в <a href="browsing.html">Browser</a>; там же их можно
+добавлять, удалять, переименовывать и организовывать. Учтите, что теги работают
+на уровне <a href="getting-started.html#notes--fields">заметки</a>: если вы тегируете карточку
+с «сиблингами», тег получат и они. Если нужно отметить только одну карточку,
+а не её «соседей», используйте флаги.</p>
+<h3 id="Использование-флагов"><a class="header" href="#Использование-флагов">Использование флагов</a></h3>
+<p>Флаги похожи на теги, но отображаются прямо в окне повторения как цветная
+иконка в правой верхней части экрана. По флагам также можно искать в Browse,
+переименовывать их в обзоре и создавать фильтрованные колоды из отмеченных
+карточек. Но в отличие от тегов, у одной карточки одновременно может быть
+только один флаг. Ещё одно отличие: флаги работают на уровне
+<a href="getting-started.html#cards">карточки</a>, поэтому флаг на одной карточке не влияет
+на её «сиблингов».</p>
+<p>Ставить/снимать флаги можно прямо в режиме повторения
+(<kbd>Ctrl</kbd>+<kbd>1-7</kbd> в Windows, <kbd>Cmd</kbd>+<kbd>1-7</kbd> на Mac)
+и в <a href="browsing.html">Browser</a>.</p>
+<h3 id="Тег-marked"><a class="header" href="#Тег-marked">Тег “Marked”</a></h3>
+<p>Anki по-особому обрабатывает тег “marked”. В окнах повторения и обзора есть
+опции для добавления/удаления этого тега. Если у заметки текущей карточки
+есть “marked”, в окне повторения показывается звезда, а в обзоре такие
+карточки выделяются другим цветом.</p>
+<p>Примечание: механизм Marking в основном оставлен для совместимости со
+старыми версиями Anki; большинству пользователей лучше использовать
+<a href="editing.html#using-flags">flags</a>.</p>
+<h3 id="Использование-полей"><a class="header" href="#Использование-полей">Использование полей</a></h3>
+<p>Тем, кто любит строгую организацию, можно добавлять поля в заметки для
+классификации материала: “book”, “page” и т. п. Anki поддерживает поиск
+по конкретным полям, поэтому запрос вида <code>"book:my book" page:63</code>
+позволяет быстро найти нужное.</p>
+<h3 id="custom-study-и-фильтрованные-колоды"><a class="header" href="#custom-study-и-фильтрованные-колоды">Custom Study и фильтрованные колоды</a></h3>
+<p>С помощью <a href="filtered-decks.html">custom study и filtered deck</a> можно создавать
+временные колоды из поисковых запросов. Это позволяет в обычное время
+учить материал вперемешку в одной колоде (что лучше для памяти), но при
+необходимости делать временные колоды для фокуса на конкретной теме,
+например перед экзаменом. Общее правило: если вы всегда хотите учить часть
+материала отдельно, держите её в обычной колоде; если отдельно нужно учить
+лишь иногда (перед тестом, при накопившемся бэклоге и т. п.), лучше подходят
+фильтрованные колоды из тегов, флагов, меток или полей.</p>
+<h2 id="Возможности-редактора"><a class="header" href="#Возможности-редактора">Возможности редактора</a></h2>
+<p>Редактор отображается при <a href="editing.html">добавлении заметок</a>,
+<a href="studying.html#editing-and-more">редактировании заметки</a> во время повторения
+и в <a href="browsing.html">окне обзора</a>.</p>
+<p><img src="media/editor_icons.png" alt="Editor icons" /></p>
+<p>Слева сверху находятся две кнопки, открывающие окна
+<a href="editing.html#customizing-fields">fields</a> и <a href="templates/intro.html">cards</a>.</p>
+<p>Справа расположены кнопки форматирования. Полужирный, курсив и подчёркивание
+работают как в текстовом редакторе. Следующие две кнопки включают нижний и
+верхний индекс — это удобно для формул вроде H<sub>2</sub>O или x<sup>2</sup>.
+Затем идут две кнопки изменения цвета текста.</p>
+<p>Кнопка-ластик очищает всё форматирование выделенного текста: цвет, жирность
+и т. д. Следующие три кнопки управляют списками, выравниванием и отступом.</p>
+<p>Кнопка со скрепкой позволяет выбрать аудио, изображения и видео с диска
+компьютера и прикрепить их к заметке. Также можно скопировать медиа в буфер
+обмена (например, через «Copy Image» в браузере) и вставить в нужное поле.
+Подробнее о медиа см. раздел <a href="media.html">media</a>.</p>
+<p>Иконка микрофона позволяет записать звук с микрофона компьютера и прикрепить
+запись к заметке.</p>
+<p>Кнопка Fx показывает быстрые команды для вставки MathJax или
+<a href="math.html">LaTeX</a> в заметку.</p>
+<p>Кнопки […​] видны, когда выбран тип заметки cloze.
+<img src="media/cloze_icons.png" alt="Cloze icons" /></p>
+<p>Кнопка <code>&lt;/&gt;</code> позволяет редактировать исходный HTML поля.
+<img src="media/html_icon.png" alt="HTML icon" /></p>
+<p>В Anki 2.1.45+ можно настраивать sticky-поля прямо в редакторе.
+Если нажать на иконку булавки справа от поля, Anki не будет очищать это
+поле после добавления заметки. Это полезно, если одно и то же содержимое
+вводится в нескольких заметках. В более старых версиях sticky-поля
+переключались через экран Fields.</p>
+<p><img src="media/Pin_icon.png" alt="Pin icon" /></p>
+<p>У большинства кнопок есть горячие клавиши. Наведите курсор на кнопку,
+чтобы увидеть сочетание.</p>
+<p>При вставке текста Anki по умолчанию сохраняет большую часть форматирования.
+Если удерживать <kbd>Shift</kbd> во время вставки, форматирование в основном
+будет удалено. В Preferences можно переключить опцию
+“Paste without shift key strips formatting”, чтобы изменить поведение по умолчанию.</p>
+<h2 id="cloze-deletion-Пропуски"><a class="header" href="#cloze-deletion-Пропуски">Cloze deletion (Пропуски)</a></h2>
+<p><em>Cloze deletion</em> — это скрытие одного или нескольких слов в предложении.
+Например, если есть предложение:</p>
+<pre><code>Canberra was founded in 1913.
+</code></pre>
+<p>…и вы создаёте cloze для “1913”, предложение станет таким:</p>
+<pre><code>Canberra was founded in [...].
+</code></pre>
+<p>Иногда такие скрытые фрагменты называют “occluded”.</p>
+<p>О том, почему полезно использовать cloze deletion, см. правило 5
+<a href="https://super-memory.com/articles/20rules.htm">здесь</a>.</p>
+<p>В Anki есть специальный тип заметки cloze deletion, чтобы делать cloze было
+проще. Чтобы создать такую заметку, выберите тип Cloze
+type, введите текст в поле “Text”, затем выделите мышью часть, которую
+нужно скрыть, и нажмите кнопку […​]. Anki заменит текст на:</p>
+<pre><code>Canberra was founded in {{c1::1913}}.
+</code></pre>
+<p>Часть “c1” означает, что вы создали один cloze-пропуск в предложении.
+При желании можно создать больше одного. Например, если выделить Canberra
+и снова нажать […​], текст станет таким:</p>
+<pre><code>{{c2::Canberra}} was founded in {{c1::1913}}.
+</code></pre>
+<p>Когда вы добавите заметку выше, Anki создаст две карточки. Первая покажет:</p>
+<pre><code>Canberra was founded in [...].
+</code></pre>
+<p>…на стороне вопроса, а на ответе будет полное предложение.
+На второй карточке вопрос будет таким:</p>
+<pre><code>[...] was founded in 1913.
+</code></pre>
+<p>На одной карточке можно скрывать несколько фрагментов. В примере выше, если
+заменить c2 на c1, будет создана только одна карточка, где скрыты и Canberra,
+и 1913. Если удерживать <kbd>Alt</kbd> (на Mac — <kbd>Option</kbd>) при
+создании cloze, Anki автоматически использует тот же номер, а не увеличивает его.</p>
+<p>Cloze-пропуски не обязаны совпадать с границами слов. Поэтому если в примере
+выше выделить “anberra”, а не “Canberra”, вопрос будет выглядеть как
+“C[…​] was founded in 1913”, что даст подсказку.</p>
+<p>Также можно задавать подсказки, не совпадающие с исходным текстом.
+Если заменить предложение на:</p>
+<pre><code>Canberra::city was founded in 1913
+</code></pre>
+<p>…а затем выделить “Canberra::city” и нажать […​], Anki воспримет текст
+после двух двоеточий как подсказку и преобразует выражение так:</p>
+<pre><code>{{c1::Canberra::city}} was founded in 1913
+</code></pre>
+<p>Когда карточка появится на повторении, она будет выглядеть так:</p>
+<pre><code>[city] was founded in 1913.
+</code></pre>
+<p>О том, как проверять правильность ввода ответа в cloze-карточках, см. раздел
+<a href="templates/fields.html#checking-your-answer">typing answers</a>.</p>
+<p>Начиная с версии 2.1.56 поддерживаются вложенные cloze-пропуски.
+Например, это корректно:</p>
+<pre><code>{{c1::Canberra was {{c2::founded}}}} in 1913
+</code></pre>
+<p>Внутренний cloze полностью вложен во внешний. Частичные пересечения
+не поддерживаются, например:</p>
+<pre><code>[...] founded in 1913 -&gt; Canberra was
+Canberra [...] in 1913 -&gt; was founded
+</code></pre>
+<p>где слово “was” присутствует в обоих пропусках.</p>
+<p>Текущая реализация поддерживает ограниченную глубину вложенности.
+В Anki 24.11 это 3 уровня. В других версиях лимит около 8, но при
+приближении к лимиту Anki может заметно замедляться. Увеличить лимит нельзя.
+Если используете эту возможность, лучше ограничиваться несколькими уровнями.</p>
+<p>До версии 2.1.56, если нужно делать cloze из перекрывающегося текста,
+добавьте в тип заметки ещё одно поле Text, выведите его в
+<a href="templates/intro.html">template</a>, а при создании заметок вставляйте текст
+в два отдельных поля, например:</p>
+<pre><code>Text1 field: {{c1::Canberra was founded}} in 1913
+
+Text2 field: {{c2::Canberra}} was founded in 1913
+</code></pre>
+<p>У стандартного cloze-типа заметки есть второе поле Extra, которое
+показывается на стороне ответа каждой карточки. Его можно использовать
+для примечаний или дополнительной информации.</p>
+<p>Cloze-тип заметки обрабатывается Anki особым образом и не может быть создан
+на основе обычного типа заметки. Если хотите его настроить, клонируйте
+существующий тип Cloze, а не другой тип заметки. Форматирование можно менять,
+но добавить дополнительные шаблоны карточек в cloze-тип нельзя.</p>
+<h2 id="Скрытие-изображения-image-occlusion"><a class="header" href="#Скрытие-изображения-image-occlusion">Скрытие изображения (Image Occlusion)</a></h2>
+<p>В Anki 23.10+ карточки Image Occlusion поддерживаются нативно.
+Заметка Image Occlusion (IO) — это частный случай cloze deletion для
+изображений вместо текста: вы скрываете части изображения и проверяете
+знание скрытой информации.</p>
+<p><img src="media/io.jpg" alt="Image Occlusion" /></p>
+<h3 id="Добавление-изображения"><a class="header" href="#Добавление-изображения">Добавление изображения</a></h3>
+<p>Чтобы добавить IO-карточки в коллекцию, откройте экран Add, нажмите “Type”
+и выберите “Image Occlusion” в списке встроенных типов заметок.
+Затем нажмите <strong>Select Image</strong>, чтобы загрузить файл с диска,
+или <strong>Paste image from clipboard</strong>, если изображение уже скопировано в буфер.</p>
+<h3 id="Добавление-io-карточек"><a class="header" href="#Добавление-io-карточек">Добавление IO-карточек</a></h3>
+<p>После загрузки изображения откроется IO-редактор. Нажимайте иконки слева,
+чтобы добавлять на изображение столько областей, сколько нужно.
+Доступны три базовые фигуры:</p>
+<ul>
+<li>Rectangle</li>
+<li>Ellipse</li>
+<li>Polygon</li>
+</ul>
+<p>Для каждой заметки можно выбрать один из двух режимов IO:</p>
+<ul>
+<li><strong>Hide All, Guess One</strong>: все области скрыты, и во время обучения
+открывается только одна область за раз.</li>
+<li><strong>Hide One, Guess One</strong>: в каждый момент скрыта только одна область,
+которая затем открывается при обучении; остальные видны.</li>
+</ul>
+<p><img src="media/io_modes.jpg" alt="Image Occlusion Modes" /></p>
+<!-- fields & tags are not intuitive to find in editor -->
+<p>У типа заметки IO по умолчанию также есть стандартные поля:
+<strong>Header</strong> (показывается над изображением на обеих сторонах карточки),
+<strong>Back Extra</strong> (показывается под изображением на обратной стороне),
+и <strong>Comments</strong> (не показывается на карточках). Чтобы открыть их в IO-редакторе,
+нажмите <strong>Toggle Mask Editor</strong>.
+Там же можно просматривать и редактировать <strong>Tags</strong> заметки.</p>
+<p>Когда закончите, нажмите “Add” внизу экрана.
+Anki добавит карточку для каждой фигуры или группы фигур, созданных на
+предыдущем шаге, и вы сможете повторять их обычным образом.</p>
+<h2 id="Редактирование-io-заметок"><a class="header" href="#Редактирование-io-заметок">Редактирование IO-заметок</a></h2>
+<p>Редактировать IO-заметки можно кнопкой “Edit” во время повторения
+или напрямую из браузера. Доступно несколько инструментов:</p>
+<ul>
+<li>Select: выбирает одну или несколько фигур для перемещения, изменения
+размера, удаления или группировки.</li>
+<li>Zoom: позволяет перемещать изображение и приближать/отдалять его колесом мыши.</li>
+<li>Shapes (Rectangle, Ellipse, Polygon): добавляют новые фигуры/карточки.</li>
+<li>Text: добавляет текстовые области на изображение. Их можно перемещать,
+менять размер и удалять, но карточка при использовании этого инструмента
+не создаётся.</li>
+<li>Undo / Redo.</li>
+<li>Zoom In / Out / Reset zoom.</li>
+<li>Toggle Translucency: временно показывает скрытые области.</li>
+<li>Delete: удаляет выбранные фигуры и текстовые области. Учтите, что удаление
+фигуры не удаляет связанную карточку автоматически; затем нужно выполнить
+Tools&gt;Empty Cards, как и с обычными cloze-пропусками.</li>
+<li>Duplicate.</li>
+<li>Group selection: объединяет фигуры в группу, чтобы перемещать, менять
+размер или удалять их одновременно. Обратите внимание: после группировки
+две и более фигур создают только одну карточку.</li>
+<li>Ungroup selection: разъединяет выбранную группу обратно на отдельные фигуры.</li>
+<li>Alignment: выравнивает фигуры/текстовые области по нужному правилу.</li>
+</ul>
+<p>При повторении IO-карточек под изображением появляется кнопка “Toggle Masks”.
+В режиме “Hide All, Guess One” она временно убирает все маски заметки.</p>
+<h2 id="Ввод-нелатинских-символов-и-диакритики"><a class="header" href="#Ввод-нелатинских-символов-и-диакритики">Ввод нелатинских символов и диакритики</a></h2>
+<p>Все современные компьютеры имеют встроенную поддержку ввода диакритики
+и нелатинских символов, причём есть несколько способов ввода.
+Мы рекомендуем использовать раскладку клавиатуры языка, который вы учите.</p>
+<p>Языки с отдельной письменностью (японский, китайский, тайский и т. д.)
+обычно имеют собственные специализированные раскладки.</p>
+<p>Европейские языки с диакритикой тоже могут иметь отдельные раскладки, но
+часто достаточно универсальной “international keyboard”. Она работает так:
+сначала вводите знак диакритики, затем букву — например, апостроф
+(<kbd>´</kbd>) + буква a (<kbd>a</kbd>) даст á.</p>
+<h3 id="Добавление-международных-раскладок"><a class="header" href="#Добавление-международных-раскладок">Добавление международных раскладок</a></h3>
+<p>Инструкции зависят от вашей ОС и окружения рабочего стола.
+Для начала смотрите ссылки ниже.</p>
+<p>Windows:</p>
+<ul>
+<li><a href="https://thegeekpage.com/how-to-add-us-international-keyboard-in-windows-10/">https://thegeekpage.com/how-to-add-us-international-keyboard-in-windows-10/</a></li>
+</ul>
+<p>Mac:</p>
+<ul>
+<li><a href="http://www.macworld.com/article/1147039/os-x/accentinput.html">http://www.macworld.com/article/1147039/os-x/accentinput.html</a></li>
+</ul>
+<p>Linux:</p>
+<ul>
+<li>Gnome: <a href="https://help.gnome.org/users/gnome-help/stable/tips-specialchars.html.en">https://help.gnome.org/users/gnome-help/stable/tips-specialchars.html.en</a></li>
+<li>KDE Plasma: <a href="https://userbase.kde.org/Tutorials/ComposeKey">https://userbase.kde.org/Tutorials/ComposeKey</a></li>
+</ul>
+<h3 id="Добавление-раскладок-для-конкретных-языков"><a class="header" href="#Добавление-раскладок-для-конкретных-языков">Добавление раскладок для конкретных языков</a></h3>
+<p>Раскладки конкретных языков добавляются похожим образом, но все варианты
+здесь не покрыть. Для подробностей ищите, например:
+“input Japanese on a mac”, “type Chinese on Windows 10” и т. п.</p>
+<p>В Linux лучше обращаться к wiki вашего дистрибутива, например:
+<a href="https://wiki.archlinux.org/title/Input_method">Arch Linux</a> и
+<a href="https://wiki.debian.org/Keyboard#Modern_strategy">Debian Linux</a>.
+Например, <code>apt install ibus-anthy</code> в Debian позволяет вводить хирагану.</p>
+<h3 id="Языки-справа-налево"><a class="header" href="#Языки-справа-налево">Языки справа налево</a></h3>
+<p>Если вы изучаете язык с письмом справа налево, есть много дополнительных
+нюансов. Подробнее: <a href="http://dotancohen.com/howto/rtl_right_to_left.html">эта страница</a>.</p>
+<h3 id="Ограничения"><a class="header" href="#Ограничения">Ограничения</a></h3>
+<p>Инструментарий, на котором построен Anki, может плохо работать с некоторыми
+методами ввода — например, удержанием клавиши для выбора символов с
+диакритикой в macOS или вводом символов через <kbd>Alt</kbd>+числовой код
+в Windows.</p>
+<h2 id="Нормализация-unicode"><a class="header" href="#Нормализация-unicode">Нормализация Unicode</a></h2>
+<p>Текст вроде <code>á</code> может быть представлен на компьютере несколькими способами:
+либо отдельным кодом этого символа, либо обычной <code>a</code> + отдельным кодом
+диакритики. Это создаёт проблемы при смешивании ввода из разных источников
+или работе на разных компьютерах: если ввод с клавиатуры приходит в одной
+форме, а содержимое хранится в другой, поиск не найдёт совпадение, хотя
+визуально текст одинаковый.</p>
+<p>Чтобы контент легче находился поиском, Anki нормализует текст к стандартной
+форме. Для большинства пользователей это прозрачно, но при изучении
+специфических материалов (например, архаичных японских символов)
+нормализация может преобразовать их в более современные аналоги.</p>
+<p>Если вы хотите сохранить варианты символов без изменений, выполните в
+<a href="./misc.html">debug console</a> следующее — это отключит нормализацию:</p>
+<pre><code class="language-python">mw.col.conf["normalize_note_text"] = False
+</code></pre>
+<p>Любой контент, добавленный после этого, останется как есть. Компромисс:
+поиск может работать хуже, если вы переключаетесь между ОС или вставляете
+данные из смешанных источников.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="studying.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="templates/intro.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="studying.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="templates/intro.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

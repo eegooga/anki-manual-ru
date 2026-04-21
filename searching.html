@@ -1,0 +1,638 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Поиск - Anki Manual</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Anki&#x27;s user manual. Anki is a flashcard program that makes learning easier.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="css/misc.css">
+        <link rel="stylesheet" href="css/mdbook-admonish.css">
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Anki Manual</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/ankitects/anki-manual/" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="Поиск"><a class="header" href="#Поиск">Поиск</a></h1>
+<ul>
+<li><a href="#%D0%9F%D1%80%D0%BE%D1%81%D1%82%D1%8B%D0%B5-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D1%8B">Простые запросы</a></li>
+<li><a href="#%D0%9E%D0%B3%D1%80%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BA%D0%BE%D0%BD%D0%BA%D1%80%D0%B5%D1%82%D0%BD%D1%8B%D0%BC-%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC">Ограничение конкретным полем</a></li>
+<li><a href="#%D0%A2%D0%B5%D0%B3%D0%B8-%D0%BA%D0%BE%D0%BB%D0%BE%D0%B4%D1%8B-%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%BA%D0%B8-%D0%B8-%D0%B7%D0%B0%D0%BC%D0%B5%D1%82%D0%BA%D0%B8">Теги, колоды, карточки и заметки</a></li>
+<li><a href="#%D0%98%D0%B3%D0%BD%D0%BE%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D0%B4%D0%B8%D0%B0%D0%BA%D1%80%D0%B8%D1%82%D0%B8%D0%BA%D0%B8%D0%BA%D0%BE%D0%BC%D0%B1%D0%B8%D0%BD%D0%B8%D1%80%D1%83%D0%B5%D0%BC%D1%8B%D1%85-%D1%81%D0%B8%D0%BC%D0%B2%D0%BE%D0%BB%D0%BE%D0%B2">Игнорирование диакритики/комбинируемых символов</a></li>
+<li><a href="#%D0%A0%D0%B5%D0%B3%D1%83%D0%BB%D1%8F%D1%80%D0%BD%D1%8B%D0%B5-%D0%B2%D1%8B%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F">Регулярные выражения</a></li>
+<li><a href="#%D0%A1%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D0%BD%D0%B8%D0%B5-%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%B5%D0%BA">Состояние карточек</a></li>
+<li><a href="#%D0%A4%D0%BB%D0%B0%D0%B3%D0%B8">Флаги</a></li>
+<li><a href="#%D0%A1%D0%B2%D0%BE%D0%B9%D1%81%D1%82%D0%B2%D0%B0-%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%B5%D0%BA">Свойства карточек</a></li>
+<li><a href="#%D0%9D%D0%B5%D0%B4%D0%B0%D0%B2%D0%BD%D0%B8%D0%B5-%D1%81%D0%BE%D0%B1%D1%8B%D1%82%D0%B8%D1%8F">Недавние события</a>
+<ul>
+<li><a href="#%D0%94%D0%BE%D0%B1%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D1%8B">Добавлены</a></li>
+<li><a href="#%D0%98%D0%B7%D0%BC%D0%B5%D0%BD%D0%B5%D0%BD%D1%8B">Изменены</a></li>
+<li><a href="#%D0%9E%D1%82%D0%B2%D0%B5%D1%87%D0%B5%D0%BD%D1%8B">Отвечены</a></li>
+<li><a href="#%D0%92%D0%BF%D0%B5%D1%80%D0%B2%D1%8B%D0%B5-%D0%BE%D1%82%D0%B2%D0%B5%D1%87%D0%B5%D0%BD%D1%8B">Впервые отвечены</a></li>
+</ul>
+</li>
+<li><a href="#%D0%A1%D0%BE%D0%B2%D0%BF%D0%B0%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5-%D1%81%D0%BF%D0%B5%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D1%85-%D1%81%D0%B8%D0%BC%D0%B2%D0%BE%D0%BB%D0%BE%D0%B2">Совпадение специальных символов</a>
+<ul>
+<li><a href="#%D0%9D%D0%B5%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%BD%D0%BD%D1%8B%D0%B9-%D0%B2%D0%B2%D0%BE%D0%B4">Необработанный ввод</a></li>
+</ul>
+</li>
+<li><a href="#id-%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%D0%BE%D0%B2">ID объектов</a></li>
+<li><a href="#%D0%9F%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%D1%81%D0%BA%D0%B8%D0%B5-%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5">Пользовательские данные</a></li>
+<li><a href="#%D0%94%D1%80%D1%83%D0%B3%D0%B8%D0%B5-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D1%8B">Другие запросы</a></li>
+</ul>
+<p>Окно обзора Anki и функция фильтрованных колод используют общий способ
+поиска конкретных карточек/заметок. Этот же способ можно использовать для
+настройки области оптимизации FSRS.</p>
+<h2 id="Простые-запросы"><a class="header" href="#Простые-запросы">Простые запросы</a></h2>
+<p>Когда вы вводите текст в поле поиска, Anki находит подходящие заметки
+и показывает их карточки. Поиск выполняется по всем полям заметок, но
+не по тегам (поиск по тегам описан <a href="#%D1%82%D0%B5%D0%B3%D0%B8-%D0%BA%D0%BE%D0%BB%D0%BE%D0%B4%D1%8B-%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%BA%D0%B8-%D0%B8-%D0%B7%D0%B0%D0%BC%D0%B5%D1%82%D0%BA%D0%B8">ниже</a>).
+Примеры:</p>
+<p><code>dog</code><br />
+ищет «dog» — также найдёт слова вроде «doggy» и «underdog».</p>
+<p><code>dog cat</code><br />
+находит заметки, содержащие одновременно «dog» и «cat», например
+«raining cats and dogs».</p>
+<p><code>dog or cat</code><br />
+находит заметки с «dog» или «cat».</p>
+<p><code>dog (cat or mouse)</code><br />
+находит заметки с «dog» и «cat» или с «dog» и «mouse».</p>
+<p><code>-cat</code><br />
+находит заметки без «cat».</p>
+<p><code>-cat -mouse</code><br />
+находит заметки без «cat» и без «mouse».</p>
+<p><code>-(cat or mouse)</code><br />
+то же самое, что выше.</p>
+<p><code>"a dog"</code><br />
+находит заметки с точной последовательностью символов «a dog», например
+«atta dog», но не «dog a» и не «adog».</p>
+<p><code>-"a dog"</code><br />
+находит заметки, где нет точной последовательности «a dog».</p>
+<p><code>d_g</code><br />
+находит заметки с d, &lt;одним символом&gt;, g: dog, dig, dug и т. д.</p>
+<p><code>d*g</code><br />
+находит заметки с d, &lt;нулём или более символами&gt;, g: dg, dog, dung
+и т. д.</p>
+<p><code>w:dog</code><br />
+ищет слово «dog», а не просто последовательность символов: найдёт «dog»,
+но не «doggy» и не «underdog». Требуется Anki 2.1.24+, AnkiMobile 2.1.61+
+или AnkiDroid 2.17+. Изменение форматирования может восприниматься как
+граница слова; например, <code>w:exam</code> найдёт <strong>exam</strong>ple, если часть «exam»
+выделена жирным.</p>
+<p><code>w:dog*</code><br />
+найдёт «dog» и «doggy», но не «underdog».</p>
+<p><code>w:*dog</code><br />
+найдёт «dog» и «underdog», но не «doggy».</p>
+<p>Что важно:</p>
+<ul>
+<li>
+<p>Поисковые термины разделяются пробелами.</p>
+</li>
+<li>
+<p>Если указано несколько терминов, Anki ищет заметки, подходящие под все
+условия — между терминами неявно вставляется <code>and</code>. В Anki 2.1.24+,
+AnkiMobile 2.0.60+ и AnkiDroid 2.17+ можно писать явно
+(<code>dog and cat</code> = <code>dog cat</code>), но в старых версиях Anki <code>and</code>
+воспринимается как обычное слово.</p>
+</li>
+<li>
+<p>Используйте <code>or</code>, если достаточно совпадения по одному из терминов.</p>
+</li>
+<li>
+<p>Можно добавить минус (<code>-</code>) перед термином, чтобы найти заметки, которые
+этому термину не соответствуют.</p>
+</li>
+<li>
+<p>Можно группировать термины скобками, как в <code>dog (cat or mouse)</code>.
+Это важно при сочетании OR и AND: со скобками пример найдёт
+«dog cat» или «dog mouse», а без скобок — «dog and cat» или «mouse».</p>
+</li>
+<li>
+<p>Anki умеет искать внутри форматирования только в настроенном вами
+<a href="editing.html#customizing-fields">поле сортировки</a>. Например, если в поле
+записано «<strong>exa</strong>mple» (часть «exa» жирная), поиск <code>example</code> не найдёт это
+совпадение, если это поле не выбрано как поле сортировки. Если слово не
+форматировано или форматирование не меняется внутри слова, Anki найдёт его
+в любом поле.</p>
+</li>
+<li>
+<p>Обычный поиск не чувствителен к регистру для латиницы: a-z совпадает с A-Z
+и наоборот. Для других символов (например, кириллицы) обычный поиск
+чувствителен к регистру, но можно сделать его нечувствительным через
+поиск по границе слова или регулярному выражению (<code>w:</code>, <code>re:</code>).</p>
+</li>
+</ul>
+<h2 id="Ограничение-конкретным-полем"><a class="header" href="#Ограничение-конкретным-полем">Ограничение конкретным полем</a></h2>
+<p>Можно попросить Anki искать только там, где определённое поле содержит текст.
+В отличие от примеров выше, поиск по полю по умолчанию требует точного совпадения.</p>
+<p><code>front:dog</code><br />
+находит заметки, где поле Front равно ровно «dog». Поле со значением
+«a dog» не подойдёт.</p>
+<p><code>"animal front:a dog"</code><br />
+находит заметки, где поле «Animal Front» равно ровно «a dog». Двойные
+кавычки обязательны: см. <a href="#matching-special-characters">ниже</a>.</p>
+<p><code>front:*dog*</code><br />
+находит заметки, где поле Front содержит dog в любом месте.</p>
+<p><code>front:</code><br />
+находит заметки с пустым полем Front.</p>
+<p><code>front:_*</code><br />
+находит заметки с непустым полем Front.</p>
+<p><code>front:*</code><br />
+находит заметки, у которых есть поле Front — пустое или нет.</p>
+<p><code>fr*:text</code><br />
+находит заметки в поле, имя которого начинается с «fr». Требуется
+Anki 2.1.24+, AnkiMobile 2.1.60+ или AnkiDroid 2.17+.</p>
+<h2 id="Теги-колоды-карточки-и-заметки"><a class="header" href="#Теги-колоды-карточки-и-заметки">Теги, колоды, карточки и заметки</a></h2>
+<p><code>tag:animal</code><br />
+находит заметки с тегом «animal» или подтегами вроде «animal::mammal».</p>
+<p><code>tag:none</code><br />
+находит заметки без тегов.</p>
+<p><code>tag:ani*</code><br />
+находит заметки с тегами, начинающимися на «ani».</p>
+<p><code>deck:french</code><br />
+находит карточки в верхнеуровневой колоде «French» и её подколодах
+вроде «French::Words». Не найдёт подколоды с таким названием в других
+ветках, например «Languages::French».</p>
+<p><code>deck:french::words</code><br />
+находит карточки в подколоде «French::Words».</p>
+<p><code>deck:french -deck:french::*</code><br />
+находит карточки в «French», но не в её подколодах.</p>
+<p><code>deck:"french words"</code><br />
+поиск, когда в названии колоды есть пробел.</p>
+<p><code>"deck:french words"</code><br />
+то же, что выше.</p>
+<p><code>deck:filtered</code><br />
+только фильтрованные колоды.</p>
+<p><code>-deck:filtered</code><br />
+только обычные колоды.</p>
+<p><code>preset:"Default"</code><br />
+карточки во всех колодах, использующих набор настроек «Default».
+Требуется Anki 23.10+, AnkiMobile 23.10+ или AnkiDroid 2.17+.</p>
+<p><code>card:forward</code><br />
+находит карточки, созданные типом карточки «Forward».</p>
+<p><code>card:1</code><br />
+ищет карточки по номеру типа карточки. Например, чтобы найти второе cloze-удаление
+в заметке, используйте <code>card:2</code>.</p>
+<p><code>note:basic</code><br />
+ищет карточки, созданные типом заметки «Basic».</p>
+<h2 id="Игнорирование-диакритикикомбинируемых-символов"><a class="header" href="#Игнорирование-диакритикикомбинируемых-символов">Игнорирование диакритики/комбинируемых символов</a></h2>
+<p>Требуется Anki 2.1.24+, AnkiMobile 2.0.60+ или AnkiDroid 2.17+.</p>
+<p>Можно использовать <code>nc:</code> (no combining), чтобы Anki игнорировал комбинируемые
+символы. Например:</p>
+<p><code>nc:uber</code><br />
+совпадёт с заметками «uber», «über», «Über» и т. д.</p>
+<p><code>nc:は</code><br />
+совпадёт с «は», «ば» и «ぱ».</p>
+<p>Поиск с игнорированием комбинируемых символов работает медленнее обычного.</p>
+<h2 id="Регулярные-выражения"><a class="header" href="#Регулярные-выражения">Регулярные выражения</a></h2>
+<p>Anki 2.1.24+, AnkiMobile 2.0.60+ и AnkiDroid 2.17+ поддерживают поиск в заметках
+с помощью «регулярных выражений» — стандартного и мощного способа поиска по тексту.</p>
+<p>Начните запрос с <code>re:</code>, чтобы использовать регулярные выражения. Для удобства Anki
+будет обрабатывать последующую часть как <a href="#raw-input">raw input</a>, поэтому учитывайте
+правила из этого раздела.</p>
+<p>Примеры:</p>
+<p><code>"re:(some|another).*thing"</code><br />
+находит заметки, где есть «some» или «another», за которыми идут 0 или более символов,
+а затем «thing».</p>
+<p><code>re:\d{3}</code><br />
+находит заметки, где подряд идут 3 цифры.</p>
+<p>Регулярные выражения можно ограничить конкретным полем. В отличие от обычного
+поиска по полю, здесь точное совпадение не требуется:</p>
+<p><code>front:re:[a-c]1</code><br />
+найдёт a1/B1/c1 в любом регистре, если они встречаются где угодно в поле «Front».</p>
+<p><code>front:re:^[a-c]1$</code><br />
+то же, что выше, но не найдёт, если до или после a1/b1/c1 есть другой текст.</p>
+<p>В Anki 2.1.50+ регулярные выражения поддерживаются и для тегов:</p>
+<p><code>tag:re:^parent$</code><br />
+находит заметки с точным тегом «parent», игнорируя дочерние теги типа
+«parent::child».</p>
+<p><code>"tag:re:lesson-(1[7-9]|2[0-5])"</code><br />
+находит заметки с тегами от «lesson-17» до «lesson-25».</p>
+<p>Подробнее о регулярных выражениях: <a href="https://regexone.com/lesson/introduction_abcs">этот сайт</a>.</p>
+<p>Обратите внимание:</p>
+<ul>
+<li>По умолчанию поиск нечувствителен к регистру; добавьте <code>(?-i)</code> в начале,
+чтобы включить чувствительность к регистру.</li>
+<li>Некоторые элементы (пробелы, переносы строк) в HTML могут быть представлены
+иначе — используйте HTML-редактор в окне редактирования, чтобы увидеть
+исходный HTML.</li>
+<li>Подробности реализации regex в Anki см. в <a href="https://docs.rs/regex/1.3.9/regex/#syntax">документации regex crate</a>.</li>
+</ul>
+<h2 id="Состояние-карточек"><a class="header" href="#Состояние-карточек">Состояние карточек</a></h2>
+<p><code>is:due</code><br />
+карточки повторения и изучаемые карточки, ожидающие показа.</p>
+<p><code>is:new</code><br />
+новые карточки.</p>
+<p><code>is:learn</code><br />
+карточки в режиме изучения.</p>
+<p><code>is:review</code><br />
+карточки повторения (как срочные, так и несрочные) и карточки после lapse.</p>
+<p><code>is:suspended</code><br />
+карточки, <a href="leeches.html">автоматически</a> или вручную приостановленные.</p>
+<p><code>is:buried</code><br />
+карточки, <a href="studying.html#siblings-and-burying">автоматически</a> или вручную
+зарытые.</p>
+<p><code>is:buried-sibling</code><br />
+карточки, зарытые автоматически.</p>
+<p><code>is:buried-manually</code><br />
+карточки, зарытые вручную.</p>
+<p>Карточки с <a href="deck-options.html#lapses">lapse</a> попадают сразу в несколько категорий,
+поэтому для точного результата полезно комбинировать термины поиска:</p>
+<p><code>is:learn is:review</code><br />
+карточки после lapse, ожидающие переобучения.</p>
+<p><code>-is:learn is:review</code><br />
+карточки повторения без карточек после lapse.</p>
+<p><code>is:learn -is:review</code><br />
+карточки, которые изучаются впервые.</p>
+<h2 id="Флаги"><a class="header" href="#Флаги">Флаги</a></h2>
+<p><code>flag:0</code><br />
+карточки без флага.</p>
+<p><code>flag:1</code><br />
+карточки с красным флагом.</p>
+<p><code>flag:2</code><br />
+карточки с оранжевым флагом.</p>
+<p><code>flag:3</code><br />
+карточки с зелёным флагом.</p>
+<p><code>flag:4</code><br />
+карточки с синим флагом.</p>
+<p><code>flag:5</code><br />
+карточки с розовым флагом.</p>
+<p><code>flag:6</code><br />
+карточки с бирюзовым флагом.</p>
+<p><code>flag:7</code><br />
+карточки с фиолетовым флагом.</p>
+<h2 id="Свойства-карточек"><a class="header" href="#Свойства-карточек">Свойства карточек</a></h2>
+<p><code>prop:ivl&gt;=10</code><br />
+карточки с интервалом 10 дней и более.</p>
+<p><code>prop:due=1</code><br />
+карточки, срок которых наступает завтра.</p>
+<p><code>prop:due=-1</code><br />
+карточки, срок которых был вчера и на которые ещё не ответили.</p>
+<p><code>prop:due&gt;=1</code><br />
+все карточки со сроком в будущем, включая завтра.</p>
+<p><code>prop:due&lt;=-1</code><br />
+все просроченные карточки.</p>
+<p><code>prop:due&gt;=-1 prop:due&lt;=1</code><br />
+карточки со сроком вчера, сегодня и завтра.</p>
+<p><code>prop:reps&lt;10</code><br />
+карточки, на которые отвечали менее 10 раз.</p>
+<p><code>prop:lapses&gt;3</code><br />
+карточки, которые уходили в lapse более 3 раз.</p>
+<p><code>prop:ease!=2.5</code><br />
+карточки легче или сложнее стандартного ease.</p>
+<p><code>prop:pos&lt;=100</code><br />
+новые карточки с позицией в очереди меньше или равной 100.</p>
+<p>Следующие запросы требуют Anki 23.10+ и включённый FSRS:</p>
+<p><code>prop:s&gt;21</code><br />
+карточки со стабильностью больше 21 дня.</p>
+<p><code>prop:d&gt;0.3</code><br />
+карточки со сложностью больше 0.3.</p>
+<p><code>prop:r&lt;0.9</code><br />
+карточки с retrievability меньше 0.9.</p>
+<h2 id="Недавние-события"><a class="header" href="#Недавние-события">Недавние события</a></h2>
+<h3 id="Добавлены"><a class="header" href="#Добавлены">Добавлены</a></h3>
+<p><code>added:1</code><br />
+карточки, добавленные сегодня.</p>
+<p><code>added:7</code><br />
+карточки, добавленные за последние 7 дней.</p>
+<p>Проверка идёт по времени создания карточки, а не заметки, поэтому карточки,
+сгенерированные в указанный период, попадут в результат, даже если заметки
+были добавлены давно.</p>
+<h3 id="Изменены"><a class="header" href="#Изменены">Изменены</a></h3>
+<p><code>edited:n</code><br />
+карточки, у которых текст заметки был добавлен/изменён за последние n дней.</p>
+<p>Требуется Anki 2.1.28+ или AnkiMobile 2.0.64+.</p>
+<h3 id="Отвечены"><a class="header" href="#Отвечены">Отвечены</a></h3>
+<p><code>rated:1</code><br />
+карточки, на которые отвечали сегодня.</p>
+<p><code>rated:1:2</code><br />
+карточки, на которые сегодня ответили Hard (2).</p>
+<p><code>rated:7:1</code><br />
+карточки, на которые за последние 7 дней ответили Again (1).</p>
+<p><code>rated:31:4</code><br />
+карточки, на которые за последние 31 день ответили Easy (4).</p>
+<p>Anki 2.1.39+ поддерживает поиск по оценкам за периоды больше 31 дня.</p>
+<p>Обратите внимание: для поиска карточек, на которые отвечали в конкретный день,
+<code>rated:n -rated:(n-1)</code> может срабатывать не всегда. Вместо этого используйте:</p>
+<p><code>prop:rated=0</code><br />
+карточки, на которые отвечали сегодня.</p>
+<p><code>prop:rated=-1</code><br />
+карточки, на которые отвечали 1 день назад.</p>
+<p><code>prop:rated=-7</code><br />
+карточки, на которые отвечали 7 дней назад.</p>
+<h3 id="Впервые-отвечены"><a class="header" href="#Впервые-отвечены">Впервые отвечены</a></h3>
+<p>Требуется Anki 2.1.45+.</p>
+<p><code>introduced:1</code><br />
+карточки, на которые впервые ответили сегодня.</p>
+<p><code>introduced:365</code><br />
+карточки, на которые впервые ответили за последние 365 дней.</p>
+<h2 id="Совпадение-специальных-символов"><a class="header" href="#Совпадение-специальных-символов">Совпадение специальных символов</a></h2>
+<p>Если вы используете версию Anki старее 2.1.36, следующие запросы могут не работать.</p>
+<p>Как показано выше, некоторые символы (<code>*</code>, <code>_</code>, <code>"</code>) имеют специальное
+значение в поиске. Если нужно искать именно эти символы, скажите Anki не
+обрабатывать их специальным образом. Это называется «экранирование» и обычно
+делается двойными кавычками и обратной косой чертой.</p>
+<ul>
+<li>
+<p><em>Пробел</em><br />
+Чтобы найти выражение с пробелами, заключите <code>"весь термин"</code> в двойные
+кавычки. В запросах с двоеточием можно заключать в кавычки только
+<code>часть:"после двоеточия"</code>.</p>
+</li>
+<li>
+<p><code>And</code>/<code>Or</code><br />
+Чтобы искать сами эти слова, заключайте их в двойные кавычки. Например,
+<code>dog "and" cat</code> ищет «dog», «cat» и слово «and».
+Если весь запрос заключён в кавычки, как в предыдущем примере, экранировать
+<code>and</code>/<code>or</code> не нужно.</p>
+</li>
+<li>
+<p><code>"</code>, <code>*</code> и <code>_</code><br />
+Добавьте перед ними обратную косую черту, чтобы искать буквально.
+Например, <code>_</code> совпадает с любым одним символом, а <code>\_</code> — только с символом <code>_</code>.</p>
+</li>
+<li>
+<p><code>\</code><br />
+Так как обратная косая черта снимает специальный смысл у других символов,
+сама она тоже специальная. Чтобы искать её буквально, используйте <code>\\</code>, а не <code>\</code>.</p>
+</li>
+<li>
+<p><code>(</code> и <code>)</code><br />
+Скобки можно искать, если заключить весь термин в кавычки, использовать
+обратные слеши или оба способа сразу. Например, <code>"(text)"</code>, <code>\(text\)</code> и
+<code>"\(text\)"</code> эквивалентны и ищут <code>(text)</code>.</p>
+</li>
+<li>
+<p><code>-</code><br />
+Термин, начинающийся с <code>-</code>, обычно инвертируется: например, <code>-dog</code> ищет всё,
+кроме dog. Если нужен буквальный дефис, используйте обратный слеш или
+кавычки. Например, <code>\-free</code> или <code>"-free"</code> найдёт «guilt-free» и «cruelty-free».</p>
+</li>
+<li>
+<p><code>:</code><br />
+Двоеточия нужно экранировать обратным слешем, если перед ними нет другого
+неэкранированного двоеточия. Например, <code>w:3:30</code> ищет «3:30» по границе слова
+и не требует слеша. Но вне <code>:</code>-поиска двоеточия нужно писать как <code>3\:30</code>.</p>
+</li>
+<li>
+<p><code>&amp;</code>, <code>&lt;</code>, и <code>&gt;</code><br />
+В поиске Anki эти символы трактуются как HTML, поэтому запросы с ними могут
+работать не так, как ожидается. Но их можно искать через HTML-сущности
+(<code>&amp;amp;</code> для <code>&amp;</code>, <code>&amp;lt;</code> для <code>&lt;</code>, <code>&amp;gt;</code> для <code>&gt;</code>). Например, <code>&amp;amp;text</code>
+ищет заметку, где в поле есть <code>&amp;text</code>.</p>
+</li>
+</ul>
+<h3 id="Необработанный-ввод"><a class="header" href="#Необработанный-ввод">Необработанный ввод</a></h3>
+<p>Текст после некоторых ключевых слов (например, <code>re:</code>) обрабатывается как raw input.
+То есть перечисленные выше символы в основном теряют специальный смысл.
+В этом контексте нужно минимум экранирования, чтобы избежать неоднозначности:</p>
+<ul>
+<li>
+<p>Двойные кавычки (<code>"</code>) нужно экранировать.</p>
+</li>
+<li>
+<p>Пробелы и неэкранированные скобки требуют, чтобы термин был в кавычках.</p>
+</li>
+<li>
+<p>Поисковый термин не должен заканчиваться нечётным количеством обратных слешей.</p>
+</li>
+</ul>
+<h2 id="id-объектов"><a class="header" href="#id-объектов">ID объектов</a></h2>
+<p><code>nid:123</code><br />
+заметка с id 123.</p>
+<p><code>cid:123,456,789</code><br />
+все карточки с id 123, 456 или 789.</p>
+<p>ID заметок и карточек можно увидеть в диалоге <a href="stats.html">card info</a> в окне
+обзора. Эти запросы также полезны при разработке дополнений и работе с БД.</p>
+<h2 id="Пользовательские-данные"><a class="header" href="#Пользовательские-данные">Пользовательские данные</a></h2>
+<p>Anki позволяет хранить на карточках небольшие объёмы пользовательских данных,
+что полезно для продвинутых сценариев, например собственных планировщиков.
+Одно из заметных применений — ранние реализации FSRS. В Anki 23.10+ есть
+несколько способов поиска по этим данным:</p>
+<p><code>has-cd:v</code><br />
+карточки, у которых в custom data есть свойство <code>v</code>.</p>
+<p><code>prop:cdn:d&gt;5</code><br />
+карточки, у которых значение <code>d</code> в custom data (обычно сложность в FSRS)
+больше 5.</p>
+<p><code>prop:cds:v=reschedule</code><br />
+карточки, у которых строка <code>v</code> в custom data равна <code>reschedule</code>.</p>
+<h2 id="Другие-запросы"><a class="header" href="#Другие-запросы">Другие запросы</a></h2>
+<p><code>prop:due=1 is:learn</code><br />
+междневные обучающие карточки со сроком на завтра.</p>
+<p><code>prop:due=0 is:learn -introduced:1</code><br />
+междневные обучающие карточки со сроком на сегодня.</p>
+<p><code>prop:resched=0</code><br />
+карточки, перепланированные сегодня через <strong>Set due date</strong> или
+<strong>Reschedule cards on change</strong>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="filtered-decks.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="importing/intro.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="filtered-decks.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="importing/intro.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

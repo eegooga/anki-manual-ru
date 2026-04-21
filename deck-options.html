@@ -1,0 +1,997 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Параметры колоды - Anki Manual</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Anki&#x27;s user manual. Anki is a flashcard program that makes learning easier.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="css/misc.css">
+        <link rel="stylesheet" href="css/mdbook-admonish.css">
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Anki Manual</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/ankitects/anki-manual/" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="Параметры-колоды"><a class="header" href="#Параметры-колоды">Параметры колоды</a></h1>
+<ul>
+<li><a href="#%D0%9F%D1%80%D0%B5%D1%81%D0%B5%D1%82%D1%8B">Пресеты</a></li>
+<li><a href="#%D0%9F%D0%BE%D0%B4%D0%BA%D0%BE%D0%BB%D0%BE%D0%B4%D1%8B">Подколоды</a></li>
+<li><a href="#%D0%94%D0%BD%D0%B5%D0%B2%D0%BD%D1%8B%D0%B5-%D0%BB%D0%B8%D0%BC%D0%B8%D1%82%D1%8B">Дневные лимиты</a>
+<ul>
+<li><a href="#%D0%9D%D0%BE%D0%B2%D1%8B%D0%B5-%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%BA%D0%B8%D0%B4%D0%B5%D0%BD%D1%8C">Новые карточки/день</a></li>
+<li><a href="#%D0%9C%D0%B0%D0%BA%D1%81%D0%B8%D0%BC%D1%83%D0%BC-%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%B5%D0%BD%D0%B8%D0%B9%D0%B4%D0%B5%D0%BD%D1%8C">Максимум повторений/день</a></li>
+<li><a href="#%D0%94%D0%BD%D0%B5%D0%B2%D0%BD%D1%8B%D0%B5-%D0%BB%D0%B8%D0%BC%D0%B8%D1%82%D1%8B-%D0%BD%D0%B0-%D1%83%D1%80%D0%BE%D0%B2%D0%BD%D0%B5-%D0%BA%D0%BE%D0%BB%D0%BE%D0%B4%D1%8B">Дневные лимиты на уровне колоды</a></li>
+<li><a href="#%D0%9D%D0%BE%D0%B2%D1%8B%D0%B5-%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%BA%D0%B8-%D0%B8%D0%B3%D0%BD%D0%BE%D1%80%D0%B8%D1%80%D1%83%D1%8E%D1%82-%D0%BB%D0%B8%D0%BC%D0%B8%D1%82-%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%B5%D0%BD%D0%B8%D0%B9">Новые карточки игнорируют лимит повторений</a></li>
+<li><a href="#%D0%9B%D0%B8%D0%BC%D0%B8%D1%82%D1%8B-%D1%81%D1%87%D0%B8%D1%82%D0%B0%D1%8E%D1%82%D1%81%D1%8F-%D1%81%D0%B2%D0%B5%D1%80%D1%85%D1%83">Лимиты считаются сверху</a></li>
+</ul>
+</li>
+<li><a href="#%D0%9D%D0%BE%D0%B2%D1%8B%D0%B5-%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%BA%D0%B8">Новые карточки</a>
+<ul>
+<li><a href="#%D0%A8%D0%B0%D0%B3%D0%B8-%D0%BE%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D1%8F">Шаги обучения</a>
+<ul>
+<li><a href="#%D0%93%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D1%8B-%D0%B4%D0%BD%D1%8F">Границы дня</a></li>
+</ul>
+</li>
+<li><a href="#%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B2%D0%B0%D0%BB-%D0%B2%D1%8B%D0%BF%D1%83%D1%81%D0%BA%D0%B0">Интервал выпуска</a></li>
+<li><a href="#%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B2%D0%B0%D0%BB-%D0%B4%D0%BB%D1%8F-easy">Интервал для Easy</a></li>
+<li><a href="#%D0%9F%D0%BE%D1%80%D1%8F%D0%B4%D0%BE%D0%BA-%D0%B2%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B8">Порядок вставки</a></li>
+</ul>
+</li>
+<li><a href="#%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B8-lapses">Ошибки (Lapses)</a>
+<ul>
+<li><a href="#%D0%A8%D0%B0%D0%B3%D0%B8-%D0%BF%D0%B5%D1%80%D0%B5%D0%BE%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D1%8F">Шаги переобучения</a></li>
+<li><a href="#%D0%9C%D0%B8%D0%BD%D0%B8%D0%BC%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9-%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%B2%D0%B0%D0%BB">Минимальный интервал</a></li>
+<li><a href="#%D0%9A%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%BA%D0%B8-%D0%BF%D0%B8%D1%8F%D0%B2%D0%BA%D0%B8-leeches">Карточки-пиявки (Leeches)</a></li>
+</ul>
+</li>
+<li><a href="#%D0%9F%D0%BE%D1%80%D1%8F%D0%B4%D0%BE%D0%BA-%D0%BF%D0%BE%D0%BA%D0%B0%D0%B7%D0%B0">Порядок показа</a>
+<ul>
+<li><a href="#%D0%9F%D0%BE%D1%80%D1%8F%D0%B4%D0%BE%D0%BA-%D1%81%D0%B1%D0%BE%D1%80%D0%B0-%D0%BD%D0%BE%D0%B2%D1%8B%D1%85-%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%B5%D0%BA">Порядок сбора новых карточек</a></li>
+<li><a href="#%D0%9F%D0%BE%D1%80%D1%8F%D0%B4%D0%BE%D0%BA-%D1%81%D0%BE%D1%80%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B8-%D0%BD%D0%BE%D0%B2%D1%8B%D1%85-%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%B5%D0%BA">Порядок сортировки новых карточек</a></li>
+<li><a href="#%D0%9F%D0%BE%D1%80%D1%8F%D0%B4%D0%BE%D0%BA-%D0%BD%D0%BE%D0%B2%D1%8B%D1%85%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%B5%D0%BD%D0%B8%D0%B9">Порядок новых/повторений</a></li>
+<li><a href="#%D0%9F%D0%BE%D1%80%D1%8F%D0%B4%D0%BE%D0%BA-%D0%BC%D0%B5%D0%B6%D0%B4%D0%BD%D0%B5%D0%B2%D0%BD%D0%BE%D0%B3%D0%BE-%D0%BE%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D1%8F%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%B5%D0%BD%D0%B8%D0%B9">Порядок междневного обучения/повторений</a></li>
+<li><a href="#%D0%9F%D0%BE%D1%80%D1%8F%D0%B4%D0%BE%D0%BA-%D1%81%D0%BE%D1%80%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B8-%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%B5%D0%BD%D0%B8%D0%B9">Порядок сортировки повторений</a></li>
+</ul>
+</li>
+<li><a href="#%D0%97%D0%B0%D0%BA%D0%B0%D0%BF%D1%8B%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-burying">Закапывание (Burying)</a></li>
+<li><a href="#%D0%90%D1%83%D0%B4%D0%B8%D0%BE">Аудио</a></li>
+<li><a href="#%D0%A2%D0%B0%D0%B9%D0%BC%D0%B5%D1%80%D1%8B">Таймеры</a>
+<ul>
+<li><a href="#%D0%92%D0%BD%D1%83%D1%82%D1%80%D0%B5%D0%BD%D0%BD%D0%B8%D0%B9-%D1%82%D0%B0%D0%B9%D0%BC%D0%B5%D1%80">Внутренний таймер</a></li>
+<li><a href="#%D0%A2%D0%B0%D0%B9%D0%BC%D0%B5%D1%80-%D0%BD%D0%B0-%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B5">Таймер на экране</a></li>
+</ul>
+</li>
+<li><a href="#%D0%90%D0%B2%D1%82%D0%BE%D0%BF%D0%B5%D1%80%D0%B5%D1%85%D0%BE%D0%B4-auto-advance">Автопереход (Auto Advance)</a></li>
+<li><a href="#%D0%9B%D1%91%D0%B3%D0%BA%D0%B8%D0%B5-%D0%B4%D0%BD%D0%B8-easy-days">Лёгкие дни (Easy Days)</a></li>
+<li><a href="#fsrs">FSRS</a>
+<ul>
+<li><a href="#%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B0%D1%8F-%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%86%D0%B8%D1%8F">Краткая инструкция</a></li>
+<li><a href="#%D0%96%D0%B5%D0%BB%D0%B0%D0%B5%D0%BC%D1%8B%D0%B9-retention-desired-retention">Желаемый retention (Desired Retention)</a></li>
+<li><a href="#%D0%9F%D0%B0%D1%80%D0%B0%D0%BC%D0%B5%D1%82%D1%80%D1%8B-fsrs">Параметры FSRS</a></li>
+<li><a href="#%D0%9F%D0%B5%D1%80%D0%B5%D0%BF%D0%BB%D0%B0%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D1%82%D1%8C-%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%BA%D0%B8-%D0%BF%D1%80%D0%B8-%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B5%D0%BD%D0%B8%D1%8F%D1%85">Перепланировать карточки при изменениях</a></li>
+<li><a href="#%D0%92%D1%8B%D1%87%D0%B8%D1%81%D0%BB%D0%B8%D1%82%D1%8C-%D0%BC%D0%B8%D0%BD%D0%B8%D0%BC%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE-%D1%80%D0%B5%D0%BA%D0%BE%D0%BC%D0%B5%D0%BD%D0%B4%D1%83%D0%B5%D0%BC%D1%8B%D0%B9-retention">Вычислить минимально рекомендуемый retention</a></li>
+<li><a href="#%D0%A1%D0%B8%D0%BC%D1%83%D0%BB%D1%8F%D1%82%D0%BE%D1%80">Симулятор</a>
+<ul>
+<li><a href="#%D0%A8%D0%B0%D0%B3%D0%B8-%D0%BE%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D1%8F-%D0%B8-%D0%BF%D0%B5%D1%80%D0%B5%D0%BE%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D1%8F">Шаги обучения и переобучения</a></li>
+<li><a href="#%D0%A1%D0%BE%D0%B2%D0%BC%D0%B5%D1%81%D1%82%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D1%8C-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D0%B9">Совместимость дополнений</a></li>
+<li><a href="#%D0%94%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE">Дополнительно</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%D0%94%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE-1">Дополнительно</a>
+<ul>
+<li><a href="#%D0%9C%D0%B0%D0%BA%D1%81%D0%B8%D0%BC%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9-%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%B2%D0%B0%D0%BB">Максимальный интервал</a></li>
+<li><a href="#%D0%98%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9-retention-historical-retention">Исторический retention (Historical Retention)</a></li>
+<li><a href="#%D0%98%D0%B3%D0%BD%D0%BE%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D1%82%D1%8C-%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%BA%D0%B8-%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D1%91%D0%BD%D0%BD%D1%8B%D0%B5-%D0%B4%D0%BE">Игнорировать карточки, повторённые до</a></li>
+<li><a href="#%D0%9D%D0%B0%D1%87%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F-%D0%BB%D1%91%D0%B3%D0%BA%D0%BE%D1%81%D1%82%D1%8C-starting-ease">Начальная лёгкость (Starting Ease)</a></li>
+<li><a href="#%D0%91%D0%BE%D0%BD%D1%83%D1%81-easy">Бонус Easy</a></li>
+<li><a href="#%D0%9C%D0%BE%D0%B4%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82%D0%BE%D1%80-%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%B2%D0%B0%D0%BB%D0%B0">Модификатор интервала</a></li>
+<li><a href="#%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B2%D0%B0%D0%BB-hard">Интервал Hard</a></li>
+<li><a href="#%D0%9D%D0%BE%D0%B2%D1%8B%D0%B9-%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%B2%D0%B0%D0%BB">Новый интервал</a></li>
+<li><a href="#%D0%9F%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%D1%81%D0%BA%D0%BE%D0%B5-%D0%BF%D0%BB%D0%B0%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5">Пользовательское планирование</a></li>
+</ul>
+</li>
+</ul>
+<p>Параметры колоды в основном управляют тем, как Anki планирует карточки.
+Перед изменением настроек рекомендуется несколько недель поработать со
+значениями по умолчанию, чтобы почувствовать логику работы Anki.
+Перед изменениями важно понимать, что делает каждый параметр, так как ошибки
+могут снизить эффективность обучения.</p>
+<p>Чтобы открыть параметры колоды на компьютере, используйте любой из способов:</p>
+<ul>
+<li>Нажмите на иконку шестерёнки на экране Decks.</li>
+<li>Выберите колоду на экране Decks и нажмите <strong>Options</strong> внизу экрана.</li>
+<li>В режиме повторения нажмите <strong>More &gt; Options</strong>.</li>
+<li>В режиме повторения нажмите <kbd>O</kbd>.</li>
+</ul>
+<p>Полезные материалы сообщества о параметрах колоды:</p>
+<ul>
+<li><a href="https://forums.ankiweb.net/t/deck-options-explained/213">Deck Options Explained</a></li>
+<li><a href="https://forums.ankiweb.net/t/deck-options-in-a-mental-map/15757">Deck Options in a Mental Map</a></li>
+</ul>
+<h2 id="Пресеты"><a class="header" href="#Пресеты">Пресеты</a></h2>
+<p>Anki позволяет использовать общие настройки для разных колод, чтобы проще
+массово обновлять параметры. Для этого параметры объединяются в <em>пресеты</em>.
+Если вы меняете параметр в пресете, изменение применяется ко всем колодам,
+которые используют этот пресет. Все новые колоды получают пресет “Default”.</p>
+<p>Чтобы изменить настройки только для одной колоды, нажмите иконку стрелки
+в правом верхнем углу окна Deck Options. Доступны действия:</p>
+<ul>
+<li><strong>Save</strong>: сохранить все изменения параметров колоды.</li>
+<li><strong>Add Preset</strong>: добавить новый пресет для этой колоды с настройками по умолчанию.</li>
+<li><strong>Clone</strong>: клонировать текущий пресет — полезно, если нужно изменить часть
+параметров, оставив остальные без изменений.</li>
+<li><strong>Rename</strong>: переименовать текущий пресет.</li>
+<li><strong>Delete</strong>: удалить текущий пресет. После этого следующая синхронизация
+будет <a href="./syncing.html#conflicts">односторонней</a>.</li>
+<li><strong>Save to All Subdecks</strong>: как <strong>Save</strong>, но дополнительно назначает выбранный
+пресет всем подколодам текущей колоды.</li>
+</ul>
+<p>Параметры колоды не имеют обратной силы. Например, если вы изменили задержку
+после ошибки, карточки, ошибочно отвеченные до изменения, сохранят старую
+задержку, а не новую.</p>
+<h2 id="Подколоды"><a class="header" href="#Подколоды">Подколоды</a></h2>
+<p>Если у колоды есть подколоды и вы хотите, чтобы некоторые из них имели
+настройки, отличные от родительской колоды, назначьте им отдельные пресеты.
+Когда Anki показывает карточку, он проверяет, в какой подколоде она находится,
+и применяет параметры этой подколоды. Есть два исключения:</p>
+<ul>
+<li><a href="#daily-limits">Лимиты</a> <strong>New cards/day</strong> и <strong>Maximum reviews/day</strong>
+подколоды ограничивают число карточек, которое можно собрать из этой
+подколоды. Но общее число карточек в сессии определяется лимитами колоды,
+которую вы выбрали для обучения.</li>
+<li>Параметры <a href="#display-order">display order</a> берутся из колоды, выбранной
+для обучения, а не из колоды текущей карточки.</li>
+</ul>
+<p>Например, у вас такая структура:</p>
+<pre><code>- Deck A (Preset 1)
+  - Deck A::Subdeck B (Preset 2)
+</code></pre>
+<p>Пресет 1 и Пресет 2 одинаковы, кроме двух пунктов:</p>
+<ul>
+<li>Пресет 1:
+<ul>
+<li><strong>Learning steps</strong>: <code>1m 10m</code></li>
+<li><strong>New/review order</strong>: <code>Mix with reviews</code></li>
+</ul>
+</li>
+<li>Пресет 2:
+<ul>
+<li><strong>Learning steps</strong>: <code>20m 2h</code></li>
+<li><strong>New/review order</strong>: <code>Show after reviews</code></li>
+</ul>
+</li>
+</ul>
+<p>Если вы учите Subdeck B:</p>
+<ul>
+<li>Learning steps для всех новых карточек будут <code>20m 2h</code> (действует Пресет 2).</li>
+<li>Все новые карточки будут показываться после повторений (действует Пресет 2).</li>
+</ul>
+<p>Если вы учите Deck A:</p>
+<ul>
+<li>Learning steps для новых карточек в Deck A будут <code>1m 10m</code> (действует Пресет 1).</li>
+<li>Learning steps для новых карточек в Subdeck B будут <code>20m 2h</code> (действует Пресет 2).</li>
+<li>Все новые карточки будут смешаны с повторениями (действует Пресет 1).</li>
+</ul>
+<h2 id="Дневные-лимиты"><a class="header" href="#Дневные-лимиты">Дневные лимиты</a></h2>
+<h3 id="Новые-карточкидень"><a class="header" href="#Новые-карточкидень">Новые карточки/день</a></h3>
+<p>Этот параметр задаёт, сколько новых карточек можно вводить в день.
+Если вы изучили меньше лимита или пропустили день, на следующий день лимит
+не «накопится»: карточек сверх установленного значения не будет.</p>
+<p>При обучении колоды с подколодами лимиты подколод ограничивают максимум
+карточек, которые можно взять из каждой конкретной подколоды. Лимиты выбранной
+колоды управляют общим количеством показанных карточек.</p>
+<p>Для старых версий см. <a href="https://faqs.ankiweb.net/the-anki-2.1-scheduler.html">этот FAQ</a>.</p>
+<p>Изучение новых карточек временно увеличивает объём повторений, так как новый
+материал нужно повторить несколько раз, прежде чем интервалы заметно вырастут.
+Если стабильно изучать 20 новых карточек в день, можно ожидать примерно
+200 повторений в день. Уменьшить нагрузку можно, снижая число новых карточек.
+Многие пользователи в первые дни учат сотни новых карточек, а затем
+оказываются перегружены объёмом повторений.</p>
+<h3 id="Максимум-повторенийдень"><a class="header" href="#Максимум-повторенийдень">Максимум повторений/день</a></h3>
+<p>Позволяет установить верхнюю границу числа карточек повторения в день.
+Когда лимит достигнут, Anki больше не показывает карточки повторения в этот
+день, даже если они ещё есть. При регулярном обучении это помогает сгладить
+пики нагрузки и не «пугает» огромным долгом после перерыва.
+Если карточки были скрыты из-за лимита, на экране поздравления появится
+подсказка увеличить лимит, если у вас есть время.</p>
+<p>При изучении колоды с подколодами лимит повторений работает аналогично
+лимиту новых карточек.</p>
+<p>Anki включает в счёт повторений карточки обучения, которые
+<a href="./preferences.html#scheduler">перешли границу дня</a> (interday learning cards),
+поэтому к ним тоже применяется лимит повторений.</p>
+<h3 id="Дневные-лимиты-на-уровне-колоды"><a class="header" href="#Дневные-лимиты-на-уровне-колоды">Дневные лимиты на уровне колоды</a></h3>
+<p>Можно использовать один и тот же пресет для разных колод, но с индивидуальными
+лимитами для каждой. Это убирает необходимость создавать клоны пресетов
+только ради лимитов и упрощает настройку подколод.</p>
+<p>В Anki есть три варианта дневных лимитов:</p>
+<ul>
+<li><strong>Preset</strong>: действует для всех колод, использующих пресет.</li>
+<li><strong>This deck</strong>: действует только для конкретной колоды.</li>
+<li><strong>Today only</strong>: действует только для конкретной колоды и только временно.</li>
+</ul>
+<h3 id="Новые-карточки-игнорируют-лимит-повторений"><a class="header" href="#Новые-карточки-игнорируют-лимит-повторений">Новые карточки игнорируют лимит повторений</a></h3>
+<p>По умолчанию лимит повторений распространяется и на новые карточки:
+когда лимит достигнут, новые карточки не показываются. Если включить эту
+опцию, новые карточки будут показываться независимо от лимита повторений.</p>
+<p>Если у вас накопился долг просроченных повторений, рекомендуется временно
+не вводить новые карточки, пока вы не сократите этот долг. Иначе отставание
+может только увеличиться.</p>
+<h3 id="Лимиты-считаются-сверху"><a class="header" href="#Лимиты-считаются-сверху">Лимиты считаются сверху</a></h3>
+<p>По умолчанию дневные лимиты верхнеуровневой колоды не применяются, если вы
+выбрали её подколоду. Например, у родительской колоды лимит 10 новых карточек/день,
+а у подколод — 20/день. Лимиты родителя не влияют на число новых карточек
+при изучении подколоды.</p>
+<p>Если включить эту опцию, лимиты верхних колод применяются и к подколодам,
+когда выбрана подколода. В примере выше вы сможете изучить только 10 новых
+карточек из подколоды вместо 20.</p>
+<p>Эта опция полезна, если вы хотите учить отдельные подколоды, но при этом
+удерживать общий лимит карточек по всем подколодам.</p>
+<h2 id="Новые-карточки"><a class="header" href="#Новые-карточки">Новые карточки</a></h2>
+<p>Параметры этого раздела влияют только на новые карточки и
+<a href="getting-started.html#card-states">карточки обучения</a>. После того как карточка
+«выпустилась» (прошла все шаги обучения), эти параметры к ней больше не применяются.</p>
+<h3 id="Шаги-обучения"><a class="header" href="#Шаги-обучения">Шаги обучения</a></h3>
+<p>Управляет числом повторов на этапе обучения и задержками между ними.
+Введите одну или несколько задержек через пробел.
+Каждое нажатие <strong>Good</strong> переводит карточку на следующий шаг, каждое
+нажатие <strong>Again</strong> возвращает на первый шаг.</p>
+<p>Например, пусть ваши learning steps: <code>1m 10m 1d</code>.</p>
+<ul>
+<li>При нажатии <strong>Again</strong> карточка проходит первый шаг и показывается снова
+через 1 минуту.</li>
+<li>При нажатии <strong>Good</strong> на новой карточке или после шага 1 минута карточка
+переходит на следующий шаг и показывается через 10 минут.</li>
+<li>При нажатии <strong>Good</strong> после шага 10 минут карточка откладывается до следующего дня.</li>
+<li>При нажатии <strong>Good</strong> на следующий день карточка выпускается и становится
+карточкой повторения. Следующий показ будет через задержку, заданную
+параметром <em>graduating interval</em>.</li>
+</ul>
+<p>Кнопка <strong>Hard</strong> работает по-разному в зависимости от текущего шага.</p>
+<ul>
+<li>На первом шаге <strong>Hard</strong> показывает задержку <code>6m</code>. Это среднее первых двух
+шагов: <code>1m</code> и <code>10m</code>.
+<ul>
+<li>Исключение: если шаг обучения только один, <strong>Hard</strong> даёт задержку в 1.5
+раза больше этого шага. Эта задержка не более чем на 1 день длиннее шага.</li>
+</ul>
+</li>
+<li>На всех остальных шагах <strong>Hard</strong> повторяет текущий шаг.</li>
+</ul>
+<p>Если больше нечего учить, Anki по умолчанию может показывать карточки обучения
+до 20 минут раньше. Чтобы отключить это или изменить «забегание вперёд»,
+см. <a href="preferences.html">Preferences</a>.</p>
+<h4 id="Границы-дня"><a class="header" href="#Границы-дня">Границы дня</a></h4>
+<p>Anki по-разному обрабатывает короткие шаги и шаги, которые
+<a href="./preferences.html#review">пересекают границу дня</a>.
+При коротких шагах карточки показываются сразу после истечения задержки,
+в приоритете перед новыми и повторениями — чтобы вы отвечали как можно ближе
+к запрошенному интервалу. Если шаг пересекает границу дня, задержка
+автоматически переводится в дни. Например, если следующий день начнётся
+через 5 часов, а задержка 6 часов, Anki преобразует её в 1 день.</p>
+<h3 id="Интервал-выпуска"><a class="header" href="#Интервал-выпуска">Интервал выпуска</a></h3>
+<p>Количество дней до следующего показа карточки после нажатия <strong>Good</strong> на
+финальном шаге обучения. Это первый интервал после «выпуска» карточки из
+обучения. См. пример <a href="deck-options.html#learning-steps">выше в этом разделе</a>.</p>
+<h3 id="Интервал-для-easy"><a class="header" href="#Интервал-для-easy">Интервал для Easy</a></h3>
+<p>Количество дней до следующего показа карточки после нажатия <strong>Easy</strong>.</p>
+<p>Кнопка <strong>Easy</strong> переводит карточку обучения в карточку повторения независимо
+от текущего шага и назначает ей задержку из этого параметра.
+Easy interval всегда должен быть не меньше graduating interval, обычно на
+несколько дней больше.</p>
+<h3 id="Порядок-вставки"><a class="header" href="#Порядок-вставки">Порядок вставки</a></h3>
+<p>Определяет, добавлять ли новые карточки случайно или последовательно.
+При изменении этого параметра Anki пересортирует колоды в текущем пресете.</p>
+<p>В современных версиях Anki рекомендуется оставить <code>Sequential</code>, а порядок
+показа регулировать через <a href="deck-options.html#display-order">display order</a>.</p>
+<h2 id="Ошибки-lapses"><a class="header" href="#Ошибки-lapses">Ошибки (Lapses)</a></h2>
+<p>Когда вы нажимаете <strong>Again</strong> на карточке повторения, это называется <em>lapse</em>.
+Параметры этого раздела влияют на такие карточки.</p>
+<h3 id="Шаги-переобучения"><a class="header" href="#Шаги-переобучения">Шаги переобучения</a></h3>
+<p>То же, что learning steps, но для карточек после lapse.
+Когда вы ошибаетесь на карточке повторения (<strong>Again</strong>), она проходит
+<em>relearning steps</em>, прежде чем снова станет карточкой повторения.</p>
+<p>Если оставить шаги пустыми, карточка пропустит переобучение и получит
+новый интервал 1 день по умолчанию.</p>
+<h3 id="Минимальный-интервал"><a class="header" href="#Минимальный-интервал">Минимальный интервал</a></h3>
+<p>Задаёт минимальное число дней ожидания после завершения переобучения.
+По умолчанию это 1 день — карточка снова покажется на следующий день.</p>
+<h3 id="Карточки-пиявки-leeches"><a class="header" href="#Карточки-пиявки-leeches">Карточки-пиявки (Leeches)</a></h3>
+<p>Управляет тем, как Anki обрабатывает leeches. Подробнее см. раздел
+<a href="leeches.html">leeches</a>.</p>
+<h2 id="Порядок-показа"><a class="header" href="#Порядок-показа">Порядок показа</a></h2>
+<p>Параметры этого раздела берутся из колоды, выбранной для обучения, а не
+из колоды текущей отображаемой карточки.</p>
+<p>Дополнительная информация о порядке показа есть в разделе
+<a href="studying.html#display-order">studying</a>.</p>
+<h3 id="Порядок-сбора-новых-карточек"><a class="header" href="#Порядок-сбора-новых-карточек">Порядок сбора новых карточек</a></h3>
+<p>Определяет, как Anki собирает новые карточки из колоды. Варианты:</p>
+<ul>
+<li>
+<p><strong>Deck</strong>: собирает карточки из каждой подколоды по порядку, начиная сверху.
+Карточки из каждой подколоды собираются по возрастанию позиции. Если
+достигнут дневной лимит выбранной колоды, сбор может остановиться до того,
+как будут проверены все подколоды. Этот порядок работает быстрее всего в
+больших коллекциях и позволяет приоритизировать подколоды, расположенные
+ближе к началу списка.</p>
+<p>Колоды/подколоды всегда сортируются по алфавиту, поэтому можно добавить
+числовой префикс, например <code>001</code>, чтобы управлять порядком.
+Также можно использовать префиксы <code>_</code> и <code>~</code>, чтобы разместить элементы
+вверху или внизу.</p>
+<p>Хотя порядок позиций изначально зависит от параметра insertion order,
+вы можете вручную <a href="./browsing.html#cards">reposition</a> карточки разными способами.</p>
+</li>
+<li>
+<p><strong>Deck, then random notes</strong>: собирает карточки из каждой подколоды по порядку,
+начиная сверху. Карточки каждой подколоды берутся из случайно выбранных заметок.</p>
+</li>
+<li>
+<p><strong>Ascending position</strong>: собирает карточки по возрастанию позиции (due #),
+обычно от самых старых добавленных к более новым.</p>
+</li>
+<li>
+<p><strong>Descending position</strong>: собирает карточки по убыванию позиции (due #),
+обычно от самых недавно добавленных.</p>
+</li>
+<li>
+<p><strong>Random notes</strong>: собирает карточки из случайно выбранных заметок.</p>
+</li>
+<li>
+<p><strong>Random cards</strong>: собирает карточки в случайном порядке.</p>
+</li>
+</ul>
+<h3 id="Порядок-сортировки-новых-карточек"><a class="header" href="#Порядок-сортировки-новых-карточек">Порядок сортировки новых карточек</a></h3>
+<p>Управляет сортировкой новых карточек после их сбора. Варианты:</p>
+<ul>
+<li>
+<p><strong>Card type, then order gathered</strong>: показывает карточки в порядке номера типа карточки.
+Карточки каждого типа показываются в порядке сбора. Если sibling burying выключен,
+этот вариант гарантирует, что все карточки front→back будут показаны до back→front.
+Такой порядок полезен, если вы не хотите видеть sibling-карточки слишком близко.</p>
+</li>
+<li>
+<p><strong>Order gathered</strong>: показывает карточки ровно в порядке их сбора.
+Если sibling burying выключен, обычно sibling-карточки идут подряд.</p>
+</li>
+<li>
+<p><strong>Card type, then random</strong>: показывает карточки по номеру типа, но перемешивает
+карточки внутри каждого типа. Полезно, если вы хотите разнести sibling-карточки,
+но при этом сохранить случайность.</p>
+</li>
+<li>
+<p><strong>Random note, then card type</strong>: случайно выбирает заметки, затем показывает
+всех их sibling-карточек по порядку.</p>
+</li>
+<li>
+<p><strong>Random</strong>: полностью перемешивает собранные карточки.</p>
+</li>
+</ul>
+<h3 id="Порядок-новыхповторений"><a class="header" href="#Порядок-новыхповторений">Порядок новых/повторений</a></h3>
+<p>Определяет, должны ли новые карточки смешиваться с повторениями, показываться
+до них или после них.</p>
+<h3 id="Порядок-междневного-обученияповторений"><a class="header" href="#Порядок-междневного-обученияповторений">Порядок междневного обучения/повторений</a></h3>
+<p>Определяет, как показывать (пере)обучающие карточки, которые пересекли
+границу дня: смешивать с повторениями, показывать до них или после.
+Так как обучающие карточки часто сложнее карточек повторения, некоторым
+пользователям удобнее видеть их в конце (сначала «лёгкие» карточки),
+а другим — в начале (чтобы осталось больше времени на сложные).</p>
+<h3 id="Порядок-сортировки-повторений"><a class="header" href="#Порядок-сортировки-повторений">Порядок сортировки повторений</a></h3>
+<p>Управляет сортировкой карточек повторения. Варианты:</p>
+<ul>
+<li>
+<p><strong>Due date, then random</strong>: порядок по умолчанию, приоритезирует карточки,
+которые ждут дольше. Рекомендуется, когда вы почти без долга или долг небольшой.
+После длительного перерыва можно временно выбрать другой порядок.</p>
+</li>
+<li>
+<p><strong>Due date, then deck</strong>: также приоритезирует «долго ждущие» карточки,
+затем показывает повторения по подколодам по очереди.</p>
+</li>
+<li>
+<p><strong>Deck, then due date</strong>: показывает повторения по подколодам по очереди.
+Обычно не рекомендуется: при постоянном порядке проще угадывать ответы
+по контексту, что ухудшает долговременную память.</p>
+</li>
+<li>
+<p><strong>Ascending intervals</strong>: сначала карточки с меньшими интервалами.</p>
+</li>
+<li>
+<p><strong>Descending intervals</strong>: сначала карточки с большими интервалами.</p>
+</li>
+<li>
+<p><strong>Ascending ease</strong>: сначала более трудные карточки.</p>
+</li>
+<li>
+<p><strong>Descending ease</strong>: сначала более лёгкие карточки.</p>
+</li>
+<li>
+<p><strong>Relative overdueness</strong>: сначала карточки, которые вы с большей вероятностью
+забыли. Обычно рекомендуется при большом бэклоге, который требует времени,
+чтобы снизить риск дальнейшего забывания.</p>
+<p>В алгоритме SM-2 overdueness определяется сравнением просрочки карточки
+и длины её интервала. Например, карточка с текущим интервалом 5 дней
+и просрочкой 2 дня будет показана раньше карточки с интервалом 10 дней
+и просрочкой 3 дня.</p>
+<p>Когда включён FSRS, этот вариант сортировки исчезает; эквивалент в FSRS —
+<strong>Ascending retrievability</strong>, рассчитываемый по retrievability каждой карточки
+(вероятности вспоминания) и desired retention в пресете.</p>
+</li>
+</ul>
+<h2 id="Закапывание-burying"><a class="header" href="#Закапывание-burying">Закапывание (Burying)</a></h2>
+<p>При сборе карточек Anki сначала берёт intraday learning cards, затем interday
+learning cards, потом review cards и в конце new cards. Это влияет на burying:</p>
+<ul>
+<li>Если включены все варианты burying, показывается sibling-карточка, которая
+раньше в этом списке. Например, review-карточка будет показана раньше новой.</li>
+<li>Sibling-карточки, которые стоят позже в списке, не могут «закопать» более
+ранние типы карточек. Например, если вы отключили burying новых карточек и
+изучаете новую карточку, она не закопает interday learning/review карточки,
+и в одной сессии вы можете увидеть и review-sibling, и new-sibling.</li>
+</ul>
+<p>Варианты:</p>
+<ul>
+<li><strong>Bury new siblings</strong>: откладывать ли другие новые карточки той же заметки
+(например, обратные карточки, соседние cloze) до следующего дня.</li>
+<li><strong>Bury review siblings</strong>: откладывать ли другие review-карточки той же заметки
+до следующего дня.</li>
+<li><strong>Bury interday learning siblings</strong>: откладывать ли до следующего дня другие
+обучающие карточки той же заметки, пересёкшие границу дня.</li>
+</ul>
+<p>Подробнее о burying см. <a href="./studying.html#siblings-and-burying">этот раздел</a>.</p>
+<h2 id="Аудио"><a class="header" href="#Аудио">Аудио</a></h2>
+<ul>
+<li>
+<p><strong>Don’t play audio automatically</strong>: по умолчанию Anki автоматически
+воспроизводит любое аудио на карточках. Если включить эту опцию, звук
+не будет воспроизводиться, пока вы не нажмёте повтор аудио
+(<kbd>R</kbd> или <kbd>F5</kbd>).</p>
+</li>
+<li>
+<p><strong>Skip question when replaying answer</strong>: управляет, проигрывать ли звук
+с вопроса при действии replay на стороне ответа. Обратите внимание: Anki
+<a href="./templates/fields.html#special-fields">не воспроизводит автоматически</a>
+аудио из поля <code>{{FrontSide}}</code>. Эта опция не влияет на автоматическое
+воспроизведение.</p>
+</li>
+</ul>
+<h2 id="Таймеры"><a class="header" href="#Таймеры">Таймеры</a></h2>
+<p><a id="timer"></a></p>
+<p>Anki отслеживает, сколько времени занимает ответ на каждую карточку, чтобы
+показывать общее время обучения за день. Это время не влияет на расписание.</p>
+<h3 id="Внутренний-таймер"><a class="header" href="#Внутренний-таймер">Внутренний таймер</a></h3>
+<ul>
+<li>Maximum answer seconds: лимит по умолчанию — 60 секунд. Если вы тратите
+больше, Anki предполагает, что вы отвлеклись или отошли от компьютера,
+и ограничивает записанное время 60 секундами, чтобы статистика не искажалась.</li>
+<li>Внутренний таймер идёт с момента показа вопроса до нажатия кнопки оценки.
+Если вы стабильно тратите на карточку больше 60 секунд, стоит либо
+увеличить лимит, либо (лучше) упростить карточки.</li>
+</ul>
+<h3 id="Таймер-на-экране"><a class="header" href="#Таймер-на-экране">Таймер на экране</a></h3>
+<ul>
+<li>Show on-screen timer: показывать в окне Study таймер времени на карточку.
+(Этот таймер остановится на значении Maximum answer seconds внутреннего таймера.)</li>
+<li>Stop on-screen timer on answer: продолжать ли экранный таймер после показа
+ответа до нажатия кнопки оценки. На записываемую статистику эта опция
+не влияет.</li>
+</ul>
+<h2 id="Автопереход-auto-advance"><a class="header" href="#Автопереход-auto-advance">Автопереход (Auto Advance)</a></h2>
+<p>Требуется Anki 23.12+. Auto Advance позволяет автоматически выполнять
+действия после заданного времени. Чтобы использовать функцию, сначала задайте
+ненулевое время в <strong>Seconds to show question for</strong> и/или
+<strong>Seconds to show answer for</strong>. Затем в окне Study запустите Auto Advance
+через кнопку <strong>More</strong>.</p>
+<h2 id="Лёгкие-дни-easy-days"><a class="header" href="#Лёгкие-дни-easy-days">Лёгкие дни (Easy Days)</a></h2>
+<p>Если вы хотите тратить меньше времени на Anki в отдельные дни недели
+(например, по воскресеньям), эта функция может помочь.
+После расчёта интервал будет слегка скорректирован для сдвига due date.
+Если установить все дни в “Reduced” или “Minimum”, нагрузка будет такой же,
+как при “Normal” для всех дней. Функция работает и с FSRS, и с SM-2.
+Изменение Easy Days не пересчитывает существующие интервалы задним числом —
+влияет только на будущие интервалы, поэтому мгновенных изменений числа
+просроченных карточек не будет.</p>
+<h2 id="fsrs"><a class="header" href="#fsrs">FSRS</a></h2>
+<p><a href="https://github.com/open-spaced-repetition/fsrs4anki/wiki/ABC-of-FSRS">Free Spaced Repetition Scheduler (FSRS)</a>
+— это альтернатива устаревшему алгоритму Anki SuperMemo 2 (SM-2).
+Более точно оценивая, сколько информации вы, вероятно, забудете, FSRS помогает
+запоминать больше материала за то же время.</p>
+<p>При включении FSRS появляются новые параметры, а SM-2-специфичные опции
+(например, <strong>Graduating interval</strong>, <strong>Easy bonus</strong> и др.) скрываются.
+Этот переключатель общий для всех пресетов.</p>
+<p><strong>Перед включением</strong></p>
+<ul>
+<li>Убедитесь, что все ваши клиенты Anki поддерживают FSRS.
+Anki 23.10, AnkiMobile 23.10 и AnkiWeb поддерживают его, AnkiDroid — с 2.17+.
+Если хотя бы один клиент не поддерживает FSRS, работа будет некорректной.</li>
+<li>Если вы ранее использовали версию FSRS с “custom scheduling”, перед
+включением FSRS очистите раздел custom scheduling.</li>
+</ul>
+<h3 id="Краткая-инструкция"><a class="header" href="#Краткая-инструкция">Краткая инструкция</a></h3>
+<ul>
+<li>Включите FSRS в разделе “FSRS” внизу страницы deck options.
+FSRS включается только глобально: нельзя включить его для одних пресетов
+и выключить для других.</li>
+<li>Убедитесь, что все learning/re-learning steps короче 1 дня и могут быть
+завершены в тот же день. <code>23h</code> не рекомендуется, хотя и меньше суток:
+вы не закончите этот шаг в тот же день, что и первое повторение.
+Хорошие примеры: <code>10m</code>, <code>30m</code>.</li>
+<li>Нажмите “Optimize” под полем “FSRS parameters”.
+Сообщение “The FSRS parameters currently appear to be optimal” — это нормально.</li>
+<li>Выберите desired retention — долю карточек, успешно вспоминаемых к сроку.
+<strong>Это самая важная настройка FSRS. Более высокий retention даёт более короткие
+интервалы и больше повторений в день.</strong> Значение по умолчанию — 90%,
+обычно это хороший баланс. Выше 90% нагрузка растёт очень быстро,
+а выше 97% может стать чрезмерной. Для выбора можно использовать
+<a href="#compute-minimum-recommended-retention">“Compute minimum recommended retention”</a>.</li>
+</ul>
+<p>Параметры и desired retention задаются на уровне пресета, поэтому можно
+создать несколько пресетов с разными настройками.</p>
+<p>FSRS адаптируется почти к любым привычкам, кроме одной: нажимать “Hard”
+вместо “Again”, когда вы не вспомнили материал. При “Hard” FSRS считает,
+что материал вспомнен корректно (хоть и с трудом). Если ставить “Hard”
+при забывании, интервалы станут неоправданно большими. Поэтому при забывании
+используйте “Again”.</p>
+<p>По совместимости дополнений общее правило такое: если дополнение влияет
+на интервалы или планирование, с FSRS его лучше не использовать.</p>
+<h3 id="Желаемый-retention-desired-retention"><a class="header" href="#Желаемый-retention-desired-retention">Желаемый retention (Desired Retention)</a></h3>
+<p>Desired retention определяет вероятность того, что вы вспомните карточку
+к моменту её следующего повторения. Значение по умолчанию <code>0.90</code> означает,
+что карточки будут планироваться так, чтобы шанс вспоминания был около 90%.
+На практике это обычно означает примерно 90% успешных ответов и около 10%
+ошибок на повторении.</p>
+<p>Ниже график, показывающий, как изменение этого значения влияет на нагрузку:</p>
+<p><img src="./media/FSRS_retention.png" alt="graph showing an exponential increase in workload as desired retention nears one." /></p>
+<p>Точная форма графика у всех разная, но есть два общих закономерных эффекта:</p>
+<ul>
+<li>
+<p>Чем ближе desired retention к 1.0, тем сильнее растёт нагрузка.
+Представьте карточку с 90% шансом вспоминания через 100 дней.
+При desired retention <code>0.90</code> вы повторите её через 100 дней.
+При <code>0.95</code> — уже через 46 дней.
+То есть при <code>0.95</code> интервалы почти вдвое меньше, а повторять нужно почти
+вдвое чаще по сравнению с <code>0.90</code>.
+При <code>0.97</code> интервал будет 27 дней (повторения примерно в 3.7 раза чаще).
+При <code>0.99</code> — всего 9 дней (более чем в 10 раз чаще, чем при настройках по умолчанию).</p>
+</li>
+<li>
+<p>Чем ниже desired retention, тем больший процент карточек вы будете забывать,
+и их придётся повторять заново. В какой-то момент вклад забытых карточек в
+нагрузку станет больше, чем выгода от длинных интервалов. Кроме того,
+частое забывание демотивирует.</p>
+</li>
+</ul>
+<p>Поэтому рекомендуем менять это значение осторожно и держать его ниже <code>0.97</code>,
+но выше <a href="#compute-minimum-recommended-retention">minimum recommended retention</a>.</p>
+<h3 id="Параметры-fsrs"><a class="header" href="#Параметры-fsrs">Параметры FSRS</a></h3>
+<p>Параметры FSRS влияют на планирование карточек. Не меняйте параметры вручную
+и не копируйте их у других пользователей.</p>
+<p><strong>Optimize FSRS Parameters</strong></p>
+<p>Оптимизатор FSRS использует машинное обучение, чтобы выявить особенности вашей
+памяти и подобрать параметры, наилучшим образом соответствующие вашей истории
+повторений. Для тонкой настройки ему нужна достаточная история ответов.</p>
+<p>Когда вы нажимаете <strong>Optimize</strong>, FSRS анализирует историю повторений и создаёт
+параметры, оптимальные для вашей памяти и изучаемого материала.
+Если у вас колоды сильно различаются по субъективной сложности, лучше назначить
+им разные пресеты — оптимальные параметры у них могут отличаться.
+Часто оптимизировать не нужно: обычно достаточно раз в месяц.</p>
+<p>По умолчанию параметры считаются по истории повторений всех колод, использующих
+текущий пресет. При желании перед оптимизацией можно
+<a href="./searching.html">настроить поиск</a>, чтобы изменить набор карточек для расчёта.</p>
+<p>Можно также оптимизировать параметры сразу для всех пресетов кнопкой
+<strong>Optimize All Presets</strong>.</p>
+<p><strong>Evaluate FSRS Parameters</strong></p>
+<p>Кнопка <strong>Evaluate</strong> показывает метрики, отражающие, насколько параметры
+соответствуют вашей истории повторений. Меньшие значения означают лучшее
+соответствие.</p>
+<p>У Log loss нет интуитивной интерпретации. RMSE (bins) можно понимать как
+среднее расхождение между предсказанной вероятностью вспоминания карточки (R)
+и фактической вероятностью по вашей истории повторений.
+Например, RMSE=5% означает, что FSRS в среднем ошибается на 5% в предсказании R.
+Для использования FSRS разбираться в этих метриках необязательно.</p>
+<p>Обратите внимание: log loss и RMSE (bins) не идеально коррелируют.
+Поэтому две колоды могут иметь близкий RMSE, но сильно отличающийся log loss,
+и наоборот.</p>
+<p>По умолчанию log loss и RMSE (bins) считаются по всем колодам текущего пресета.
+При желании перед оценкой можно <a href="./searching.html">настроить поиск</a>, чтобы
+изменить набор карточек для расчёта.</p>
+<h3 id="Перепланировать-карточки-при-изменениях"><a class="header" href="#Перепланировать-карточки-при-изменениях">Перепланировать карточки при изменениях</a></h3>
+<p>Эта опция определяет, менять ли due dates карточек при включении FSRS,
+изменении desired retention или параметров. По умолчанию перепланирование
+выключено: новые правила будут применяться только к будущим повторениям,
+без мгновенного скачка нагрузки. Если включить перепланирование, due dates
+изменятся; в зависимости от desired retention это часто приводит к тому,
+что сразу много карточек становятся срочными, поэтому <strong>при первом переходе
+с SM-2 эту опцию обычно не рекомендуют</strong>.</p>
+<p>Используйте опцию осторожно: она добавляет запись повторения к каждой карточке
+и увеличивает размер коллекции.</p>
+<p>Если вы только переходите с SM-2 и всё же хотите включить эту опцию,
+сначала сделайте резервную копию, затем включите FSRS с перепланированием;
+при необходимости можно откатить изменения или восстановиться из бэкапа.</p>
+<h3 id="Вычислить-минимально-рекомендуемый-retention"><a class="header" href="#Вычислить-минимально-рекомендуемый-retention">Вычислить минимально рекомендуемый retention</a></h3>
+<p>«Compute minimum recommended retention (CMRR)» пытается найти значение desired retention,
+при котором вы усваиваете максимум материала за минимальное время.
+Получившееся число можно использовать как ориентир.
+Вы можете выбрать более высокий retention, если готовы потратить больше времени
+ради лучшего удержания. Но ставить retention ниже минимально рекомендованного
+обычно не стоит: из-за большего забывания суммарно времени на обучение уйдёт больше.</p>
+<h3 id="Симулятор"><a class="header" href="#Симулятор">Симулятор</a></h3>
+<p>Симулятор позволяет оценить нагрузку — в повторениях в день
+или в минутах обучения в день.</p>
+<ul>
+<li><strong>Days to simulate</strong> задаёт длительность симулируемой истории обучения.</li>
+<li><strong>Additional new cards to simulate</strong> определяет, должен ли симулятор
+учитывать дополнительные карточки сверх текущего числа в пресете.
+Например, если сейчас в пресете 100 карточек и вы задали 50,
+симуляция пойдёт для 150 карточек. Полезно, если вы планируете добавлять
+новые карточки в будущем.</li>
+<li><strong>New cards/day</strong> и <strong>Maximum reviews/day</strong> задают, сколько новых карточек
+учится в день и каков максимум повторений в день.</li>
+<li><strong>Maximum interval</strong> задаёт максимальную длину интервала (в днях).</li>
+</ul>
+<p>Чтобы симуляция была максимально реалистичной, учитываются реальные состояния
+памяти ваших карточек (difficulty, stability, retrievability).
+Также используются ваши параметры FSRS и desired retention, поэтому их
+изменение влияет на результат симуляции.</p>
+<h4 id="Шаги-обучения-и-переобучения"><a class="header" href="#Шаги-обучения-и-переобучения">Шаги обучения и переобучения</a></h4>
+<p>Шаги (пере)обучения длиной 1 день и больше не рекомендуются при FSRS.
+Их популярность в старом SM-2 была связана с тем, что многократные ошибки
+после выпуска карточки сильно снижали ease и приводили к так называемому
+“ease hell”. В FSRS такой проблемы нет. Если шаги обучения короче дня,
+FSRS может планировать повторения в моменты, которые он считает оптимальными
+для вашего материала и памяти. Ещё одна причина избегать длинных шагов:
+FSRS может назначить первое повторение раньше последнего learning step,
+из-за чего кнопка <strong>Hard</strong> покажет более длинный интервал, чем <strong>Good</strong>.</p>
+<p>Также рекомендуем минимизировать число learning steps. Исследования показывают,
+что многократные повторы одной карточки в течение дня почти не улучшают
+долгосрочную память, поэтому время лучше потратить на другие карточки
+или сократить сессию.</p>
+<p>В последних версиях Anki можно позволить FSRS управлять краткосрочным
+планированием, оставив поле (re)learning steps пустым. Это экспериментальная
+возможность.
+Учтите: то, что FSRS-5 <em>может</em> давать интервалы короче дня, не означает,
+что он <em>обязательно</em> это сделает. Интервал для <strong>Again</strong> может быть
+равен одному дню или даже больше.</p>
+<h4 id="Совместимость-дополнений"><a class="header" href="#Совместимость-дополнений">Совместимость дополнений</a></h4>
+<p>Некоторые дополнения конфликтуют с FSRS. Общее правило:
+если дополнение влияет на интервалы карточки, его не стоит использовать
+вместе с FSRS.
+Список популярных дополнений и их совместимость с FSRS:
+<a href="https://github.com/open-spaced-repetition/fsrs4anki#add-on-compatibility">Add-on Compatibility</a>.</p>
+<h4 id="Дополнительно"><a class="header" href="#Дополнительно">Дополнительно</a></h4>
+<p>Ответы на частые вопросы о FSRS есть в <a href="https://faqs.ankiweb.net/frequently-asked-questions-about-fsrs.html">FAQ</a>.</p>
+<p>Подробнее о FSRS:</p>
+<ul>
+<li><a href="https://github.com/open-spaced-repetition/fsrs4anki/wiki">FSRS4Anki Wiki</a></li>
+<li><a href="https://github.com/open-spaced-repetition/fsrs4anki">FSRS4Anki on Github</a></li>
+</ul>
+<h2 id="Дополнительно-1"><a class="header" href="#Дополнительно-1">Дополнительно</a></h2>
+<h3 id="Максимальный-интервал"><a class="header" href="#Максимальный-интервал">Максимальный интервал</a></h3>
+<p>Максимальное число дней, через которое карточка повторения будет показана снова.
+Когда интервал достигает этого ограничения, кнопки <strong>Hard</strong>, <strong>Good</strong> и <strong>Easy</strong>
+дают одинаковую задержку. Чем меньше это значение, тем выше ежедневная нагрузка.
+По умолчанию стоит 100 лет; можно уменьшить это число, если вы готовы тратить
+больше времени на обучение ради более высокого retention.</p>
+<h3 id="Исторический-retention-historical-retention"><a class="header" href="#Исторический-retention-historical-retention">Исторический retention (Historical Retention)</a></h3>
+<p>Эта настройка скрыта, пока FSRS не включён.</p>
+<p>Если часть вашей истории повторений отсутствует, FSRS должен заполнить пробелы.
+По умолчанию он предполагает, что в тех старых повторениях вы вспоминали около
+90% материала. Если ваш фактический retention тогда был заметно выше или ниже,
+изменение этой опции позволит FSRS точнее приблизить недостающую историю.</p>
+<p>История повторений может быть неполной по двум причинам:</p>
+<ul>
+<li>Вы используете опцию <strong>Ignore cards reviewed before</strong>.</li>
+<li>Вы раньше удаляли журнал повторений для экономии места или импортировали
+материал из другой SRS-программы.</li>
+</ul>
+<p>Вторая причина встречается редко, поэтому если вы не используете первую опцию,
+обычно менять эту настройку не нужно.</p>
+<h3 id="Игнорировать-карточки-повторённые-до"><a class="header" href="#Игнорировать-карточки-повторённые-до">Игнорировать карточки, повторённые до</a></h3>
+<p>Если задано, карточки, повторённые до указанной даты, будут игнорироваться
+при оптимизации параметров FSRS. Это полезно, если вы импортировали чужие
+данные расписания или изменили свою стратегию использования кнопок ответа.</p>
+<h3 id="Начальная-лёгкость-starting-ease"><a class="header" href="#Начальная-лёгкость-starting-ease">Начальная лёгкость (Starting Ease)</a></h3>
+<p>Определяет начальную лёгкость карточки. Она задаётся в момент, когда карточка
+впервые выходит из обучения. По умолчанию значение <code>2.50</code>: это означает, что
+после завершения обучения нажатие <strong>Good</strong> на последующих повторениях увеличивает
+интервал примерно в 2.5 раза (например, с 10 до 25 дней). В зависимости от
+дальнейших оценок ease может расти или снижаться от стартового значения.</p>
+<h3 id="Бонус-easy"><a class="header" href="#Бонус-easy">Бонус Easy</a></h3>
+<p>Дополнительный множитель, применяемый к интервалу, когда карточка повторения
+оценивается кнопкой <strong>Easy</strong>. При значении по умолчанию <code>1.30</code> кнопка <strong>Easy</strong>
+даёт интервал в 1.3 раза больше, чем <strong>Good</strong> (например, если <strong>Good</strong> = 10 дней,
+то <strong>Easy</strong> ≈ 13 дней).</p>
+<h3 id="Модификатор-интервала"><a class="header" href="#Модификатор-интервала">Модификатор интервала</a></h3>
+<p>Дополнительный множитель, применяемый ко всем интервалам повторения.
+При значении по умолчанию <code>1.00</code> он ничего не меняет. Если установить <code>0.80</code>,
+интервалы будут составлять 80% от обычных (например, 10 дней превратятся в 8).
+Так можно сделать повторения реже или чаще.</p>
+<p>Для материала средней сложности у большинства пользователей правильных ответов
+по зрелым карточкам обычно около 90%. Проверить свой результат можно в
+статистике колоды на графике Answer Buttons: retention зрелых карточек —
+это <code>correct%</code> в правой части графика. Если вы учитесь недавно, зрелых карточек
+может ещё не быть. Так как результаты по новым и молодым карточкам могут сильно
+колебаться, лучше дождаться достаточного числа зрелых повторений, прежде чем
+делать выводы о своём retention.</p>
+<p>На сайте SuperMemo предлагается подбирать подходящий множитель под желаемый
+retention. Формула:</p>
+<pre><code>log(desired retention%) / log(current retention%)
+</code></pre>
+<p>Допустим, текущий retention — 85%, а целевой — 90%. Тогда:</p>
+<pre><code>log(90%) / log(85%) = 0.65
+</code></pre>
+<p>Можно воспользоваться <a href="https://www.google.com/search?q=log(90%25)+%2F+log(85%25)">Google для вычисления</a>.</p>
+<p>Если ввести получившиеся 65% в interval modifier, со временем ваш retention
+должен приблизиться к целевому.</p>
+<p>Важно учитывать, что связь между временем обучения и retention нелинейна:
+в нашем примере, чтобы поднять retention на 5 процентных пунктов, придётся
+учиться примерно на 35% чаще. Если материал очень важен, это может быть
+оправданно — решать вам. Если же проблема в том, что вы слишком много забываете,
+часто больше пользы даст дополнительное время на начальном этапе обучения
+или использование мнемотехник.</p>
+<p>Ещё один важный момент: Anki принудительно делает новый интервал минимум
+на 1 день длиннее предыдущего, чтобы вы не застряли на бесконечных повторениях
+с тем же интервалом. Если вам нужно повторять карточку раз в день несколько дней
+подряд, лучше добавить шаги в learning mode, а не менять этот множитель.</p>
+<h3 id="Интервал-hard"><a class="header" href="#Интервал-hard">Интервал Hard</a></h3>
+<p>Множитель, применяемый при нажатии <strong>Hard</strong>. Процент берётся относительно
+предыдущего интервала. Например, при значении по умолчанию <code>1.20</code> карточка
+с интервалом 10 дней получит 12 дней.</p>
+<h3 id="Новый-интервал"><a class="header" href="#Новый-интервал">Новый интервал</a></h3>
+<p>Множитель, применяемый при нажатии <strong>Again</strong> на карточке повторения.
+Значение по умолчанию <code>0.00</code> означает, что при забывании задержка карточки
+сбрасывается к нулю (после применения <a href="#minimum-interval">minimum interval</a>
+это становится 1 днём).</p>
+<p>Если изменить значение по умолчанию, забытые карточки могут сохранять часть
+предыдущего интервала. Например, если у карточки было 100 дней, а <strong>New Interval</strong>
+установлен в <code>0.20</code>, новый интервал будет 20 дней.</p>
+<p>Хотя сохранение части интервала может казаться логичным, наблюдения SuperMemo
+показывают, что это может быть <a href="https://supermemo.guru/wiki/Post-lapse_stability">контрпродуктивно</a>.
+Поэтому обычно рекомендуют оставить значение по умолчанию.</p>
+<h3 id="Пользовательское-планирование"><a class="header" href="#Пользовательское-планирование">Пользовательское планирование</a></h3>
+<p>Вы можете получить более тонкий контроль над планированием в Anki, используя
+свой JavaScript в поле custom scheduling. Это глобальная опция: код, введённый
+здесь, применяется ко всем пресетам.</p>
+<p>Ниже пример скрипта custom scheduling. Обратите внимание: для версий Anki на Qt5
+код нужно транспилировать.</p>
+<pre><code class="language-javascript">// print the existing states
+console.log(
+  JSON.stringify(states, null, 4)
+);
+
+// load the debugger if the web inspector is open
+debugger;
+
+// if the hard button is a learning step, make it
+// a 123 minute delay
+if (states.hard.normal?.learning) {
+  states.hard.normal.learning.scheduledSecs = 123 * 60;
+}
+
+// apply the same change in a rescheduling filtered deck
+if (states.hard.filtered?.rescheduling?.originalState?.learning) {
+  states.hard.filtered.rescheduling.originalState.learning.scheduledSecs =
+    123 * 60;
+}
+
+// increase ease factor by 0.2 when Easy used on a review
+if (states.good.normal?.review) {
+  states.easy.normal.review.easeFactor =
+    states.good.normal.review.easeFactor + 0.2;
+}
+</code></pre>
+<p>Также можно посмотреть <a href="https://github.com/open-spaced-repetition/fsrs4anki/blob/main/fsrs4anki_scheduler.js">FSRS custom scheduling code</a> как пример.</p>
+<p>Различные состояния планирования карточек описаны в <a href="https://github.com/ankitects/anki/blob/main/proto/anki/scheduler.proto">SchedulingStates</a>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="preferences.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="syncing.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="preferences.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="syncing.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
