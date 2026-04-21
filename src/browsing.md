@@ -169,145 +169,142 @@ _Боковая панель_ слева предоставляет быстры
 | Sort Field      | То же, что в режиме Notes, для заметки карточки.                                                                                                                                                                                       | Содержимое поля заметки, выбранного как поле сортировки для типа заметки. Показывать и сортировать можно только по этому полю. Поле меняется через **Fields...** в области редактирования.                   |
 | Tags            | То же, что в режиме Notes, для заметки карточки.                                                                                                                                                                                       | Теги заметки.                                                                                                                                                                                                   |
 
-## Editing Area
+## Область редактирования
 
-The bottom right area displays the note of the currently selected row. For
-more information about cards and notes, see [Getting Started](getting-started.md).
-For more information on formatting buttons, see [Editing](editing.md).
+В правой нижней области отображается заметка выбранной строки.
+Подробнее о карточках и заметках см. в [Начало работы](getting-started.md).
+Подробнее о кнопках форматирования см. в [Редактирование](editing.md).
 
-You can see a preview of what the currently selected card would look
-like when reviewing by clicking the **Preview** button at the top of the editing area.
-Note that this will not display any type-the-answer fields on your
-cards, which makes it easier to preview the cards quickly.
-In Notes mode, the preview is shown for the first card of the selected note.
+Вы можете увидеть предварительный просмотр выбранной карточки в режиме
+повторения, нажав кнопку **Preview** в верхней части области редактирования.
+Обратите внимание: поля с вводом ответа в этом режиме не отображаются,
+что ускоряет просмотр карточек.
+В режиме Notes предпросмотр показывается для первой карточки выбранной заметки.
 
-## Menus and Actions
+## Меню и действия
 
-At the top of the browser window, you find a toolbar with various menus which in
-turn offer various actions that can be performed in the browser.
+В верхней части окна обзора находится панель инструментов с различными меню,
+которые содержат действия, доступные в этом окне.
 
 ### Edit
 
 <!-- prettier-ignore -->
 
-| Name                 | Action                                                                                                                                                                                                                        |
+| Название             | Действие                                                                                                                                                                                                                      |
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Undo                 | Revert the most recently performed operation.                                                                                                                                                                                 |
-| Select All           | Select all rows displayed.                                                                                                                                                                                                    |
-| Select Notes         | Show only the currently selected notes and select all rows.                                                                                                                                                                   |
-| Invert Selection     | Select those rows not selected, and deselect the currently selected rows.                                                                                                                                                     |
-| Create Filtered Deck | Show the [filtered deck](filtered-decks.md#creating-manually) dialog and set the current browser search as a filter. Use <kbd>Alt</kbd> / <kbd>Option</kbd> to set the second filter instead.|
+| Undo                 | Отменить последнее выполненное действие.                                                                                                                                                                                      |
+| Select All           | Выделить все отображаемые строки.                                                                                                                                                                                             |
+| Select Notes         | Показать только выбранные заметки и выделить все строки.                                                                                                                                                                      |
+| Invert Selection     | Выделить невыделенные строки и снять выделение с уже выбранных.                                                                                                                                                               |
+| Create Filtered Deck | Открыть диалог [фильтрованной колоды](filtered-decks.md#creating-manually) и установить текущий поиск из обзора как фильтр. Используйте <kbd>Alt</kbd> / <kbd>Option</kbd>, чтобы задать второй фильтр. |
 
 ### Notes
 
-Most of the following actions operate on the selected notes. They are also available through
-a context menu when a selected row is right-clicked in Notes mode. In Cards mode,
-they can be found in a submenu of the context menu.
+Большинство следующих действий применяется к выбранным заметкам. Они также
+доступны в контекстном меню при щелчке правой кнопкой по выбранной строке в
+режиме Notes. В режиме Cards эти команды находятся в подменю контекстного меню.
 
 <!-- prettier-ignore -->
 
-| Name              | Action                                                                                                                                                                                                                                                                                                                                                     |
+| Название          | Действие                                                                                                                                                                                                                                                                                                                                                   |
 | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Add Notes         | Open the [Add](editing.md#adding-cards-and-notes) dialog.                                                                                                                                                                                                                                                                                                  |
-| Create Copy       | Open a [duplicate](browsing.md#finding-duplicates) of the current note in the [editor](editing.md#adding-cards-and-notes), which can be slightly modified to easily obtain variations of your cards. By default, the duplicate card will be created in the same deck as the original.                                                                      |
-| Export Notes      | Open the [Export](exporting.md) dialog.                                                                                                                                                                                                                                                                                                                    |
-| Add Tags          | Add provided tags to all selected notes.                                                                                                                                                                                                                                                                                                                   |
-| Remove Tags       | Enter tags and remove them from all selected notes.                                                                                                                                                                                                                                                                                                        |
-| Clear Unused Tags | Remove all tags from the sidebar that are not used by any notes.                                                                                                                                                                                                                                                                                           |
-| Toggle Mark       | If the current note is marked (i.e., has the _Marked_ tag), unmark all selected notes. If the current is not marked, mark all selected notes.                                                                                                                                                                                                              |
-| Change Note Type   | Convert the selected notes from one type to another. For example, imagine you have a _Russian_ note type and a _Computer_ note type, and you accidentally added some computer-related text into a _Russian_ note. You can use this option to fix that mistake. The scheduling of cards is not affected. Changing the type of a note requires a one-way sync. |
-| Find Duplicates   | Open the [Duplicates](#finding-duplicates) dialog.                                                                                                                                                                                                                                                                                                         |
-| Find and Replace  | Open the [Find and Replace](#find-and-replace) dialog.                                                                                                                                                                                                                                                                                                     |
-| Manage Note Types  | Open the [Note Types](editing.md#adding-a-note-type) dialog.                                                                                                                                                                                                                                                                                                |
-| Delete            | Delete all selected notes and their cards. It is not possible to remove individual cards, as individual cards are controlled by the [templates](templates/intro.md).                                                                                                                                                                                       |
+| Add Notes         | Открыть диалог [Add](editing.md#adding-cards-and-notes).                                                                                                                                                                                                                                                                                                  |
+| Create Copy       | Открыть [дубликат](browsing.md#finding-duplicates) текущей заметки в [редакторе](editing.md#adding-cards-and-notes), чтобы слегка изменить его и быстро получить варианты карточек. По умолчанию дубликат создаётся в той же колоде, что и оригинал.                                                     |
+| Export Notes      | Открыть диалог [Export](exporting.md).                                                                                                                                                                                                                                                                                                                     |
+| Add Tags          | Добавить указанные теги ко всем выбранным заметкам.                                                                                                                                                                                                                                                                                                        |
+| Remove Tags       | Ввести теги и удалить их у всех выбранных заметок.                                                                                                                                                                                                                                                                                                         |
+| Clear Unused Tags | Удалить с боковой панели все теги, которые не используются ни в одной заметке.                                                                                                                                                                                                                                                                            |
+| Toggle Mark       | Если текущая заметка отмечена (имеет тег _Marked_), снять отметку со всех выбранных заметок. Если текущая заметка не отмечена — отметить все выбранные заметки.                                                                                                                                                                                           |
+| Change Note Type  | Преобразовать выбранные заметки из одного типа в другой. Например, если у вас есть типы _Russian_ и _Computer_ и вы случайно добавили «компьютерный» текст в заметку _Russian_, это действие поможет исправить ошибку. Расписание карточек не меняется. Изменение типа заметки требует односторонней синхронизации. |
+| Find Duplicates   | Открыть диалог [Duplicates](#finding-duplicates).                                                                                                                                                                                                                                                                                                          |
+| Find and Replace  | Открыть диалог [Find and Replace](#find-and-replace).                                                                                                                                                                                                                                                                                                      |
+| Manage Note Types | Открыть диалог [Note Types](editing.md#adding-a-note-type).                                                                                                                                                                                                                                                                                                |
+| Delete            | Удалить все выбранные заметки и их карточки. Удалять отдельные карточки нельзя, так как они управляются [шаблонами](templates/intro.md).                                                                                                                                                                                                                  |
 
 ### Cards
 
-The following actions operate on the currently selected cards. They are also available through
-a context menu when a selected row is rightclicked in Cards mode. In Notes mode,
-they can be found in a submenu of the context menu.
+Следующие действия применяются к выбранным карточкам. Они также доступны
+в контекстном меню при щелчке правой кнопкой по выбранной строке в режиме Cards.
+В режиме Notes эти действия находятся в подменю контекстного меню.
 
 <!-- prettier-ignore -->
 
-| Name           | Action                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| Название       | Действие                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Change Deck    | Move currently selected cards to a different deck.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| Set Due Date   | Turns cards into review cards if they are new, and makes them due on a certain date. This can be useful for moving cards forward or back a few days when your study schedule is interrupted. Entering a range like `60-90` will make the selected cards due between 60 and 90 days from now. New cards will have their interval set to the same delay, but review cards will be rescheduled without changing their current interval, unless an exclamation mark (`!`) is included at the end of the range. Note that the answer time is not recorded when manually scheduling cards, since the action can be performed even outside of review, and Anki isn't aware of which card may or may not be shown at the time.                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| Reset        | Move currently selected cards to the end of the new queue. The existing review history is preserved. In 2.1.50+, there are options to restore the original card position, and to reset the card's lapse and repetition counters.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| Reposition     | Change the order new cards will appear in. You can find out the existing positions by enabling the _due_ column, as described in the [table](#cardnote-table) section above. If you run the reposition command when multiple cards are selected, it will apply increasing numbers to each card in turn. By default the number increases by one for each card, but this can be adjusted by changing the "step" setting. The **Shift position of existing cards** option allows you to insert cards between currently existing ones, pushing the currently existing ones apart. For instance, if you have five cards and you want to move 3, 4, and 5 between 1 and 2, selecting this setting would cause the cards to end up in the order 1, 3, 4, 5, 2. By contrast, if you turn this option off, 1 and 2 will get the same position number (and it will thus be unpredictable which of the cards with the same number comes up first). Please note that when enabled, any card with a higher position will be modified, and all of those changed cards will need to be sent the next time you sync. |
-| Toggle Suspend | [Suspend](studying.md#editing-and-more) or unsuspend all selected cards, depending on whether the current card is suspended or not.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| Flag           | Toggle the flags of all selected cards. Whether a flag is added or removed depends on whether the current card has the chosen flag.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| Info           | Show various information about the current card, including its review history. For more information, see [Card Info](stats.md#card-info).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| Change Deck    | Переместить выбранные карточки в другую колоду.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| Set Due Date   | Превратить новые карточки в карточки повторения и назначить срок на определённую дату. Это полезно, если нужно сдвинуть карточки вперёд или назад на несколько дней при перерыве в расписании. Диапазон `60-90` сделает выбранные карточки сроком от 60 до 90 дней от текущей даты. Для новых карточек интервал будет установлен равным этой задержке, а карточки повторения будут переназначены без изменения текущего интервала, если только в конце диапазона не добавить восклицательный знак (`!`). Обратите внимание: время ответа при ручном назначении не записывается, так как операция может выполняться вне режима повторения, и Anki не знает, какая карточка показывалась в этот момент. |
+| Reset          | Переместить выбранные карточки в конец очереди новых. История повторений сохраняется. В 2.1.50+ есть опции восстановить исходную позицию карточки и сбросить счётчики lapses и повторов.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| Reposition     | Изменить порядок появления новых карточек. Текущие позиции можно увидеть, включив столбец _due_, как описано в разделе [таблицы](#таблица-карточекзаметок). Если выполнить команду для нескольких карточек, им по очереди назначатся возрастающие номера. По умолчанию шаг увеличения — 1, но его можно изменить параметром «step». Опция **Shift position of existing cards** позволяет вставлять карточки между уже существующими, раздвигая их. Например, если у вас есть карточки 1–5 и вы хотите поместить 3, 4 и 5 между 1 и 2, при включённой опции порядок станет 1, 3, 4, 5, 2. Если опцию выключить, 1 и 2 получат одинаковый номер позиции, и порядок их появления станет непредсказуемым. При включённой опции изменяются все карточки с более высокой позицией, и их нужно будет отправить при следующей синхронизации. |
+| Toggle Suspend | [Приостановить](studying.md#editing-and-more) или снять приостановку со всех выбранных карточек — в зависимости от того, приостановлена ли текущая карточка.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| Flag           | Переключить флаги у всех выбранных карточек. Добавление или снятие зависит от того, есть ли выбранный флаг у текущей карточки.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| Info           | Показать различную информацию о текущей карточке, включая историю повторений. Подробнее см. [Card Info](stats.md#card-info).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 
 ### Go
 
-This menu exists to provide keyboard shortcuts to jump to various
-parts of the browser, and to go up and down the card list.
+Это меню предназначено для горячих клавиш перехода к разным частям окна
+обзора и перемещения вверх/вниз по списку карточек.
 
 ## Find and Replace
 
-This dialog allows for replacing text on notes. As described above, it is available
-from the toolbar and the table's context menu.
+Этот диалог позволяет заменять текст в заметках. Как описано выше, он доступен
+с панели инструментов и из контекстного меню таблицы.
 
-The first input field is for the text that is going to be replaced, the second
-one for the replacement. Next, there is a dropdown menu that allows you to specify
-where Anki should look for text to replace: in a note's tags (requires Anki 2.1.45+),
-in all fields, or just in a specific field (only fields belonging to a selected
-note will be listed).
+Первое поле ввода — текст, который нужно заменить, второе — текст замены.
+Далее идёт выпадающее меню, где задаётся область поиска: в тегах заметки
+(требуется Anki 2.1.45+), во всех полях или только в конкретном поле
+(в списке будут только поля выбранной заметки).
 
-By default, only selected notes will be affected. If you want to lift that
-restriction, you can untick the "selected notes only" checkbox (requires Anki 2.1.45+).
+По умолчанию изменения применяются только к выбранным заметкам.
+Чтобы снять это ограничение, уберите флажок «selected notes only»
+(требуется Anki 2.1.45+).
 
-The regular expression option allows you to perform complex replacements.
-For example, assume there is the following text in a field:
+Опция регулярных выражений позволяет выполнять сложные замены.
+Например, пусть в поле есть такой текст:
 
     <img src="pic.jpg" />
 
-We use these settings:
+Используем такие настройки:
 
 ![Find and Replace dialog](media/find_and_replace.png)
 
-(Note that on Anki versions prior to 2.1.28, you would need to replace `${1}`
-with `\1`.)
+(Примечание: в версиях Anki до 2.1.28 вместо `${1}` нужно использовать `\1`.)
 
-Then the assumed field content will change to:
+Тогда содержимое поля изменится на:
 
     pic.jpg
 
-A full discussion on regular expressions is outside the scope of this document.
-There are a number of syntax guides available on the web:
+Подробный разбор регулярных выражений выходит за рамки этого руководства.
+В интернете есть множество справочников по синтаксису:
 
 - For Anki 2.1.28+, see <https://docs.rs/regex/latest/regex/index.html#syntax>.
 - For older Anki versions, see <http://docs.python.org/library/re.html>.
 
-## Finding Duplicates
+## Поиск дубликатов
 
-You can use the **Notes > Find Duplicates** option to search for notes that
-have the same content. When you open the window, Anki will look at all
-of your note types and present a list of all possible fields. If you
-want to look for duplicates in the _Back_ field, you’d select it from
-the list and then click **Search**.
+Вы можете использовать **Notes > Find Duplicates** для поиска заметок
+с одинаковым содержимым. Когда вы откроете окно, Anki проверит все типы заметок
+и покажет список всех возможных полей. Если вы хотите искать дубликаты по полю
+_Back_, выберите его из списка и нажмите **Search**.
 
-By default, it will search in all note types that have the field you provided.
-This differs from the duplicate check when you add cards manually, which
-is limited to a single note type.
+По умолчанию поиск выполняется по всем типам заметок, где есть указанное поле.
+Это отличается от проверки дубликатов при ручном добавлении карточек,
+которая ограничена одним типом заметок.
 
-The **Optional filter** text box allows you to narrow down where Anki will
-look for duplicates. If you only want to search for duplicates in the
-"French Vocab" and "French Verbs" note types, you would enter:
+Поле **Optional filter** позволяет сузить область поиска дубликатов.
+Если нужно искать только в типах заметок «French Vocab» и «French Verbs»,
+введите:
 
     "note:french vocab" or "note:french verbs"
 
-Or you might want to look only for duplicates in a particular deck, so
-you could use:
+Или, например, вы хотите искать дубликаты только в определённой колоде:
 
     "deck:myDeck"
 
-The search syntax is the same as used when searching in the browser.
-For more information, see [Searching](searching.md).
+Синтаксис здесь такой же, как в поиске окна обзора.
+Подробнее см. [Поиск](searching.md).
 
-You can click one of the links in the search results list to display the
-duplicate notes in that set. If the search brings up a large number of
-duplicates, you may wish to instead click the **Tag Duplicates** button,
-which will tag all matching notes with _duplicate_. You can then search
-for this tag in the browser and handle them all from the same screen.
+Вы можете нажать на одну из ссылок в списке результатов, чтобы показать
+дубликаты из соответствующей группы. Если найдено слишком много дубликатов,
+удобнее нажать **Tag Duplicates** — тогда всем совпадающим заметкам будет
+добавлен тег _duplicate_. После этого можно найти этот тег в обзоре и
+обработать всё с одного экрана.
