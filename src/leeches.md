@@ -1,55 +1,57 @@
-# Leeches
+# Трудные карточки (leeches)
 
 <!-- toc -->
 
-Leeches are cards that you keep forgetting. Because they require so
-many reviews, they take up a lot more of your time, compared to other cards.
+Leeches — это карточки, которые вы постоянно забываете. Поскольку им
+требуется много повторений, они отнимают значительно больше времени,
+чем другие карточки.
 
-Anki can help you identify leeches. Each time a review card "lapses" (is 
-failed while it is in review mode), a counter increases. When this counter
-reaches 8, Anki tags the note as a leech and suspends the card. The 
-threshold, and whether to suspend or not, can be adjusted in the
-[deck options](deck-options.md).
+Anki помогает выявлять leeches. Каждый раз, когда карточка на этапе
+повторения «срывается» (вы отвечаете неправильно в режиме повторения),
+счётчик увеличивается. Когда счётчик достигает 8, Anki помечает заметку
+как leech и приостанавливает карточку. Порог и поведение
+(приостанавливать или нет) можно изменить в [параметрах колоды](deck-options.md).
 
-If you keep failing that card, Anki will continue to alert you about the 
-leech periodically. These warnings occur at half the initial leech 
-threshold. For example, if you set the warning at 8 lapses, future 
-warnings will happen every 4 lapses (at 12, 16, and so on).
+Если вы продолжаете ошибаться по этой карточке, Anki будет периодически
+предупреждать о leech. Эти предупреждения происходят с шагом,
+равным половине исходного порога. Например, если порог 8 срывов,
+следующие предупреждения будут каждые 4 срыва (на 12, 16 и т. д.).
 
-Once a leech is found, there are several ways to handle it.
+После обнаружения leech есть несколько способов с ним поступить.
 
-## Editing
+## Редактирование
 
-The most efficient method to deal with leeches is to change how the
-information is presented. Maybe your cards have too much information, or 
-you’re trying to memorize something without fully understanding it. Often, 
-it helps to follow the [20 rules of formulating 
-knowledge](https://supermemo.guru/wiki/20_rules_of_knowledge_formulation),
-proposed by Dr Piotr Wozniak, the creator of SuperMemo. Some cards can 
-benefit from a mnemonic. Even some well-written cards may need a boost in 
-coherence, e.g. by adding cards for related concepts. However, it takes a 
-lot of experience to know how to formulate the material properly, break it 
-down into smallest possible components, and use mnemonic techniques.
+Самый эффективный способ работать с leech — изменить способ
+представления информации. Возможно, в карточках слишком много информации,
+или вы пытаетесь запомнить то, что не до конца понимаете. Часто помогает
+следовать [20 правилам формулирования знаний](https://supermemo.guru/wiki/20_rules_of_knowledge_formulation),
+предложенным доктором Пётром Возняком, создателем SuperMemo.
+Некоторым карточкам полезны мнемоники. Даже хорошо написанным карточкам
+иногда нужна лучшая связность, например путём добавления карточек
+по связанным понятиям. Однако, чтобы правильно формулировать материал,
+разбивать его на минимальные компоненты и применять мнемотехники,
+нужен значительный опыт.
 
-## Deleting
+## Удаление
 
-If the material you’re struggling with isn't important enough to justify 
-the time spent, you can simply delete the card. By selectively deleting
-difficult and obscure items, you can spend more time learning other 
-material, making studying more enjoyable. If you think the card might be 
-useful for future reference, you can leave it suspended.
+Если материал, с которым вы испытываете трудности, недостаточно важен,
+чтобы оправдать потраченное время, карточку можно просто удалить.
+Выборочно удаляя трудные и редкие элементы, вы сможете тратить больше времени
+на изучение другого материала и делать обучение приятнее.
+Если карточка может пригодиться в будущем как справка,
+можно оставить её приостановленной.
 
-## Waiting
+## Ожидание
 
-Some leeches are caused by "interference". For example, an English
-learner may have recently learned the words "disappoint" and "disappear".
-As they look similar, the learner may find themselves confusing the two
-when trying to answer. In such situations, it’s often helpful to
-concentrate on one idea at a time. Once that idea is firmly ingrained in 
-your mind, you can then start learning the other idea. So, in these
-situations, you might want to leave one of the words suspended until you
-have learned the other one well, and then unsuspend it.
+Некоторые leeches появляются из-за «интерференции». Например,
+изучающий английский мог недавно выучить слова `disappoint` и `disappear`.
+Поскольку они похожи, он может путать их при ответе.
+В таких ситуациях часто полезно сосредоточиться на одной идее за раз.
+Когда одна идея хорошо закрепится в памяти,
+можно начинать учить вторую. Поэтому в таких случаях
+имеет смысл оставить одно из слов приостановленным,
+пока вы хорошо не выучите другое, а затем снять приостановку.
 
-For a more detailed discussion, you can refer to the article "[Dealing 
-with Leeches](https://controlaltbackspace.org/leech/)", written by Soren 
-Bjornstad.
+Для более подробного обсуждения см. статью
+[Dealing with Leeches](https://controlaltbackspace.org/leech/),
+написанную Soren Bjornstad.
