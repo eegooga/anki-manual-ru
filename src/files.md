@@ -1,187 +1,303 @@
-# Managing Files and Your Collection
+# Управление файлами и коллекцией
 
 <!-- toc -->
 
-## Checking Your Collection
+## Проверка коллекции
 
-It is a good idea to occasionally check your collection file for
-problems. You can do this via the Tools&gt;Check Database menu item.
-Checking the database ensures the file has not been corrupted, rebuilds some
-internal structures, and optimizes the file.
+Полезно время от времени
+проверять файл коллекции на проблемы.
+Это можно сделать через пункт меню
+Инструменты&gt;Проверить базу данных.
+Проверка базы данных гарантирует,
+что файл не повреждён,
+перестраивает некоторые внутренние структуры
+и оптимизирует файл.
 
-When you check the database, your tag list is also rebuilt. When you
-delete individual decks or cards, Anki does not update the list of used
-tags, as it's inefficient to do so. If you want to clear old tags out
-from the list that are no longer in use, checking your database is the
-way to do it.
+При проверке базы данных
+также перестраивается список тегов.
+Когда вы удаляете отдельные колоды или карточки,
+Anki не обновляет список используемых тегов,
+потому что это неэффективно.
+Если вы хотите очистить список
+от старых неиспользуемых тегов,
+проверка базы данных — правильный способ.
 
-Please note that Anki will automatically optimize your collection once
-every 2 weeks. This optimization ensures the collection performs well,
-but it does not check for errors or rebuild the tag list when
-automatically optimizing.
+Обратите внимание:
+Anki автоматически оптимизирует коллекцию
+раз в 2 недели.
+Эта оптимизация поддерживает производительность,
+но не проверяет ошибки
+и не перестраивает список тегов
+при автоматическом запуске.
 
 <a id="file-locations"></a>
 
-## User Data
+## Данные пользователя
 
-On **Windows**, the latest Anki versions store your collection files in your
-appdata folder. You can access it by opening the file manager, and
-typing `%APPDATA%\Anki2` in the location field. Older versions of Anki
-stored your Anki files in a folder called `Anki` in your `Documents`
-folder.
+На **Windows**
+последние версии Anki
+хранят файлы коллекции
+в папке `appdata`.
+Открыть её можно,
+запустив файловый менеджер
+и введя `%APPDATA%\Anki2`
+в поле пути.
+Старые версии Anki
+хранили файлы в папке `Anki`
+в каталоге `Documents`.
 
-On **Mac** computers, recent Anki versions store all user data in the
-`~/Library/Application Support/Anki2` folder. The Library folder is
-hidden by default, but can be revealed in Finder by holding down the
-option key while clicking on the Go menu. If you're on an older Anki
-version, your Anki files will be in your `Documents/Anki` folder.
+На **Mac**
+современные версии Anki
+хранят пользовательские данные в
+`~/Library/Application Support/Anki2`.
+Папка Library по умолчанию скрыта,
+но её можно показать в Finder,
+удерживая Option
+при нажатии меню Go.
+Если у вас старая версия Anki,
+файлы Anki будут в
+`Documents/Anki`.
 
-On **Linux**, recent Anki versions store your user data in
-`~/.local/share/Anki2`, or `$XDG_DATA_HOME/Anki2` if you have set a
-custom data path. If you are using a third-party **Flatpak** build,
-your files will be in `~/.var/app/net.ankiweb.Anki/data/Anki2/`.
-Older versions of Anki stored your files in
-`~/Documents/Anki` or `~/Anki`.
+На **Linux**
+современные версии Anki
+хранят пользовательские данные в
+`~/.local/share/Anki2`,
+или `$XDG_DATA_HOME/Anki2`,
+если задан пользовательский путь данных.
+Если используется сторонняя сборка **Flatpak**,
+файлы будут в
+`~/.var/app/net.ankiweb.Anki/data/Anki2/`.
+Старые версии Anki
+хранили файлы в
+`~/Documents/Anki` или `~/Anki`.
 
-Within the Anki folder, the program-level and profile-level preferences
-are stored in a file called `prefs.db`.
+Внутри папки Anki
+настройки уровня программы и профиля
+хранятся в файле `prefs.db`.
 
-There is also a separate folder for each profile. The folder contains:
+Также есть отдельная папка
+для каждого профиля.
+Она содержит:
 
-- Your notes, decks, cards and so on in a file called `collection.anki2`
+- Ваши заметки, колоды, карточки и т. д.
+  в файле `collection.anki2`
 
-- Your audio and images in a `collection.media` folder
+- Ваши аудио и изображения
+  в папке `collection.media`
 
-- A backups folder
+- Папку резервных копий
 
-- Some system files
+- Некоторые системные файлы
 
-You should never copy or move your collection while Anki is open. Doing
-so could cause your collection to become corrupt. Please do not move or
-modify the other files in the folder either.
+Никогда не копируйте
+и не перемещайте коллекцию,
+пока Anki открыт.
+Это может привести к повреждению коллекции.
+Также не перемещайте и не изменяйте
+другие файлы в этой папке.
 
-## Program Files
+## Файлы программы
 
-Anki's launcher is installed in the following locations by default:
+Лаунчер Anki по умолчанию устанавливается в:
 
 - Windows: `%LOCALAPPDATA%\Programs\Anki`
 - macOS: `/Applications/Anki.app`
 - Linux: `/usr/local/share/anki`
 
-When you install/update Anki with the launcher, it downloads support
-files and places them in the following locations:
+Когда вы устанавливаете/обновляете Anki через лаунчер,
+он загружает вспомогательные файлы
+и помещает их в:
 
 - Windows: `%LOCALAPPDATA%\AnkiProgramFiles`
 - macOS: `~/Library/Application Support/AnkiProgramFiles`
 - Linux: `~/.local/share/AnkiProgramFiles`
 
-Removing that folder will cause the launcher to behave like a fresh install.
+Удаление этой папки
+приведёт к тому,
+что лаунчер будет вести себя
+как при «чистой» установке.
 
-The `AnkiProgramFiles` contains all the files needed to run Anki aside from
-the launcher. You can copy it to a different folder or system, and start
-Anki from the new location by opening `AnkiProgramFiles/.venv/bin/anki` (or
-`AnkiProgramFiles\.venv\scripts\anki` on Windows). If placed in the standard location on a new computer, the launcher will also be able to re-use the existing files, provided the files were copied with modification times preserved.
+`AnkiProgramFiles`
+содержит все файлы,
+необходимые для запуска Anki,
+кроме самого лаунчера.
+Можно скопировать эту папку
+в другое место или на другую систему
+и запускать Anki из нового расположения,
+открыв `AnkiProgramFiles/.venv/bin/anki`
+(или `AnkiProgramFiles\.venv\scripts\anki` на Windows).
+Если поместить её в стандартное место
+на новом компьютере,
+лаунчер тоже сможет переиспользовать эти файлы,
+при условии,
+что при копировании сохранены времена модификации.
 
-See the flash drive section below for more.
+Подробнее см. раздел про флешку ниже.
 
-## Startup Options
+## Параметры запуска
 
-If you have made a destructive change on one computer and have an
-undamaged copy on another computer, you may wish to start Anki without
-syncing in order to use the full sync option without first downloading
-the changes. Similarly, if you are experiencing problems with Anki, you
-might need to (or might be instructed to) disable add-ons temporarily to
-see if one might be causing the problem. To do both of these things at the same time, you can
-open Anki in safe mode by holding down the <kbd>Shift</kbd> key while starting Anki. Keep holding <kbd>Shift</kbd> down until the on-screen message informs you that Anki has started in safe mode. If you're on Linux and that didn't work, run 'anki --safemode'.
+Если вы сделали разрушительное изменение
+на одном компьютере,
+а на другом есть неповреждённая копия,
+может понадобиться запустить Anki
+без синхронизации,
+чтобы использовать полную синхронизацию,
+не скачивая сначала повреждённые изменения.
+Аналогично,
+если у вас проблемы с Anki,
+может потребоваться
+(или вам могут посоветовать)
+временно отключить дополнения,
+чтобы проверить,
+не они ли причина проблемы.
+Чтобы сделать обе вещи одновременно,
+запустите Anki в безопасном режиме,
+удерживая <kbd>Shift</kbd>
+при запуске Anki.
+Держите <kbd>Shift</kbd>,
+пока не появится сообщение,
+что Anki запущен в safe mode.
+Если вы на Linux
+и это не сработало,
+запустите `anki --safemode`.
 
-It is possible to specify a custom folder location during startup. This
-is an advanced feature that is primarily intended to be used with
-portable installations, and we recommend you use the default location in
-most circumstances.
+Можно указать пользовательский путь папки
+во время запуска.
+Это продвинутая возможность,
+в первую очередь для portable-установок,
+и в большинстве случаев
+рекомендуется использовать путь по умолчанию.
 
-The syntax to specify an alternate folder is as follows:
+Синтаксис для указания альтернативной папки:
 
     anki -b /path/to/anki/folder
 
-- If you have multiple profiles, you can pass -p &lt;name&gt; to load
-  a specific profile.
-- If you pass -p some-fake-name, Anki will show the profile screen on startup.
-  If no profile is provided, the last-used profile is loaded.
+- Если у вас несколько профилей,
+  можно передать `-p <name>`,
+  чтобы загрузить конкретный профиль.
+- Если передать `-p some-fake-name`,
+  Anki покажет экран профилей при запуске.
+  Если профиль не указан,
+  загружается последний использованный профиль.
 
-- To change the interface language, use -l &lt;iso 639-1 language
-  code&gt;, such as "-l ja" for Japanese.
+- Чтобы изменить язык интерфейса,
+  используйте `-l <iso 639-1 language code>`,
+  например `-l ja` для японского.
 
-If you always want to use a custom folder location, you can modify your
-shortcut to Anki. On Windows, right-click on the shortcut, choose
-Properties, select the Shortcut tab, and add "-b
-\\path\\to\\data\\folder" after the path to the program, which should
-leave you with something like
+Если вы всегда хотите использовать
+пользовательскую папку,
+можно изменить ярлык Anki.
+На Windows:
+щелкните правой кнопкой ярлык,
+выберите Properties,
+откройте вкладку Shortcut
+и добавьте `-b \path\to\data\folder`
+после пути к программе,
+чтобы получилось примерно так:
 
     "C:\Program Files\Anki\anki.exe" -b "C:\AnkiDataFolder"
 
-You can also use this technique with the -l option to easily use Anki in
-different languages.
+Эту же технику можно использовать
+с опцией `-l`,
+чтобы легко запускать Anki
+на разных языках.
 
-On Windows, you should use a backslash (\\) not a forward slash (/).
+На Windows нужно использовать обратный слэш (`\`),
+а не прямой (`/`).
 
-On a Mac there is no easy way to alter the behaviour when clicking on
-the Anki icon, but it is possible to start Anki with a custom base
-folder from a terminal:
+На Mac нет простого способа
+изменить поведение запуска по клику на иконку Anki,
+но можно запустить Anki
+с пользовательской базовой папкой из терминала:
 
     open /Applications/Anki.app --args -b ~/myankifolder
 
-Alternatively, you can define the environment variable "ANKI_BASE".
-On Windows, you can define the environment variable with:
+Либо можно задать
+переменную окружения `ANKI_BASE`.
+На Windows:
 
     set "ANKI_BASE=C:/path/to/AnkiDataFolder"
 
-On Linux and macOS, you can use:
+На Linux и macOS:
 
     export ANKI_BASE="/path/to/AnkiDataFolder"
 
-## DropBox and File Syncing
+## DropBox и синхронизация файлов
 
-We do not recommend you sync your Anki folder directly with a
-third-party synchronization service, as it can lead to database
-corruption when files are synced while in use.
+Мы не рекомендуем
+синхронизировать папку Anki напрямую
+через сторонний сервис синхронизации,
+так как это может привести
+к повреждению базы данных,
+если файлы синхронизируются
+во время использования.
 
-If you just want to synchronize your media, you can link external
-folders into services like DropBox. Please see [DropboxWiki: Sync
+Если вам нужна только синхронизация медиа,
+можно связать внешние папки
+с сервисами вроде DropBox.
+См. [DropboxWiki: Sync
 Folders Outside Dropbox (archive.org)][dropboxwiki-sync-other]
-for more info.
+для подробностей.
 
 [dropboxwiki-sync-other]: http://web.archive.org/web/20180919153730/http://www.dropboxwiki.com/tips-and-tricks/sync-other-folders
 
-If you wish to keep your collection in sync as well, it is strongly
-recommended that you create a script that copies your files from your
-synced folder to a local folder, launches Anki, and then copies the
-files back when Anki is closed. This will ensure that the files are
-never synchronized while they are open.
+Если вы хотите синхронизировать
+и коллекцию тоже,
+настоятельно рекомендуется
+создать скрипт,
+который копирует файлы
+из синхронизируемой папки
+в локальную папку,
+запускает Anki,
+а после закрытия Anki
+копирует файлы обратно.
+Это гарантирует,
+что файлы никогда не синхронизируются,
+когда они открыты.
 
-## Network Filesystems
+## Сетевые файловые системы
 
-We strongly recommend you have Anki store your files on a local hard
-disk, as network filesystems can lead to database corruption. If a
-network filesystem is your only option, regular use of Tools&gt;Check
-Database to detect corruption is recommended.
+Мы настоятельно рекомендуем
+хранить файлы Anki
+на локальном жёстком диске,
+так как сетевые файловые системы
+могут приводить к повреждению базы данных.
+Если сетевой диск — единственный вариант,
+рекомендуется регулярно использовать
+Инструменты&gt;Проверить базу данных
+для обнаружения повреждений.
 
-## Running from a Flash Drive
+## Запуск с флешки
 
-On Windows, Anki can be installed on a USB / flash drive and run as a
-portable application. The following example assumes your USB drive is
-drive E; adjust as necessary.
+На Windows Anki можно установить
+на USB/flash drive
+и запускать как portable-приложение.
+Следующий пример предполагает,
+что флешка имеет букву диска E;
+при необходимости замените её.
 
-WARNING: The drive letter must be the same on all devices. If you set this up for drive E,
-it won't work for a flash drive mapped to drive D for example.
+ПРЕДУПРЕЖДЕНИЕ: Буква диска
+должна быть одинаковой на всех устройствах.
+Если вы настроили это для диска E,
+это не будет работать,
+если флешка на другом устройстве
+получит букву D.
 
-WARNING: Media syncing with AnkiWeb may not work if your flash drive is formatted
-as FAT32. Please format the drive as NTFS to ensure media syncs
-correctly.
+ПРЕДУПРЕЖДЕНИЕ: Синхронизация медиа с AnkiWeb
+может не работать,
+если флешка отформатирована в FAT32.
+Форматируйте диск в NTFS,
+чтобы медиа синхронизировались корректно.
 
-1. Download the latest Anki launcher, and install it in a custom location:
-   `E:\Anki\Launcher`. Not `E:\Anki\Launcher\Anki`.
-2. When the launcher appears, close it without installing.
-3. Put the following in a file `E:\Anki\Anki.bat`:
+1. Скачайте последний лаунчер Anki
+   и установите его в пользовательский путь:
+   `E:\Anki\Launcher`.
+   Не `E:\Anki\Launcher\Anki`.
+2. Когда лаунчер откроется,
+   закройте его,
+   не устанавливая Anki.
+3. Поместите следующий текст
+   в файл `E:\Anki\Anki.bat`:
 
 ```bat
 @echo off
@@ -193,128 +309,188 @@ set ANKI_BASE=%USB_ROOT%\AnkiData
 start /b %ANKI_LAUNCHER%
 ```
 
-4. Double-click on the .bat file you created, and install Anki as normal.
-5. You can now double-click on the .bat file to run Anki from other machines.
+4. Дважды щёлкните созданный `.bat`-файл
+   и установите Anki как обычно.
+5. Теперь можно дважды щёлкать `.bat`-файл,
+   чтобы запускать Anki на других машинах.
 
-Tools>Upgrade/Downgrade will continue to function, but only when your machine
-has access to the internet.
+Tools>Upgrade/Downgrade
+продолжит работать,
+но только когда у машины
+есть доступ в интернет.
 
-## Backups
+## Резервные копии
 
-Please see [this section](./backups.md).
+См. [этот раздел](./backups.md).
 
-## Inaccessible Harddisk
+## Недоступный жёсткий диск
 
-If Anki can't write to files in the [Anki folder](#user-data), a message
-will be displayed on startup saying that Anki can't write to the
-harddisk, and Anki will close. If you're unsure how to fix the
-permissions, please contact someone near you who is knowledgeable about
-computers and can help you out.
+Если Anki не может писать файлы
+в [папке Anki](#user-data),
+при запуске появится сообщение,
+что Anki не может писать на жёсткий диск,
+и Anki закроется.
+Если вы не знаете,
+как исправить права доступа,
+обратитесь к человеку рядом с вами,
+который разбирается в компьютерах
+и может помочь.
 
-## Permissions of Temp Folder
+## Права папки Temp
 
-Anki uses the system's temporary folder to store temporary data. If the
-permissions of this folder have been changed from the default settings
-by a rogue app or buggy antivirus app, Anki will not function properly.
+Anki использует системную временную папку
+для хранения временных данных.
+Если права этой папки
+изменены от стандартных
+вредоносным приложением
+или багнутым антивирусом,
+Anki не будет работать корректно.
 
-If you're on a Windows 7 machine, the general steps to fix the problem
-are listed below. As this is somewhat complicated, please ask someone
-knowledgeable about Windows if you are not sure.
+Если вы на Windows 7,
+общие шаги исправления:
+(это довольно сложно,
+поэтому обратитесь к специалисту по Windows,
+если не уверены).
 
-1. Click on the start bar, and type in %temp% (including the percents),
-   then hit <kbd>Enter</kbd>.
+1. Нажмите на строку запуска,
+   введите `%temp%`
+   (включая проценты),
+   затем нажмите <kbd>Enter</kbd>.
 
-2. Go up one folder, and locate the temp folder. Right click on it, and
-   choose Properties.
+2. Поднимитесь на одну папку вверх,
+   найдите папку temp,
+   кликните правой кнопкой,
+   выберите Properties.
 
-3. In the security tab, click on Advanced.
+3. На вкладке Security
+   нажмите Advanced.
 
-4. Click on the Owner tab. If you're not listed as the owner, click the
-   button to take ownership.
+4. На вкладке Owner,
+   если вы не владелец,
+   нажмите кнопку,
+   чтобы получить владение.
 
-5. On the permissions tab, ensure that you have full control. On a
-   default W7 install the control will actually be inherited from
-   c:\\users\\your-username.
+5. На вкладке permissions
+   убедитесь,
+   что у вас полный доступ.
+   В стандартной установке W7
+   доступ обычно наследуется от
+   `c:\users\your-username`.
 
-## Corrupt Collections
+## Повреждённые коллекции
 
-Anki uses a file format that is robust against program and computer
-crashes, but it's still possible for your collection to become corrupt
-if the files are modified while Anki is open, stored on a network drive,
-or corrupted by a bug.
+Anki использует формат файла,
+устойчивый к сбоям программы и компьютера,
+но коллекция всё равно может повредиться,
+если файлы изменяются,
+пока Anki открыт,
+хранятся на сетевом диске,
+или повреждены из-за бага.
 
-When you run Tools&gt;Check Database, you will receive a message if Anki
-detects the file has been corrupted. **The best way to recover from this
-is to restore from the most recent [automatic backup](#backups)**, but
-if your backup is too old, then you can attempt to repair the corruption
-instead.
+Когда вы запускаете Инструменты&gt;Проверить базу данных,
+Anki сообщит,
+если обнаружит повреждение файла.
+**Лучший способ восстановления —
+восстановиться из последней
+[автоматической резервной копии](#backups)**,
+но если резервная копия слишком старая,
+можно попробовать
+починить повреждение вручную.
 
-On Linux, make sure sqlite3 is installed. On a Mac, it should be
-installed already. On Windows, download
+На Linux убедитесь,
+что установлен `sqlite3`.
+На Mac он обычно уже установлен.
+На Windows скачайте
 <http://www.sqlite.org/sqlite-3_6_23.zip>.
 
-Next, create a backup of your collection.anki2 file, in case something
-goes wrong with the steps below.
+Далее создайте резервную копию файла `collection.anki2`,
+на случай если что-то пойдёт не так
+в шагах ниже.
 
 ### Linux/macOS
 
-Open a terminal, change to the folder your collection is located in, and
-type:
+Откройте терминал,
+перейдите в папку,
+где находится коллекция,
+и введите:
 
     sqlite3 collection.anki2 .dump > dump.txt
 
-Open the resulting dump.txt file in a text editor, and look at the final
-line. If it reads "rollback;", change it to "commit;"
+Откройте получившийся `dump.txt`
+в текстовом редакторе
+и проверьте последнюю строку.
+Если там `rollback;`,
+замените её на `commit;`.
 
-Then run the following in a terminal:
+Затем выполните в терминале:
 
     cat dump.txt | sqlite3 temp.file
 
-Make sure you use temp.file - do not put collection.anki2 on the right,
-or you will blank out the file. When you're done, proceed to the final
-step.
+Обязательно используйте `temp.file` —
+не указывайте справа `collection.anki2`,
+иначе вы очистите файл.
+После этого переходите к финальному шагу.
 
 ### Windows
 
-Copy the `sqlite3.exe` program and your deck to your desktop. Then go to
-**Start&gt;Run** and type in `cmd.exe`.
+Скопируйте `sqlite3.exe`
+и вашу колоду на рабочий стол.
+Затем откройте **Start&gt;Run**
+и введите `cmd.exe`.
 
-If you're on a recent Windows, the command prompt may not start on your
-desktop. If you don't see desktop displayed in the command prompt, type
-something like the following, replacing "administrator" with your login
-name.
+На современных Windows
+командная строка может открыться
+не на рабочем столе.
+Если путь рабочего стола не отображается,
+введите примерно следующее,
+заменив `administrator`
+на своё имя пользователя:
 
     cd C:\Users\Administrator\Desktop
 
-Then type:
+Затем введите:
 
     sqlite3 collection.anki2 .dump > dump.txt
 
-Open the resulting dump.txt file in a text editor, and look at the final
-line. If it reads "rollback;", change it to "commit;"
+Откройте `dump.txt`
+в текстовом редакторе
+и проверьте последнюю строку.
+Если там `rollback;`,
+замените её на `commit;`.
 
-Then run the following in a terminal:
+Затем выполните в терминале:
 
     type dump.txt | sqlite3 temp.file
 
-Make sure you use temp.file - do not put collection.anki2 on the right,
-or you will blank out the file. When you're done, proceed to the final
-step.
+Обязательно используйте `temp.file` —
+не указывайте справа `collection.anki2`,
+иначе вы очистите файл.
+После этого переходите к финальному шагу.
 
-### Final Step
+### Финальный шаг
 
-Check that you didn't get an error message, and that temp.file is not
-empty. The procedure optimizes the collection in the process, so it's
-normal for the new file to be somewhat smaller than the old one.
+Проверьте,
+что ошибок не было,
+и `temp.file` не пустой.
+Процедура также оптимизирует коллекцию,
+поэтому новый файл
+может быть немного меньше старого —
+это нормально.
 
-When you've confirmed the file is not empty:
+После того как вы подтвердили,
+что файл не пустой:
 
-- rename the original collection.anki2 file to something else
+- переименуйте исходный `collection.anki2`
+  во что-то другое
 
-- rename temp.file to collection.anki2
+- переименуйте `temp.file`
+  в `collection.anki2`
 
-- move collection.anki2 back into your collection folder, overwriting
-  the old version
+- переместите `collection.anki2`
+  обратно в папку коллекции,
+  заменив старую версию
 
-- start Anki and go to Tools&gt;Check Database to make sure the
-  collection has been successfully restored.
+- запустите Anki
+  и откройте Инструменты&gt;Проверить базу данных,
+  чтобы убедиться,
+  что коллекция успешно восстановлена.
