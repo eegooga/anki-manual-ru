@@ -1,24 +1,24 @@
-# Introduction
+# Введение
 
-## Mobile Clients
+## Мобильные клиенты
 
-This is the manual for the computer version of Anki. Separate manuals are available for the mobile clients:
+Это руководство для компьютерной версии Anki. Для мобильных клиентов доступны отдельные руководства:
 
-- [AnkiDroid Manual](https://docs.ankidroid.org/) (Android)
-- [AnkiMobile Manual](https://docs.ankimobile.net/) (iPhone/iPad)
+- [Руководство AnkiDroid](https://docs.ankidroid.org/) (Android)
+- [Руководство AnkiMobile](https://docs.ankimobile.net/) (iPhone/iPad)
 
-## Quickstart
+## Быстрый старт
 
-In a hurry? Jump straight to [Getting Started](getting-started.md).
+Спешите? Сразу переходите к разделу [Начало работы](getting-started.md).
 
-## Getting Help
+## Получение помощи
 
-Looking for help? Please see [Getting Help](./getting-help.md).
+Нужна помощь? Пожалуйста, см. раздел [Получение помощи](./getting-help.md).
 
-## Translations
+## Переводы
 
-Volunteers have contributed translations of this manual. The
-translations may not always be up to date.
+Волонтёры внесли вклад в перевод этого руководства.
+Переводы не всегда могут быть актуальными.
 
 - [Bahasa Indonesia](https://web.archive.org/web/20250228144632/https://apps.ankiweb.net/docs/manual.id.html)
 - [Deutsch](https://web.archive.org/web/20240413080739/https://www.dennisproksch.de/anki)
@@ -34,11 +34,11 @@ translations may not always be up to date.
 - [日本語](http://wikiwiki.jp/rage2050/)
 - [简体中文](https://open-spaced-repetition.github.io/anki-manual-zh-CN/)
 
-If you would like to help translate the manual into a different language,
-please see the [translation docs](https://translating.ankiweb.net/anki/manual.html).
+Если вы хотите помочь с переводом руководства на другой язык,
+см. [документацию по переводу](https://translating.ankiweb.net/anki/manual.html).
 
-## Legacy Documentation
+## Устаревшая документация
 
-Not on the latest version of Anki? Find archives of this manual at the [Internet Archive](https://web.archive.org/web/20240829022941/https://docs.ankiweb.net/).
+Используете не самую новую версию Anki? Архивы этого руководства доступны в [Internet Archive](https://web.archive.org/web/20240829022941/https://docs.ankiweb.net/).
 
-For information on old scheduler versions, see [this FAQ](https://faqs.ankiweb.net/the-anki-2.1-scheduler.html).
+Информацию о старых версиях планировщика смотрите в [этом FAQ](https://faqs.ankiweb.net/the-anki-2.1-scheduler.html).

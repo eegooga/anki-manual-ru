@@ -1,9 +1,8 @@
-# Platform Notes
+# Примечания по платформам
 
-This section explains the way Anki is installed, and the possible problems you may encounter, depending on your OS:
+На этих страницах описаны советы по установке и устранению проблем,
+зависящих от платформы.
 
-- [Windows](./windows/intro.md)
-- [macOS](./mac/intro.md)
-- [Linux](./linux/intro.md)
-
-If you have already installed Anki, you can skip to the [Getting Started](../getting-started.md) section.
+- [Windows](windows/intro.md)
+- [macOS](mac/intro.md)
+- [Linux](linux/intro.md)

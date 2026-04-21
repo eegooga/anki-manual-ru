@@ -1,77 +1,84 @@
-# Troubleshooting
+# Устранение неполадок
 
-If you encounter a problem with Anki, please try the following steps in order:
+Если вы столкнулись с проблемой в Anki, попробуйте следующие шаги по порядку:
 
-### 1. Restart Anki
+### 1. Перезапустите Anki
 
-Please close Anki, then start it again.
+Закройте Anki, затем запустите его снова.
 
-If you are unable to close Anki because of an error message, you can either
-terminate Anki using your task manager, or restart your computer. Anki saves
-periodically, so you should not lose more than a few minutes of work in most
-circumstances.
+Если закрыть Anki не получается из-за сообщения об ошибке,
+завершите Anki через диспетчер задач или перезагрузите компьютер.
+Anki периодически сохраняет данные, поэтому в большинстве случаев
+вы потеряете не более нескольких минут работы.
 
-If the problem does not occur again, you can skip the following steps.
+Если проблема больше не возникает, следующие шаги можно пропустить.
 
-### 2. Check add-ons
+### 2. Проверьте дополнения
 
-Please close Anki, then open it in safe mode by holding down the
-<kbd>Shift</kbd> key while starting Anki. Keep holding <kbd>Shift</kbd> down
-until the on-screen message informs you that Anki has started in safe mode.
-If you're on Linux and that didn't work, run 'anki --safemode'.
+Закройте Anki, затем откройте его в безопасном режиме,
+удерживая клавишу <kbd>Shift</kbd> при запуске Anki.
+Продолжайте удерживать <kbd>Shift</kbd>, пока на экране
+не появится сообщение, что Anki запущен в безопасном режиме.
+Если вы на Linux и это не сработало, запустите `anki --safemode`.
 
-If the problem goes away, that indicates an add-on is causing the problem.
-Remove any add-ons you don't need, and disable half of the others. If the
-problem continues, try the other half. Repeat the process until you've figured
-out which add-on is causing the problem. Then please report the issue to the
-add-on author, using the Copy Debug Info button, and pasting that into the
-report.
+Если проблема исчезла, значит её вызывает дополнение.
+Удалите ненужные дополнения и отключите половину остальных.
+Если проблема сохраняется, попробуйте другую половину.
+Повторяйте процесс, пока не выясните, какое дополнение
+вызывает проблему. Затем сообщите об этом автору дополнения,
+используя кнопку Copy Debug Info и вставив её содержимое
+в сообщение об ошибке.
 
-### 3. Check your Anki version
+### 3. Проверьте версию Anki
 
-You can find the version you're using in the **Help → About** or **Anki →
-About** menu. If the version you're using is not the latest version published on
-<https://apps.ankiweb.net>, please close Anki, install the latest version, and
-then start Anki again to see if the problem has gone away.
+Версию можно посмотреть в меню **Справка → О программе**
+или **Anki → О программе**. Если ваша версия не является
+последней опубликованной на <https://apps.ankiweb.net>,
+закройте Anki, установите последнюю версию,
+затем снова запустите Anki и проверьте, исчезла ли проблема.
 
-If you're using Linux, please make sure you can reproduce the error using the
-packaged version on the Anki website, as distros often distribute [broken versions](platform/linux/distro-packages.md).
+Если вы используете Linux, убедитесь, что ошибка воспроизводится
+в пакетной версии с сайта Anki, так как дистрибутивы часто распространяют
+[неисправные версии](platform/linux/distro-packages.md).
 
-### 4. Check your database
+### 4. Проверьте базу данных
 
-After restarting Anki, please try the **Tools → Check Database** menu item to
-make sure your collection doesn't have any problems.
+После перезапуска Anki выберите в меню
+**Инструменты → Проверить базу данных**,
+чтобы убедиться, что с коллекцией всё в порядке.
 
-### 5. Restart your computer
+### 5. Перезагрузите компьютер
 
-Sometimes restarting your computer may help.
+Иногда помогает обычная перезагрузка компьютера.
 
-### 6. Change the Video Driver
+### 6. Смените видеодрайвер
 
-Crashes and display issues can be caused by the video driver. Changing to a
-different video driver may help. Make sure you try all the driver options and
-restart Anki after each change.
+Сбои и проблемы отображения могут быть вызваны видеодрайвером.
+Переход на другой видеодрайвер может помочь.
+Обязательно попробуйте все варианты драйвера
+и перезапускайте Anki после каждого изменения.
 
-If you're using Anki version 23.10 or above, the easiest way is to open
-**Tools → Preferences** (or **Anki → Preferences** if you're on a Mac) and
-change the driver from the dropdown menu.
+Если у вас версия Anki 23.10 или выше,
+самый простой способ — открыть
+**Инструменты → Настройки** (или **Anki → Настройки** на Mac)
+и выбрать драйвер в выпадающем списке.
 
-If you are on an older Anki version or if you cannot access the preferences for
-some reason, you can use the command-line instructions instead and manually
-change the gldriver file:
+Если у вас старая версия Anki или по какой-то причине
+нет доступа к настройкам, используйте инструкции
+командной строки и измените файл `gldriver` вручную:
 
 - [Windows](https://docs.ankiweb.net/platform/windows/display-issues.html)
 - [Mac](https://docs.ankiweb.net/platform/mac/display-issues.html)
 - [Linux](https://docs.ankiweb.net/platform/linux/display-issues.html)
 
-### 7. Reset window sizes
+### 7. Сбросьте размеры окон
 
-Sometimes pressing **reset window sizes** button in the preferences screen
-immediately after starting Anki will help.
+Иногда помогает кнопка **reset window sizes** в настройках,
+если нажать её сразу после запуска Anki.
 
-### 8. If the problem remains
+### 8. Если проблема остаётся
 
-If you've confirmed you are using the latest Anki version, and are still
-receiving errors even with add-ons disabled,
-please [report the problem](./getting-help.md), including the next error you
-receive in your post.
+Если вы подтвердили, что используете последнюю версию Anki,
+и всё ещё получаете ошибки даже с отключёнными дополнениями,
+пожалуйста, [сообщите о проблеме](./getting-help.md),
+включив в сообщение следующую полученную ошибку.
