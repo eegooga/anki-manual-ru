@@ -1,53 +1,54 @@
-# Math and Symbols
+# Математика и символы
 
 <!-- toc -->
 
 ## MathJax
 
-[MathJax](https://www.mathjax.org) is a modern, browser-based
-typesetting system, useful for mathematical and chemical equations. It
-does not require the installation of any extra software, so it is easy
-to use, and it is recommended for most users.
+[MathJax](https://www.mathjax.org) — это современная браузерная система
+набора формул, удобная для математических и химических выражений. Она
+не требует установки дополнительного ПО, поэтому проста в использовании
+и рекомендуется большинству пользователей.
 
-MathJax is supported out of the box on Anki 2.1+, AnkiMobile, and
+MathJax поддерживается «из коробки» в Anki 2.1+, AnkiMobile и
 AnkiDroid 2.9+.
 
-To try it out:
+Чтобы попробовать:
 
-1. Type the following in a field:
+1. Введите в поле:
 
        \sqrt{x}
 
-2. Select the text you just typed.
+2. Выделите только что введённый текст.
 
-3. Click the rightmost button in the editor, and choose "MathJax
-   inline" from the menu. Anki will change the text so it reads:
+3. Нажмите крайнюю правую кнопку в редакторе и выберите в меню
+   «MathJax inline». Anki изменит текст на:
 
        \(\sqrt{x}\)
 
-4. Click the **Cards...** button. You’ll see a preview of how the
-   equation will appear when the card is reviewed.
+4. Нажмите кнопку **Cards...**. Вы увидите, как формула будет выглядеть
+   при повторении карточки.
 
     $$
     \sqrt{x}
     $$
-Anki’s MathJax support expects content in TeX format. If you’re not
-familiar with TeX formatting, please see [this cheatsheet](https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference).
-Please note that point 1 does not apply in Anki - Anki uses `\(` and
-`\)` for inline equations, and `\[` and `\]` for display equations.
+Поддержка MathJax в Anki ожидает выражения в формате TeX. Если вы не
+знакомы с форматированием TeX, воспользуйтесь [этой шпаргалкой](https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference).
+Обратите внимание: пункт 1 из этой шпаргалки не относится к Anki —
+в Anki для встроенных формул используются `\(` и `\)`, а для выносных —
+`\[` и `\]`.
 
-If you want to use newlines in a MathJax expression, please use
-<kbd>Shift</kbd>+<kbd>Enter</kbd> instead of just <kbd>Enter</kbd>, as a normal newline will prevent
-MathJax from working correctly.
+Если в выражении MathJax нужны переносы строк, используйте
+<kbd>Shift</kbd>+<kbd>Enter</kbd>, а не просто <kbd>Enter</kbd>, иначе
+MathJax может работать некорректно.
 
-Anki includes built in support for mhchem for rendering chemical
-equations. Please see the "chemical equations" section and the following
-sections for more information:
+Anki включает встроенную поддержку mhchem для отображения химических
+уравнений. Подробнее см. раздел «chemical equations» и последующие разделы:
 <https://mhchem.github.io/MathJax-mhchem/>
 
-### Customize MathJax
+### Настройка MathJax
 
-Anki's bundled MathJax support is loaded before card content, so if you wish to customise MathJax you'll have to do so in a specific way. An example is provided here.
+Встроенная поддержка MathJax в Anki загружается до содержимого карточки,
+поэтому для настройки нужен специальный способ. Пример:
 
 ```javascript
 <script>
@@ -61,45 +62,43 @@ if (typeof is_already_run == 'undefined') {
 </script>
 ```
 
-Note that Anki has special logic for cloze deletions that might not work if you change the standard delimiters for MathJax equations.
+Учтите, что в Anki есть особая логика для cloze-пропусков, которая может
+перестать работать, если изменить стандартные разделители формул MathJax.
 
 ## LaTeX
 
-LaTeX is a powerful typesetting system, useful for entering mathematical
-formulas, chemical formulas, musical notation and so on. Anki provides
-some support for LaTeX, allowing you to enter LaTeX code in your notes.
-When you review a card, Anki will call LaTeX and display the generated
-image instead.
+LaTeX — мощная система вёрстки, полезная для ввода математических и
+химических формул, нотной записи и т. д. Anki частично поддерживает LaTeX:
+вы можете вставлять LaTeX-код в заметки. При повторении карточки Anki
+запустит LaTeX и покажет сгенерированное изображение.
 
-LaTeX is more work to set up, and images can only be generated with the
-computer version of Anki - though once generated, the images can be
-displayed by mobile clients. Because of the extra complexity LaTeX
-brings, it is only recommended for users that need more features than
-MathJax provides.
+LaTeX сложнее в настройке, и изображения можно генерировать только в
+компьютерной версии Anki. После генерации они отображаются и в мобильных
+клиентах. Из-за дополнительной сложности LaTeX рекомендуется только тем,
+кому не хватает возможностей MathJax.
 
-### Security Warning
+### Предупреждение о безопасности
 
-LaTeX code can contain malicious commands that can read or write non-Anki
-data on your computer. For this reason, recent Anki versions will refuse to
-generate LaTeX images by default.
+Код LaTeX может содержать вредоносные команды, способные читать или изменять
+данные на вашем компьютере вне Anki. Поэтому в новых версиях Anki по умолчанию
+генерация LaTeX-изображений отключена.
 
-If you wish to use LaTeX on your own cards, you will need to enable the **Generate LaTeX images** option in the preferences screen.
+Если вы хотите использовать LaTeX в своих карточках, включите опцию
+**Generate LaTeX images** в настройках.
 
-**We strongly recommend you do not enable this option if you use shared decks, or think
-you will import shared decks in the future, as you are potentially giving any shared
-deck author access to your computer**.
+**Мы настоятельно рекомендуем не включать эту опцию, если вы используете
+общие колоды или планируете импортировать их в будущем, так как это может
+дать автору общей колоды доступ к вашему компьютеру**.
 
-You do not need to enable this option for shared decks. If a shared deck author has
-correctly generated all the images prior to them sharing the deck, the images should
-already be available.
+Для общих колод включать эту опцию не нужно. Если автор общей колоды
+заранее корректно сгенерировал все изображения, они уже будут доступны.
 
-### Assumed Knowledge
+### Необходимые знания
 
-Anki’s LaTeX support is not turn-key: it is assumed that you know how to
-use LaTeX already, and that you have it installed. If you have no
-experience with LaTeX, please consult one of the many guides available
-on the internet. If you are having trouble with markup, please ask on a
-LaTeX forum.
+Поддержка LaTeX в Anki не является полностью автоматической: предполагается,
+что вы уже умеете пользоваться LaTeX и установили его. Если опыта нет,
+обратитесь к одному из многочисленных руководств в интернете. Если у вас
+проблемы с разметкой, задайте вопрос на форуме по LaTeX.
 
 To install LaTeX, on Windows use MiKTeX; on macOS use MacTeX, and on Linux
 use your distro’s package manager. Dvipng must also be installed.

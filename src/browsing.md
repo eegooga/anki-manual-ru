@@ -1,175 +1,173 @@
-# Browsing
+# Обзор
 
 <!-- toc -->
 
-The Browse window allows you to search through your cards and notes, and edit
-them. It is opened by clicking **Browse** in the main window, or by pressing
-<kbd>B</kbd>. It is comprised of three sections: the _sidebar_ on the
-left, the _card/note table_ on the top right, and the _editing area_ on the bottom
-right. By positioning the mouse between two sections, it is possible to click
-and drag to expand one section and shrink the other.
+Окно «Обзор» позволяет искать по карточкам и заметкам, а также редактировать их.
+Оно открывается нажатием **Browse** в главном окне или клавишей
+<kbd>B</kbd>. Окно состоит из трёх частей: _боковая панель_ слева,
+_таблица карточек/заметок_ справа сверху и _область редактирования_ справа снизу.
+Если навести курсор между двумя секциями, можно зажать кнопку мыши и перетащить
+границу, чтобы увеличить одну секцию и уменьшить другую.
 
-## Table Modes
+## Режимы таблицы
 
 ![Table Modes](media/browser_table_modes.png)
 
-Anki 2.1.45+ offers two modes: either cards or notes are shown in the data table.
-You can change the current mode by clicking the switch at the top, to the left
-of the search area, or pressing <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>T</kbd> or
-<kbd>Cmd</kbd>+<kbd>Opt</kbd>+<kbd>T</kbd>. The switch also indicates if **C**ards
-or **N**otes are currently shown.
+В Anki 2.1.45+ доступны два режима: в таблице данных показываются либо карточки,
+либо заметки. Переключить режим можно переключателем сверху слева от поля поиска
+или сочетанием <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>T</kbd> /
+<kbd>Cmd</kbd>+<kbd>Opt</kbd>+<kbd>T</kbd>. Переключатель также показывает,
+что сейчас отображается: **C**ards или **N**otes.
 
-**Note**: For the sake of simplicity, this manual generally assumes the Cards
-mode to be the active one. Whenever selecting/finding/etc. "cards" is mentioned,
-the reader may substitute it for "cards or notes depending on the active mode".
+**Примечание**: для простоты в этом руководстве обычно подразумевается, что
+активен режим Cards. Везде, где упоминается выбор/поиск и т. п. «карточек»,
+можно читать это как «карточки или заметки в зависимости от активного режима».
 
-## Sidebar
+## Боковая панель
 
-The _sidebar_ on the left allows quick access to common search terms. On Anki
-2.1.45+, it also provides a searchbar, facilities to edit tags and decks, and a
-choice of two different tools, which are discussed in the following sections.
-You can switch tools using the toolbar at the top of the sidebar or the shortcuts
-<kbd>Alt</kbd>+<kbd>1</kbd>/<kbd>2</kbd>.
+_Боковая панель_ слева предоставляет быстрый доступ к частым условиям поиска.
+В Anki 2.1.45+ в ней также есть строка поиска, средства редактирования тегов и
+колод и выбор из двух инструментов, описанных ниже.
+Переключать инструменты можно через панель сверху на боковой панели или
+сочетаниями <kbd>Alt</kbd>+<kbd>1</kbd>/<kbd>2</kbd>.
 
-### Search Tool
+### Инструмент поиска
 
 ![Search Tool](media/browser_search_tool.png)
 
-With this tool, the sidebar behaves as in previous versions: Clicking on an item
-will search for it.
+С этим инструментом боковая панель работает как в предыдущих версиях:
+щелчок по элементу запускает поиск по нему.
 
-You can hold down <kbd>Ctrl</kbd> (<kbd>Command</kbd> on Mac) while clicking in
-order to append the clicked item to the current search with an AND condition,
-instead of starting a new search. If you wanted to show _learning_ cards that were
-also in the German deck for instance, you could click on "Learning",
-then <kbd>Ctrl</kbd>-click on "German".
+Если удерживать <kbd>Ctrl</kbd> (на Mac — <kbd>Command</kbd>) при щелчке,
+выбранный элемент добавится к текущему запросу через AND вместо запуска нового
+поиска. Например, чтобы показать _изучаемые_ карточки из колоды German, нажмите
+«Learning», затем <kbd>Ctrl</kbd>-клик по «German».
 
-You can hold down <kbd>Shift</kbd> to create an OR search instead of an AND. For
-example, you could click one deck, then <kbd>Shift</kbd>-click another to show
-cards from either of the decks in the same view.
+Удерживайте <kbd>Shift</kbd>, чтобы использовать OR вместо AND.
+Например, кликните по одной колоде, затем <kbd>Shift</kbd>-кликните по другой —
+и увидите карточки из обеих колод в одном списке.
 
-You can hold down <kbd>Alt</kbd> (<kbd>Option</kbd> on Mac) in order to reverse the
-search (prepend a `-`): for example, to show all cards in a current deck that
-do _not_ have a certain tag. <kbd>Alt</kbd>/<kbd>Option</kbd> can be combined with
-either <kbd>Ctrl</kbd> or <kbd>Shift</kbd> (e.g. clicking with <kbd>Ctrl</kbd>+<kbd>Alt</kbd>
-will result in adding a new search term that is negated).
+Можно удерживать <kbd>Alt</kbd> (на Mac — <kbd>Option</kbd>), чтобы инвертировать
+условие (добавить префикс `-`): например, показать все карточки текущей колоды,
+которые _не_ имеют определённого тега. <kbd>Alt</kbd>/<kbd>Option</kbd> можно
+комбинировать с <kbd>Ctrl</kbd> или <kbd>Shift</kbd> (например,
+<kbd>Ctrl</kbd>+<kbd>Alt</kbd> добавит новое отрицательное условие поиска).
 
-On Anki 2.1.39+, you can also hold down both <kbd>Ctrl</kbd> and
-<kbd>Shift</kbd> together when clicking a search term to replace all occurrences of the
-same kind of search with the new one.
-Let's say you had previously typed in a complicated search expression like
+В Anki 2.1.39+ можно также удерживать одновременно <kbd>Ctrl</kbd> и
+<kbd>Shift</kbd> при нажатии на условие поиска, чтобы заменить все вхождения
+того же типа новым значением.
+Предположим, вы ввели сложное выражение:
 `deck:Swahili (is:due or tag:important)`
-and now want to perform the same search for your Urdu deck. You can hold down
-<kbd>Ctrl</kbd>+<kbd>Shift</kbd> while clicking the Urdu deck in the sidebar to obtain the
-following search expression:
+и теперь хотите выполнить тот же поиск для колоды Urdu. Удерживайте
+<kbd>Ctrl</kbd>+<kbd>Shift</kbd> и нажмите на Urdu в боковой панели — получите:
 `deck:Urdu (is:due or tag:important)`.
 
-### Selection Tool
+### Инструмент выделения
 
 ![Selection Tool](media/browser_selection_tool2.png)
 
-The Selection tool allows for selecting multiple items at the same time by holding down <kbd>Ctrl</kbd>
-or <kbd>Shift</kbd> while clicking. It also enables drag-and-drop to reorder decks and
-tags.
+Инструмент выделения позволяет выбирать сразу несколько элементов, удерживая
+<kbd>Ctrl</kbd> или <kbd>Shift</kbd> во время клика. Также он поддерживает
+перетаскивание для изменения порядка колод и тегов.
 
-Here is an example: Say you have the tags `Math`, `Calculus`, and `Algebra`.
-Click on the `Calculus` tag, then <kbd>Ctrl</kbd>-click on the `Algebra` tag. Now both
-tags are selected, click and drag any of the two onto the `Math` tag to make them
-both children of this tag. Behind the scenes, Anki has renamed the two tags to
-`Math::Calculus` and `Math::Algebra` respectively and updated your notes accordingly.
+Пример: у вас есть теги `Math`, `Calculus` и `Algebra`.
+Нажмите `Calculus`, затем <kbd>Ctrl</kbd>-кликните `Algebra`. Теперь оба тега
+выделены; перетащите любой из них на `Math`, чтобы сделать их дочерними.
+В результате Anki переименует теги в `Math::Calculus` и `Math::Algebra`
+и обновит ваши заметки.
 
-Another use case for selecting multiple items is searching: If you right-click on
-a selection of items, you can choose **Search &gt; All/Any Selected**. This
-can be combined with keyboard modifiers as described in [Search Tool](#search-tool)
-to append the resulting search to the current search.
+Ещё один сценарий множественного выбора — поиск: если щёлкнуть правой кнопкой
+по выделению, можно выбрать **Search &gt; All/Any Selected**.
+Это можно комбинировать с модификаторами клавиатуры, как описано в
+[Инструмент поиска](#инструмент-поиска), чтобы добавить полученный запрос к текущему.
 
-### Saved Searches
+### Сохранённые поиски
 
-If you regularly search for the same thing,
-you can save the current search by right-clicking the topmost item in the sidebar,
-choosing **Save Current Search** and typing in a name.
-You can also drag and drop any sidebar item onto this area to add an equivalent
-saved search, effectively pinning it at the top.
+Если вы регулярно выполняете один и тот же поиск,
+сохраните текущий запрос: щёлкните правой кнопкой по верхнему элементу боковой
+панели, выберите **Save Current Search** и задайте имя.
+Также можно перетащить любой элемент боковой панели в эту область, чтобы добавить
+эквивалентный сохранённый поиск и закрепить его сверху.
 
-### Editing Items
+### Редактирование элементов
 
-You can delete or rename tags, decks, and saved searches directly from the sidebar,
-from the right-click menu, or by using a shortcut key (<kbd>Del</kbd> and
-<kbd>F2</kbd> on Windows). Deletion even works for multiple items at once
-(see [Selection Tool](#selection-tool)).
+Теги, колоды и сохранённые поиски можно удалять и переименовывать прямо на
+боковой панели: через контекстное меню или горячими клавишами
+(<kbd>Del</kbd> и <kbd>F2</kbd> в Windows). Удаление работает и для нескольких
+элементов сразу (см. [Инструмент выделения](#инструмент-выделения)).
 
-### Finding Items
+### Поиск элементов
 
-To find a certain item in the sidebar tree, type part of its name into the searchbar
-at the top.
+Чтобы найти элемент в дереве боковой панели, введите часть его названия
+в строку поиска сверху.
 
-## Search Box
+## Поле поиска
 
-Above the card list is a search box. You can type in various things
-there to search for cards. For information on the search syntax,
-see [Searching](searching.md).
+Над списком карточек находится поле поиска. Введите в него запрос для поиска
+карточек. О синтаксисе см. раздел [Поиск](searching.md).
 
-## Card/Note Table
+## Таблица карточек/заметок
 
-The table's rows represent cards or notes that match the current search.
-When you click on a row, the corresponding note will be shown in the bottom section.
+Строки таблицы представляют карточки или заметки, соответствующие текущему
+поиску. При клике по строке соответствующая заметка показывается в нижней части.
 
-### Rows
+### Строки
 
-If you drag the mouse or hold <kbd>Ctrl</kbd> or <kbd>Command</kbd> to select multiple
-rows, the editor will be temporarily hidden. Various operations (such as
-changing the deck) can operate on multiple cards or notes at once, independent
-of the active mode. Therefore in Cards mode, a note is considered to be selected
-if any of its cards is selected, and in Notes mode, a card is considered to be selected
-if its note is selected.
+Если выделить несколько строк (протягиванием мышью либо с
+<kbd>Ctrl</kbd>/<kbd>Command</kbd>), редактор временно скроется. Разные операции
+(например, смена колоды) могут применяться сразу к нескольким карточкам или
+заметкам, независимо от текущего режима. Поэтому в режиме Cards заметка считается
+выбранной, если выбрана хотя бы одна её карточка, а в режиме Notes карточка
+считается выбранной, если выбрана её заметка.
 
-Other operations (like showing card information) only operate on a single card
-or note. This is called the _current_ card or note, which is usually the one that
-was last selected or clicked.
-In Cards Mode, again, the current note is the note of the current card and in Notes
-mode, the current card is the first card of the current note.
+Другие операции (например, показ информации о карточке) работают только с одной
+карточкой или заметкой. Она называется _текущей_ и обычно является последней
+выбранной/нажатой.
+В режиме Cards текущая заметка — это заметка текущей карточки, а в режиме Notes
+текущая карточка — первая карточка текущей заметки.
 
-The background colour will change depending on the card and note. In Cards mode,
-the first match will be used:
+Цвет фона меняется в зависимости от состояния карточки и заметки. В режиме Cards
+используется первое подходящее условие:
 
-1. if the card is **flagged**, use the flag colour,
-2. if the card is **suspended**, yellow,
-3. if the card's note is **marked**, purple.
+1. если карточка **помечена флагом**, используется цвет флага;
+2. если карточка **приостановлена**, жёлтый;
+3. если заметка карточки **отмечена**, фиолетовый.
 
-In Notes mode, colour is only applied to marked notes.\
-For more information about marked notes and suspended cards, see [Editing and More](studying.md#editing-and-more).
+В режиме Notes цвет применяется только к отмеченным заметкам.\
+Подробнее об отмеченных заметках и приостановленных карточках:
+[Редактирование и другое](studying.md#editing-and-more).
 
-### Columns
+### Столбцы
 
-The columns are configurable: right click on one (or <kbd>Ctrl</kbd>-click on a
-Mac) to choose which columns you'd like to see.
-You can drag columns to reorder them. Clicking on a column will sort by that column;
-click again to reverse the sort order. Note that you cannot sort by the Question
-and Answer columns.
+Набор столбцов настраивается: нажмите правой кнопкой на заголовок столбца
+(или <kbd>Ctrl</kbd>-клик на Mac), чтобы выбрать, какие столбцы показывать.
+Столбцы можно перетаскивать для изменения порядка. Клик по столбцу сортирует по
+нему; повторный клик меняет порядок сортировки. По столбцам Question и Answer
+сортировка недоступна.
 
-All columns are available for both [Cards and Notes mode](#table-modes)
-but sometimes with slightly different names and data. The following table lists
-the behaviours for both modes.
+Все столбцы доступны и в режиме [Cards, и в режиме Notes](#режимы-таблицы),
+но иногда имеют немного разные названия и данные. В таблице ниже показано
+поведение в обоих режимах.
 
 <!-- prettier-ignore -->
 
-| Column          | Cards mode                                                                                                                                                                                                                             | Notes mode                                                                                                                                                                                                     |
+| Столбец         | Режим Cards                                                                                                                                                                                                                             | Режим Notes                                                                                                                                                                                                     |
 | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Answer          | The back side of the card in one line with the question stripped. You can also choose a [custom format](templates/styling.md#browser-appearance) in the card type editor instead.                                                      | The same as in Cards mode, only for the first card of the note.                                                                                                                                                |
-| Card(s)         | The name of the card's template.                                                                                                                                                                                                       | The number of cards the note has.                                                                                                                                                                              |
-| Card Modified   | The last time changes were made to the card (e.g. when you reviewed the card and the review history and interval were updated).                                                                                                        | The last time changes were made to one of the note's cards.                                                                                                                                                    |
-| Created         | The same as in Notes mode for the card's note.                                                                                                                                                                                         | The date the note was created.                                                                                                                                                                                 |
-| Deck            | The name of the deck the card is in.                                                                                                                                                                                                   | The number of different decks the note's cards are in, or the deck name if all cards are in the same deck.                                                                                                     |
-| Due             | The due date for cards in review or (re)learning, and the position in the new card queue for new cards. The line is wrapped in brackets if the card is suspended or buried. Sorting is done by type and only then by date or position. | The due date for the note's next due review or (re)learning card that is not suspended, buried or in a filtered deck.                                                                                          |
-| (Avg.) Ease     | The card's ease if it is not new.                                                                                                                                                                                                      | The average ease for the note's cards that are not new.                                                                                                                                                        |
-| (Avg.) Interval | The card's interval if the card is in review or relearning.                                                                                                                                                                            | The average interval for the note's cards that are in review or relearning.                                                                                                                                    |
-| Lapses          | How often the card was rated “Again”.                                                                                                                                                                                                  | The total lapses for all cards of the note.                                                                                                                                                                    |
-| Note            | The same as in Notes mode for the card's note.                                                                                                                                                                                         | The name of the note's note type.                                                                                                                                                                               |
-| Note Modified   | The same as in Notes mode for the card's note.                                                                                                                                                                                         | The last time the note (e.g. the content of a field) was edited.                                                                                                                                               |
-| Question        | The front side of the card in one line. You can also choose a [custom format](templates/styling.md#browser-appearance) in the card type editor instead.                                                                                | The same as in Cards mode, only for the first card of the note.                                                                                                                                                |
-| Reviews         | How often the card has been reviewed.                                                                                                                                                                                                  | The total review count for all cards of the note.                                                                                                                                                              |
-| Sort Field      | The same as in Notes mode for the card's note.                                                                                                                                                                                         | The content of the note's field that is defined as the note type's sort field. Only this one field can be displayed and sorted by. You can change the sort field by clicking **Fields...** in the editing area. |
-| Tags            | The same as in Notes mode for the card's note.                                                                                                                                                                                         | The note's tags.                                                                                                                                                                                               |
+| Answer          | Обратная сторона карточки в одну строку, без вопроса. Можно также выбрать [пользовательский формат](templates/styling.md#browser-appearance) в редакторе типа карточки.                                                              | То же, что в режиме Cards, но только для первой карточки заметки.                                                                                                                                               |
+| Card(s)         | Имя шаблона карточки.                                                                                                                                                                                                                  | Количество карточек у заметки.                                                                                                                                                                                  |
+| Card Modified   | Время последнего изменения карточки (например, когда после повторения обновились история и интервал).                                                                                                                                | Время последнего изменения одной из карточек заметки.                                                                                                                                                           |
+| Created         | То же, что в режиме Notes, для заметки текущей карточки.                                                                                                                                                                              | Дата создания заметки.                                                                                                                                                                                          |
+| Deck            | Имя колоды, в которой находится карточка.                                                                                                                                                                                              | Количество разных колод, в которых находятся карточки заметки, либо имя колоды, если все карточки в одной колоде.                                                                                             |
+| Due             | Срок для карточек на повторении/переобучении и позиция в очереди новых карточек для новых. Строка берётся в скобки, если карточка приостановлена или зарыта. Сортировка сначала по типу, затем по дате/позиции.                  | Дата ближайшей карточки заметки на повторении/переобучении, которая не приостановлена, не зарыта и не находится в фильтрованной колоде.                                                                       |
+| (Avg.) Ease     | Лёгкость карточки, если она не новая.                                                                                                                                                                                                  | Средняя лёгкость карточек заметки, которые не являются новыми.                                                                                                                                                  |
+| (Avg.) Interval | Интервал карточки, если она на повторении или переобучении.                                                                                                                                                                           | Средний интервал карточек заметки, которые на повторении или переобучении.                                                                                                                                      |
+| Lapses          | Сколько раз карточке ставили оценку «Again».                                                                                                                                                                                           | Суммарное число lapses по всем карточкам заметки.                                                                                                                                                               |
+| Note            | То же, что в режиме Notes, для заметки карточки.                                                                                                                                                                                       | Имя типа заметки.                                                                                                                                                                                               |
+| Note Modified   | То же, что в режиме Notes, для заметки карточки.                                                                                                                                                                                       | Время последнего редактирования заметки (например, содержимого поля).                                                                                                                                            |
+| Question        | Лицевая сторона карточки в одну строку. Можно также выбрать [пользовательский формат](templates/styling.md#browser-appearance) в редакторе типа карточки.                                                                          | То же, что в режиме Cards, но только для первой карточки заметки.                                                                                                                                               |
+| Reviews         | Сколько раз карточка повторялась.                                                                                                                                                                                                      | Общее число повторений всех карточек заметки.                                                                                                                                                                   |
+| Sort Field      | То же, что в режиме Notes, для заметки карточки.                                                                                                                                                                                       | Содержимое поля заметки, выбранного как поле сортировки для типа заметки. Показывать и сортировать можно только по этому полю. Поле меняется через **Fields...** в области редактирования.                   |
+| Tags            | То же, что в режиме Notes, для заметки карточки.                                                                                                                                                                                       | Теги заметки.                                                                                                                                                                                                   |
 
 ## Editing Area
 
