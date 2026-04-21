@@ -1,6 +1,7 @@
-# Copy and paste issues
+# Проблемы копирования и вставки
 
-If you are experiencing problems with copying and pasting, please check if you
-are running other programs on your computer that monitor the clipboard, such as
-dictionary programs, clipboard managers or clipping tools. The toolkit Anki uses
-can have trouble when such programs are running.
+Если у вас возникают проблемы с копированием и вставкой, проверьте, не
+запущены ли на компьютере программы, которые отслеживают буфер обмена,
+например словари, менеджеры буфера обмена или инструменты для вырезок.
+Инструментарий, который использует Anki, может работать нестабильно,
+когда такие программы запущены.
