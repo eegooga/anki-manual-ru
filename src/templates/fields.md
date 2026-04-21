@@ -229,97 +229,94 @@ This is other text on the template. It is outside of the tags so it should not b
 
 Лишние символы в ссылке, скорее всего, «собьют» словарь, и совпадений вы не получите.
 
-To solve this, Anki provides the ability to strip formatting from fields
-when they are replaced. If you prefix a field name with text:, Anki will
-not include any formatting. So a dictionary link that worked even with
-formatted text would be:
+Чтобы решить это, в Anki есть возможность удалять форматирование при
+подстановке полей. Если добавить к имени поля префикс `text:`, Anki не будет
+включать форматирование. Тогда словарная ссылка будет работать даже с
+форматированным текстом:
 
     <a href="http://example.com/search?q={{text:Expression}}">check in dictionary</a>
 
-## Right To Left Text
+## Текст справа налево
 
-If you’re using a language that reads from right to left, you’ll need
-to adjust the template like so:
+Если вы используете язык с письмом справа налево, шаблон нужно настроить так:
 
     <div dir=rtl>{{FieldThatHasRTLTextInIt}}</div>
 
-## Ruby Characters
+## Ruby-символы
 
-Some languages commonly use annotations above the text to display the
-pronunciation of characters. These annotations are known as
+В некоторых языках над текстом используют надписи, показывающие произношение
+символов. Такие надписи называются
 [ruby characters](https://en.wikipedia.org/wiki/Ruby_character).
-In Japanese, these are known as [furigana](https://en.wikipedia.org/wiki/Furigana).
+В японском они известны как [furigana](https://en.wikipedia.org/wiki/Furigana).
 
-In Anki, you can display ruby characters by using the following syntax:
+В Anki ruby-символы можно отображать таким синтаксисом:
 
     Text[Ruby]
 
-Suppose the text above is written in MyField. By default, if you simply use
-`{{Myfield}}`, the field will be displayed as is. To properly position the
-ruby characters above the text, use the `furigana` filter in the templates
-like so:
+Предположим, такой текст записан в `MyField`. По умолчанию, если просто
+использовать `{{Myfield}}`, поле будет показано «как есть». Чтобы корректно
+разместить ruby-символы над текстом, примените в шаблоне фильтр `furigana`:
 
     {{furigana:MyField}}
 
-Here are some examples:
+Примеры:
 
 <!-- prettier-ignore -->
-| Raw Text            | Rendered Text                                                                             |
+| Исходный текст      | Отображаемый текст                                                                        |
 | ------------------- | ----------------------------------------------------------------------------------------- |
 | `Text[Ruby]`        | <ruby><rb>Text</rb><rt>Ruby</rt></ruby>                                                   |
 | `日本語[にほんご]`  | <ruby><rb>日本語</rb><rt>にほんご</rt></ruby>                                             |
 | `世[よ]の 中[なか]` | <ruby><rb>世</rb><rt>よ</rt></ruby>の<ruby><rb>中</rb><rt>なか</rt></ruby>                |
 | `世[よ]の中[なか]`  | <ruby><rb>世</rb><rt>よ</rt></ruby><ruby><rb>の中</rb><rt>なか</rt></ruby> _(incorrect!)_ |
 
-Notice how the third example has a space before the 中 character. This is
-necessary to specify that the ruby text applies only to that character.
-If there was no space, the ruby text will be misplaced above the の character,
-as shown in the fourth example.
+Обратите внимание: в третьем примере перед символом 中 есть пробел.
+Это нужно, чтобы ruby-текст применялся только к этому символу.
+Без пробела ruby-текст будет смещён над символом の, как в четвёртом примере.
 
-### Additional Ruby Character Filters
+### Дополнительные фильтры ruby-символов
 
-In addition to the `furigana` filter, you can also only show certain parts
-of the ruby text, with the `kana` and `kanji` filters. The `kana` filter will
-only show the ruby text, while the `kanji` filter removes the ruby text
-entirely.
+Помимо фильтра `furigana`, можно показывать только определённые части ruby-текста
+через фильтры `kana` и `kanji`. `kana` показывает только ruby-текст,
+а `kanji` полностью убирает ruby-подписи.
 
 <!-- prettier-ignore -->
-| Raw Text           | Field Filter           | Rendered Text                                 |
+| Исходный текст     | Фильтр поля            | Отображаемый текст                            |
 | ------------------ | ---------------------- | --------------------------------------------- |
 | `日本語[にほんご]` | `{{furigana:MyField}}` | <ruby><rb>日本語</rb><rt>にほんご</rt></ruby> |
 | `日本語[にほんご]` | `{{kana:MyField}}`     | にほんご                                      |
 | `日本語[にほんご]` | `{{kanji:MyField}}`    | 日本語                                        |
 
-These names are, again, borrowed from Japanese.
-The term [kana](https://en.wikipedia.org/wiki/Kana) represents the phonetic
-system used to describe how words are pronounced, whereas the term
-[kanji](https://en.wikipedia.org/wiki/Kanji) represents its Chinese characters.
+Эти названия, как и раньше, взяты из японского.
+Термин [kana](https://en.wikipedia.org/wiki/Kana) обозначает фонетическую
+систему записи произношения, а [kanji](https://en.wikipedia.org/wiki/Kanji) —
+китайские иероглифы, используемые в японском.
 
-## Media & LaTeX
+## Медиа и LaTeX
 
-Anki does not scan templates for media references, because it is slow to
-do so. This has implications for including media on the template.
+Anki не сканирует шаблоны на медиа-ссылки, потому что это медленно.
+Из-за этого есть особенности при добавлении медиа в шаблон.
 
-### Static Sounds/Images
+### Статические звуки/изображения
 
-If you wish to include images or sounds on your cards that are the same
-for every card (e.g. a company logo at the top of each card):
+Если нужно добавить на карточки одинаковые для всех элементы
+(например, логотип вверху каждой карточки):
 
-1. Rename the file so it starts with an underscore, e.g "\_logo.jpg".
-   The underscore tells Anki that the file is used by the template and
-   it should be exported when sharing the deck.
+1. Переименуйте файл так, чтобы имя начиналось с подчёркивания,
+   например `\_logo.jpg`.
+   Подчёркивание сообщает Anki, что файл используется шаблоном и должен
+   экспортироваться при публикации колоды.
 
-2. Add a reference to the media on your front or back template, like:
+2. Добавьте ссылку на медиа в шаблон лицевой или обратной стороны:
 
 <!-- -->
 
     <img src="_logo.jpg">
 
-### Field References
+### Ссылки через поля
 
-Media references to fields are not supported. They may or may not display
-during review, and will not work when checking for unused media,
-importing/exporting, and so on. Examples that won’t work:
+Медиа-ссылки через поля не поддерживаются. Они могут показываться или не
+показываться при повторении и не будут работать при проверке неиспользуемых
+медиа, импорте/экспорте и т. д. Примеры, которые не работают:
 
     <img src="{{Expression}}.jpg">
 
@@ -327,19 +324,20 @@ importing/exporting, and so on. Examples that won’t work:
 
     [latex]{{Field 1}}[/latex]
 
-Instead, you should include the media references in the field. Please
-see the [importing section](../importing/text-files.md#importing-media) for more information.
+Вместо этого добавляйте медиа-ссылки прямо в поле.
+Подробнее см. раздел [importing](../importing/text-files.md#importing-media).
 
-## Checking Your Answer
+## Проверка вашего ответа
 
-You can watch [a video about this feature](http://www.youtube.com/watch?v=5tYObQ3ocrw&yt:cc=on) on
-YouTube.
+Можно посмотреть [видео об этой функции](http://www.youtube.com/watch?v=5tYObQ3ocrw&yt:cc=on)
+на YouTube.
 
-The easiest way to check your answer is to click "Basic" at the top
-left of the card adding screen, and select "Basic (type in the answer)".
+Самый простой способ включить проверку ответа — нажать «Basic» в левом
+верхнем углу окна добавления карточки и выбрать
+«Basic (type in the answer)».
 
-If you have downloaded a shared deck and would like to type in the answer
-with it, you can modify its card template. If it has a template like:
+Если вы скачали общую колоду и хотите вводить ответ в ней, измените шаблон
+карточки. Если сейчас он выглядит так:
 
     {{Native Word}}
 
@@ -349,70 +347,69 @@ with it, you can modify its card template. If it has a template like:
 
     {{Foreign Word}}
 
-To type in the foreign word and check if you are correct, you need to
-edit your front template so that it looks like this:
+Чтобы вводить иностранное слово и проверять правильность, отредактируйте
+лицевой шаблон так:
 
     {{Native Word}}
     {{type:Foreign Word}}
 
-Here, we have added `type:` in front of the field we want to
-compare. Since FrontSide is on the back of the card, the type answer box
-will appear on the back as well.
+Здесь мы добавили `type:` перед полем, которое нужно сравнить.
+Так как `FrontSide` находится на обратной стороне карточки, поле ввода
+ответа тоже появится на обратной стороне.
 
-When reviewing, Anki will display a text box where you can type in the
-answer, and upon hitting <kbd>Enter</kbd> or showing the answer, Anki will show you
-which parts you got right and which parts you got wrong. The text box’s
-font size will be the size you configured for that field (via the
-“Fields” button when editing).
+Во время повторения Anki покажет текстовое поле для ввода ответа. После
+нажатия <kbd>Enter</kbd> или показа ответа Anki отметит, какие части верные,
+а какие нет. Размер шрифта поля ввода будет таким, какой вы задали для этого
+поля (через кнопку «Fields» при редактировании).
 
-Note that the type answer boxes don't appear in the preview dialog or in AnkiWeb.
+Обратите внимание: поля ввода ответа не отображаются в окне предпросмотра
+и в AnkiWeb.
 
-This feature does not change how the cards are answered, so it’s still
-up to you to decide how well you remembered or not.
+Эта функция не меняет сам процесс выставления оценки карточке, поэтому
+решение о том, насколько хорошо вы вспомнили ответ, остаётся за вами.
 
-Only one typing comparison can be used on a card. If you add the above
-text multiple times, it will not work. It also only supports a single
-line, so it is not useful for comparing against a field that is
-comprised of multiple lines.
+На одной карточке можно использовать только одно сравнение ввода.
+Если добавить этот текст несколько раз, это не сработает. Также поддерживается
+только одна строка, поэтому функция плохо подходит для сравнения с полем,
+состоящим из нескольких строк.
 
-Anki uses a monospaced font for the answer comparison so that the
-“provided” and “correct” sections line up. If you wish to override the
-font for the answer comparison, you can put the following at the bottom
-of your styling section:
+Anki использует моноширинный шрифт для сравнения ответов, чтобы блоки
+«provided» и «correct» выравнивались. Чтобы переопределить шрифт сравнения,
+добавьте в конец раздела стилей:
 
     code#typeans { font-family: "myfontname"; }
 
-Which will affect the following HTML for the answer comparison:
+Это повлияет на следующий HTML, используемый для сравнения ответа:
 
     <code id=typeans>...</code>
 
-Advanced users can override the default type-answer colors with the css
-classes "typeGood", "typeBad" and "typeMissed". AnkiMobile supports
-"typeGood" and "typeBad", but not "typeMissed".
+Продвинутые пользователи могут переопределить стандартные цвета через CSS-классы
+`typeGood`, `typeBad` и `typeMissed`. AnkiMobile поддерживает `typeGood`
+и `typeBad`, но не `typeMissed`.
 
-If you wish to override the size of the typing box and don’t want to
-change the font in the Fields dialog, you can override the default
-inline style using `!important`, like so:
+Если вы хотите изменить размер поля ввода и не менять шрифт в диалоге Fields,
+можно переопределить встроенный inline-стиль через `!important`:
 
     #typeans { font-size: 50px !important; }
 
-It is also possible to type in the answer for cloze deletion cards. To
-do this, add `{{type:cloze:Text}}` to both the front and back
-template, so the back looks something like this:
+Ввод ответа доступен и для cloze-карточек. Для этого добавьте
+`{{type:cloze:Text}}` и в лицевой, и в обратный шаблон; обратная сторона
+будет выглядеть примерно так:
 
     {{cloze:Text}}
     {{type:cloze:Text}}
     {{Extra}}
 
 
-If there are multiple sections elided, you can separate the answers in
-the text box with a comma.
+Если скрытых фрагментов несколько, ответы в поле ввода можно разделять запятыми.
 
-### Ignoring Diacritics
+### Игнорирование диакритики
 
-If you don't want Anki to compare accents on characters in your typed input with the correct answer, you can do so by using `type:nc` in your fields.
+Если вы не хотите, чтобы Anki сравнивал диакритику в введённом ответе с
+правильным, используйте `type:nc` в полях.
 
     {{type:nc:Front}}
 
-This makes sure a difference in accents isn't marked as incorrect by Anki. 
-For example, `بطيخ` would be treated the same as `بَطِّيخ` or `elite` would be treated same as `élite`.
+Это гарантирует, что различия в диакритике не будут считаться ошибкой.
+Например, `بطيخ` будет считаться тем же, что `بَطِّيخ`, а `elite` —
+тем же, что `élite`.
