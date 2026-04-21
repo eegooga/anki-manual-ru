@@ -406,31 +406,31 @@ Anki возвращает карточки
 
 ## Разбор отставания
 
-Filtered decks могут быть полезны,
+Фильтрованные колоды могут быть полезны,
 когда вы отстали по повторениям.
 Один пользователь Anki
 описывает,
-как он использует filtered decks
-для разбора backlog:
+как он использует фильтрованные колоды
+для разбора накопившегося отставания:
 
-    I did this for a backlog of 800 cards with filtered subdecks. Worked
-    very well for me.
+    Я делал так с отставанием в 800 карточек и с фильтрованными подколодами.
+    Для меня это сработало очень хорошо.
 
-    Just Due filter with: "is:due prop:due>-7"
+    Фильтр для «только что просроченных»: "is:due prop:due>-7"
 
-    Over Due filter with: "is:due prop:due<=-7"
+    Фильтр для «давно просроченных»: "is:due prop:due<=-7"
 
-    The Just Due deck will then contain cards that became due in the past
-    week. That's the deck you should study every day as it gets the cards
-    that become due regularly. With this you can study as if there weren't
-    any backlog.
+    Колода «только что просроченные» будет содержать карточки, срок которых
+    наступил за последнюю неделю. Именно её стоит учить каждый день, потому что
+    туда попадают карточки, которые регулярно становятся срочными. Так можно
+    учиться так, как будто отставания вообще нет.
 
-    The Over Due deck will contain your backlog — cards which you didn't
-    study in time. You can study them the same way you would study new
-    cards. They go back into the regular cards, so the number of overdue
-    will never grow as long as you keep your Just Due deck in check.
+    Колода «давно просроченные» будет содержать ваше отставание — карточки,
+    которые вы не выучили вовремя. Их можно учить так же, как новые карточки.
+    После ответа они возвращаются в обычные колоды, поэтому число просроченных
+    не будет расти, пока вы держите под контролем колоду «только что просроченные».
 
-    How long it takes depends on how many overdue cards you study each day
-    in addition to the ones that become due regularly. You can still motor
-    through them when you feel like it - or you can do a specific number per
-    day like you would for new cards. Up to you.
+    Сколько времени это займёт, зависит от того, сколько просроченных карточек
+    в день вы проходите помимо тех, что становятся срочными регулярно. Можно
+    проходить их рывками, когда есть желание, а можно задать фиксированное
+    количество в день — как с новыми карточками. Выбор за вами.
