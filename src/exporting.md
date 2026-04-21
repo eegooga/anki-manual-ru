@@ -1,72 +1,83 @@
-# Exporting
+# Экспорт
 
 <!-- toc -->
 
-Exporting allows you to save part of your collection as a text file or
-packaged Anki deck. To export, click the File menu and choose **Export**.
+Экспорт позволяет сохранить часть вашей коллекции в текстовый файл
+или в пакет колоды Anki. Чтобы экспортировать, откройте меню «Файл»
+и выберите **Экспорт**.
 
-## Text Files
+## Текстовые файлы
 
-If you choose "Notes in Plain Text", Anki will write the contents of the
-notes into a text file. Each field is separated by a tab. If you edit
-the resulting file and don't modify the first field, you can later
-import that file back into Anki and Anki will update your notes based on
-your edits, provided you import back into the same note type.
+Если выбрать «Notes in Plain Text», Anki запишет содержимое заметок
+в текстовый файл. Каждое поле разделяется табуляцией.
+Если вы отредактируете получившийся файл и не измените первое поле,
+позже его можно импортировать обратно в Anki,
+и Anki обновит ваши заметки на основе правок,
+если импорт производится в тот же тип заметки.
 
-If you find yourself needing to edit the first field as well, you'll
-need to change the format of your note type so that the first field is
-an ID number rather than actual text. (You can install
-the [Add note id](https://ankiweb.net/shared/info/8897764)
-add-on to make this easier.)
+Если вам всё же нужно редактировать и первое поле,
+придётся изменить формат типа заметки так,
+чтобы первое поле было ID-номером, а не обычным текстом.
+(Чтобы упростить это, можно установить дополнение
+[Add note id](https://ankiweb.net/shared/info/8897764).)
 
-In order for formatting to be preserved when you import text back in,
-the text is exported with all the HTML formatting embedded in it.
+Чтобы при обратном импорте форматирование сохранилось,
+текст экспортируется со встроенной HTML-разметкой.
 
-## Packaged Decks
+## Пакеты колод
 
-A "packaged deck" consists of cards, notes, note types, and any sounds or
-images bundled up into a file ending with .apkg or .colpkg. You can use
-packaged decks to transfer cards between people, or for backing up parts
-of your collection.
+«Пакет колоды» состоит из карточек, заметок, типов заметок,
+а также любых звуков и изображений, объединённых в файл
+с расширением `.apkg` или `.colpkg`.
+Пакеты колод можно использовать для передачи карточек между людьми
+или для резервного копирования частей коллекции.
 
-There are two different kinds of packaged decks.
+Есть два вида пакетов колод.
 
-### Collection (.colpkg)
+### Коллекция (.colpkg)
 
-When you export all decks with scheduling included, this is called a
-"collection package". Anki will copy your entire collection into a file
-ending in .colpkg, and place it on your desktop. A collection package is
-used to back up your collection, or copy it to another device.
+Когда вы экспортируете все колоды с включённым расписанием,
+это называется «пакет коллекции».
+Anki копирует всю коллекцию в файл с расширением `.colpkg`
+и помещает его на рабочий стол.
+Пакет коллекции используется для резервного копирования коллекции
+или копирования на другое устройство.
 
-Collection packages created with previous versions of Anki were called
-collection.apkg.
+Пакеты коллекции, созданные старыми версиями Anki,
+назывались `collection.apkg`.
 
-When this file is later imported, Anki will delete all the current cards
-in the collection, and replace the collection with the items in the
-file. This is useful for copying your collection back and forth between
-devices.
+Когда этот файл позже импортируется, Anki удаляет все текущие карточки
+из коллекции и заменяет коллекцию содержимым файла.
+Это полезно для переноса коллекции между устройствами.
 
-Existing media in your collection is not deleted when you import a
-collection package. To delete unused media, use Tools&gt;Check Media.
+Существующие медиафайлы в коллекции не удаляются
+при импорте пакета коллекции.
+Чтобы удалить неиспользуемые медиафайлы,
+используйте Инструменты&gt;Проверка медиа.
 
-If you choose Anki 2.1.50+ Collection Package format, imports and exports
-will be faster, and media files will be compressed, but the resulting
-.colpkg file will not be readable by older Anki clients.
+Если выбрать формат пакета коллекции Anki 2.1.50+,
+импорт и экспорт будут быстрее, а медиафайлы — сжаты,
+но итоговый файл `.colpkg` не будет читаться
+старыми клиентами Anki.
 
-### Deck (.apkg)
+### Колода (.apkg)
 
-Deck packages contain a single deck (and any child decks it may have).
-They have a filename ending with .apkg, but a filename other than
-collection.apkg. When you import a deck package, Anki will add the
-contents into your collection, rather than overwriting your collection.
+Пакеты колод содержат одну колоду
+(и любые её дочерние колоды).
+Их имя файла заканчивается на `.apkg`,
+но это не `collection.apkg`.
+При импорте пакета колоды Anki добавляет его содержимое
+в вашу коллекцию, а не перезаписывает коллекцию целиком.
 
-If some notes in the deck package have previously been imported, Anki
-will keep the version with the most recent modification time. So if you
-download an updated deck, the edits that have been made in the updated
-version will be made in your collection as well, but if you re-import an
-unchanged deck after making edits in your collection, the changes in
-your collection will be kept.
+Если некоторые заметки из пакета колоды импортировались ранее,
+Anki сохраняет версию с самым новым временем изменения.
+Поэтому если вы скачаете обновлённую колоду,
+правки из новой версии применятся в вашей коллекции,
+но если вы повторно импортируете неизменённую колоду
+после собственных правок в коллекции,
+ваши изменения будут сохранены.
 
-If you choose not to include scheduling information, Anki will assume
-that you are sharing the deck with other people, and will remove marked
-and leech tags so that they will have a clean copy of it.
+Если вы решите не включать информацию о расписании,
+Anki будет считать, что вы делитесь колодой с другими,
+и удалит теги `marked` и `leech`,
+чтобы пользователи получили «чистую» копию.

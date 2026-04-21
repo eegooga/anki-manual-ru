@@ -1,73 +1,76 @@
-# Contributing
+# Участие
 
 <!-- toc -->
 
-## Sharing Decks Publicly
+## Публичный обмен колодами
 
-To share decks with the general public, [synchronize](syncing.md) them
-with AnkiWeb, then log into AnkiWeb and click on "Share" from the menu
-next to the deck you wish to share.
+Чтобы поделиться колодами с широким кругом пользователей,
+[синхронизируйте](syncing.md) их с AnkiWeb, затем войдите в AnkiWeb
+и нажмите «Share» в меню рядом с колодой, которой хотите поделиться.
 
-If you shared a deck previously (including with previous versions of
-Anki), you can update it by clicking "Share" as above. Updating a shared
-deck will not reset the download counts or ratings. You can delete a
-shared deck that you have uploaded using the Delete button on the shared
-deck's page.
+Если вы уже делились колодой ранее (включая старые версии Anki),
+её можно обновить, снова нажав «Share», как описано выше.
+Обновление общей колоды не сбрасывает количество скачиваний и рейтинги.
+Удалить загруженную вами общую колоду можно кнопкой Delete
+на странице этой колоды.
 
-When updating a deck, AnkiWeb expects the deck to be at the same
-location as before. If you shared a deck when it was called "Korean
-Verbs" for example, and then renamed it to "Korean::Korean Verbs",
-resharing will not be able to update the existing copy. If you have
-forgotten the original name, you can guess it by downloading the
-deck on AnkiWeb and importing it (File > Import) in a new profile
-(File > Switch profile > Add). Then you can copy the exact name of the
-deck when it was first shared. If this doesn't work, please contact
-support.
+При обновлении колоды AnkiWeb ожидает, что колода находится
+в том же месте, что и раньше. Например, если вы делились колодой
+с названием `Korean Verbs`, а затем переименовали её в
+`Korean::Korean Verbs`, повторная публикация не сможет обновить
+существующую копию. Если вы забыли исходное имя, можно попробовать
+восстановить его, скачав колоду на AnkiWeb и импортировав её
+(Файл > Импорт) в новый профиль
+(Файл > Сменить профиль > Добавить). Затем можно скопировать
+точное имя колоды на момент первой публикации.
+Если это не помогло, обратитесь в поддержку.
 
-When you update a shared deck, users who downloaded the deck previously
-will not automatically receive updates. If they download the deck again
-and re-import it, newly added material will be imported without altering
-their existing study progress, provided neither you nor the user has
-altered the note type since the first import.
+Когда вы обновляете общую колоду, пользователи,
+которые скачивали её ранее, не получают обновления автоматически.
+Если они снова скачают колоду и повторно импортируют её,
+новые материалы будут импортированы без изменения их текущего
+прогресса обучения — при условии, что ни вы, ни пользователь
+не изменяли тип заметки с момента первого импорта.
 
-## Sharing Decks Privately
+## Приватный обмен колодами
 
-If you’d like to share decks with a limited group of people (such as a
-study group or class) rather than the general public, you can do so by
-sharing them outside of AnkiWeb.
+Если вы хотите делиться колодами с ограниченной группой людей
+(например, учебной группой или классом), а не со всеми,
+можно сделать это вне AnkiWeb.
 
-To share a deck privately, go to the File menu and choose Export. Select
-a single deck (not "All Decks"), and turn off "include scheduling
-information". This will produce an .apkg file which you can share with
-others.
+Чтобы поделиться колодой приватно, откройте меню Файл
+и выберите Экспорт. Выберите одну колоду (не «Все колоды»)
+и отключите «включить информацию о расписании».
+Это создаст файл `.apkg`, которым можно поделиться с другими.
 
-You can share the .apkg file by emailing it to people, placing it on a
-website or shared folder, or using a free file sharing service like
-Dropbox or Google Drive and sending people a link.
+Файл `.apkg` можно отправить по email, разместить на сайте
+или в общей папке, либо использовать бесплатный файловый сервис
+вроде Dropbox или Google Drive и отправить ссылку.
 
-Both the computer version and mobile clients make it easy to import from
-an apkg file simply by clicking or tapping on it. AnkiWeb does not have
-the ability to import apkg files however, so the recipients of your deck
-will need to have the computer version or Anki on their mobile device.
+И компьютерная версия, и мобильные клиенты позволяют легко импортировать
+`.apkg`: достаточно нажать/тапнуть по файлу. Однако AnkiWeb
+не умеет импортировать `.apkg`, поэтому получателям вашей колоды
+понадобится компьютерная версия Anki или Anki на мобильном устройстве.
 
-When a user imports an .apkg file, cards that already exist in their
-collection will be ignored and any new cards will be added. As long as
-they use the same note type, modified cards will also be updated. To
-prevent data loss, cards that have been deleted in the new apkg file
-will not be deleted in the user’s collection, so if you need to delete
-cards from users' decks for whatever reason, you will need to contact
-them about it.
+Когда пользователь импортирует `.apkg`, карточки,
+которые уже есть в коллекции, будут пропущены,
+а новые карточки добавлены. Если используется тот же тип заметки,
+изменённые карточки также обновятся. Чтобы избежать потери данных,
+карточки, удалённые в новом `.apkg`, не удаляются из коллекции пользователя,
+поэтому если по какой-то причине нужно удалить карточки
+из колод пользователей, вам придётся сообщить им об этом отдельно.
 
-## Sharing Add-ons
+## Публикация дополнений
 
-Please see <https://addon-docs.ankiweb.net/sharing.html>
+См. <https://addon-docs.ankiweb.net/sharing.html>
 
-## Translating Anki
+## Перевод Anki
 
-Please see <https://translating.ankiweb.net>
+См. <https://translating.ankiweb.net>
 
-## Contributing Code
+## Вклад в код
 
-Anki's source code is available at <https://github.com/ankitects/anki>
+Исходный код Anki доступен по адресу <https://github.com/ankitects/anki>
 
-Before contributing, please see [contributing.md](https://github.com/ankitects/anki/blob/main/docs/contributing.md).
+Перед тем как вносить изменения, см.
+[contributing.md](https://github.com/ankitects/anki/blob/main/docs/contributing.md).
