@@ -9,8 +9,8 @@
 Это руководство относится к компьютерной версии Anki.
 Для мобильных клиентов есть отдельные руководства:
 
-- [Руководство AnkiDroid](https://docs.ankidroid.org/) (Андроид)
-- [Руководство AnkiMobile](https://docs.ankimobile.net/) (Айфон/Айпад)
+- [Руководство AnkiDroid](https://docs.ankidroid.org/) (Android)
+- [Руководство AnkiMobile](https://docs.ankimobile.net/) (iPhone/iPad)
 
 ## Быстрый старт
 
