@@ -2,14 +2,15 @@
 
 ## Официальная документация
 
-- [Руководство AnkiWeb](https://docs.ankiweb.net/intro.html) (En)
+- [Руководство AnkiWeb](https://docs.ankiweb.net/intro.html) (англ.)
 
 ## Мобильные клиенты
 
-Это руководство для компьютерной версии Anki. Для мобильных клиентов доступны отдельные руководства:
+Это руководство относится к компьютерной версии Anki.
+Для мобильных клиентов есть отдельные руководства:
 
-- [Руководство AnkiDroid](https://docs.ankidroid.org/) (Android)
-- [Руководство AnkiMobile](https://docs.ankimobile.net/) (iPhone/iPad)
+- [Руководство AnkiDroid](https://docs.ankidroid.org/) (Андроид)
+- [Руководство AnkiMobile](https://docs.ankimobile.net/) (Айфон/Айпад)
 
 ## Быстрый старт
 
@@ -17,12 +18,12 @@
 
 ## Получение помощи
 
-Нужна помощь? Пожалуйста, см. раздел [Получение помощи](./getting-help.md).
+Нужна помощь? См. раздел [Получение помощи](./getting-help.md).
 
 ## Переводы
 
-Волонтёры внесли вклад в перевод этого руководства.
-Переводы не всегда могут быть актуальными.
+Над переводом этого руководства работали волонтёры.
+Переводы могут обновляться с задержкой.
 
 - [Bahasa Indonesia](https://web.archive.org/web/20250228144632/https://apps.ankiweb.net/docs/manual.id.html)
 - [Deutsch](https://web.archive.org/web/20240413080739/https://www.dennisproksch.de/anki)
@@ -45,4 +46,4 @@
 
 Используете не самую новую версию Anki? Архивы этого руководства доступны в [Internet Archive](https://web.archive.org/web/20240829022941/https://docs.ankiweb.net/).
 
-Информацию о старых версиях планировщика смотрите в [этом FAQ](https://faqs.ankiweb.net/the-anki-2.1-scheduler.html).
+О старых версиях планировщика читайте в [этом ЧаВо](https://faqs.ankiweb.net/the-anki-2.1-scheduler.html).
